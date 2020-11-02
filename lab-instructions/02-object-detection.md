@@ -175,7 +175,7 @@ Now that you've published the image classification model, you can use it from a 
 4. Open the code file for your client application (*Program.cs* for C#, *test-detector&period;py* for Python) and review the code it contains, noting the following details:
     - Namespaces from the package you installed are imported
     - The **Main** function retrieves the configuration settings, and uses the key and endpoint to create an authenticated **CustomVisionPredictionClient**.
-    - The prediction client object is used to get object detection predictions for the **produce.jpg** image, specifying the project ID and model name in the request. The predicted tagged regions are then drawn on the image, and the result is saved as **output.jpg88.
+    - The prediction client object is used to get object detection predictions for the **produce.jpg** image, specifying the project ID and model name in the request. The predicted tagged regions are then drawn on the image, and the result is saved as **output.jpg**.
 5. Return the integrated terminal for the **test-detector** folder, and enter the following SDK-specific command to run the program:
 
     **C#**
