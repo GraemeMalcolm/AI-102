@@ -147,7 +147,7 @@ Now you're ready to publish your trained model so that it can be used from a cli
 
 Now that you've published the image classification model, you can use it from a client application. Once again, you can choose to use **C#** or **Python**.
 
-1. In Visual Studio Code, in the **AI-102** project, browse to the **image_classification** folder and in the folder for your preferred language (**C-Sharp** or **Python**), expand the **test-classifier** folder.
+1. In Visual Studio Code, in the **AI-102** project, browse to the **image-classification** folder and in the folder for your preferred language (**C-Sharp** or **Python**), expand the **test-classifier** folder.
 2. Right-click the **test-classifier** folder and open an integrated terminal. Then enter the following SDK-specific command to install the Custom Vision Prediction package:
 
     **C#**

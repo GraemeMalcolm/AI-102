@@ -71,6 +71,67 @@ Alternatively, you can simply drag around the object to create a region.
 
 ![Tagged images in a project](./images/tagged-images.jpg)
 
+## Use the Training API to upload images
+
+You can use the graphical tool in the Custom Vision portal to tag your images, but many AI development teams use other tools that generate files containing information about tags and object regions in images. In scenarios like this, you can use the Custom Vision training API to upload tagged images to the project.
+
+> **Note**: In this exercise, you can choose to use the API from either the **C#** or **Python** SDK. In the steps below, perform the actions appropriate for your preferred language.
+
+1. Click the *settings* (&#9881;) icon at the top right of the **Training Images** page in the Custom Vision portal to view the project settings.
+2. Under **General** (on the left), note the **Project Id** that uniquely identifies this project.
+3. On the left, under **Resources** note that the details for the *training* resource, including its key and endpoint are shown (you can also obtain this information by viewing the resource in the Azure portal).
+4. In Visual Studio Code open the **AI-102** project, and in the **Explorer** pane, browse to the **object-detection** folder and expand the **C-Sharp** or **Python** folder depending on your language preference.
+5. Right-click the **train-detector** folder and open an integrated terminal. Then enter install the Custom Vision Training package by running the appropriate command for your language preference:
+
+   **C#**
+
+    ```
+    dotnet add package Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training --version 2.0.0
+    ```
+
+   **Python**
+
+   ```
+   pip install azure-cognitiveservices-vision-customvision
+   ```
+
+6. View the contents of the **train-detector** folder, and note that it contains a file named **tagged-images.json**. Open this file and examine the JSON it contains. The JSON defines a list of images, each containing one or more tagged regions. Each tagged region includes a tag name, and the top and left coordinates and width and height dimensions of the bounding box containing the tagged object.
+
+    > **Note**: The coordinates and dimensions in this file indicate relative points on the image. For example, a *height* value of 0.7 indicates a box that is 70% of the height of the image. Some tagging tools generate other formats of file in which the coordinate and dimension values represent pixels, inches, or other units of measurements.
+
+7. Note that the **train-detector** folder contains a subfolder in which the image files referenced in the JSON file are stored.
+
+8. View the contents of the **train-detector** folder, and note that it contains a file for configuration settings:
+    - **C#**: appsettings.json
+    - **Python**: .env
+
+    Open the configuration file and update the configuration values it contains to reflect the endpoint and key for your Custom Vision *training* resource, and the project ID for the classification project you created previously. Save your changes.
+9. Note that the **train-detector** folder contains a code file for the client application:
+
+    - **C#**: Program.cs
+    - **Python**: train-detector&period;py
+
+    Open the code file and review the code it contains, noting the following details:
+    - Namespaces from the package you installed are imported
+    - The **Main** function retrieves the configuration settings, and uses the key and endpoint to create an authenticated **CustomVisionTrainingClient**, which is then used with the project ID to create a **Project** reference to your project.
+    - The **Upload_Images** function extracts the tagged region information from the JSON file and uses it to create a batch of images with regions, which it then uploads to the project.
+10. Return the integrated terminal for the **train-detector** folder, and enter the following command to run the program:
+
+    **C#**
+
+    ```
+    dotnet run
+    ```
+
+    **Python**
+
+    ```
+    python train-detector.py
+    ```
+
+11. Wait for the program to end. Then return to your browser and view the **Training Images** page for your project in the Custom Vision portal (refreshing the browser if necessary).
+12. Verify that some new tagged images have been added to the project.
+
 ## Train and test a model
 
 Now that you've tagged the images in your project, you're ready to train a model.
@@ -79,17 +140,54 @@ Now that you've tagged the images in your project, you're ready to train a model
 2. Wait for training to complete (it might take ten minutes or so), and then review the *Precision*, *Recall*, and *mAP* performance metrics - these measure the prediction accuracy of the classification model, and should all be high.
 3. At the top right of the page, click **Quick Test**, and then in the **Image URL** box, enter `https://aka.ms/apple-orange` and view the prediction that is generated. Then close the **Quick Test** window.
 
-## Publish and consume the object detection model
+## Publish the image classification model
 
-Now you're ready to publish your trained model and use it from a client application.
+Now you're ready to publish your trained model so that it can be used from a client application.
 
-1. At the top left of the **Performance** page, click **&#128504; Publish** to publish the trained model with the following settings:
-    - **Model name**: detect-produce
-    - **Prediction Resource**: *Your custom vision **prediction** resource*.
-2. After publishing, click the *settings* (&#9881;) icon at the top right of the **Performance** page to view the project settings. Then, under **General** (on the left), copy the **Project Id** and paste it into the code cell below replacing **YOUR_PROJECT_ID** (if CTRL+V doesn't paste, try SHIFT+CTRL+V).
+1. In the Custom Vision portal, on the **Performance** page,  click **&#128504; Publish** to publish the trained model with the following settings:
+    - **Model name**: fruit-detector
+    - **Prediction Resource**: *The **prediction** resource you created previously (<u>not</u> the training resource)*.
+2. At the top left of the **Project Settings** page, click the *Projects Gallery* (&#128065;) icon to return to the Custom Vision portal home page, where your project is now listed.
+3. On the Custom Vision portal home page, at the top right, click the *settings* (&#9881;) icon to view the settings for your Custom Vision service. Then, under **Resources**, expand your *prediction* resource (<u>not</u> the training resource) to see its **Key** and **Endpoint** values (you can also obtain this information by viewing the resource in the Azure portal).
 
-> (*if you used a **Cognitive Services** resource instead of creating a **Custom Vision** resource at the beginning of this exercise, you can copy its key and endpoint from the right side of the project settings, paste it into the code cell below, and run it to see the results. Otherwise, continue completing the steps below to get the key and endpoint for your Custom Vision prediction resource*).
+## Use the image classifier from a client application
 
-3. At the top left of the **Project Settings** page, click the *Projects Gallery* (&#128065;) icon to return to the Custom Vision portal home page, where your project is now listed.
-4. On the Custom Vision portal home page, at the top right, click the *settings* (&#9881;) icon to view the settings for your Custom Vision service. Then, under **Resources**, expand your *prediction* resource (<u>not</u> the training resource) and copy its **Key** and **Endpoint** values to the code cell below, replacing **YOUR_KEY** and **YOUR_ENDPOINT**.
-5. Run the code cell below by clicking the Run Cell <span>&#9655</span> button (at the top left of the cell) to set the variables to your project ID, key, and endpoint values.
+Now that you've published the image classification model, you can use it from a client application. Once again, you can choose to use **C#** or **Python**.
+
+1. In Visual Studio Code, in the **AI-102** project, browse to the **image-detection** folder and in the folder for your preferred language (**C-Sharp** or **Python**), expand the **test-detector** folder.
+2. Right-click the **test-detector** folder and open an integrated terminal. Then enter the following SDK-specific command to install the Custom Vision Prediction package:
+
+    **C#**
+
+    ```
+    dotnet add package Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction --version 2.0.0
+    ```
+
+     **Python**
+
+   ```
+   pip install azure-cognitiveservices-vision-customvision
+   ```
+
+   > **Note**: The Python SDK package includes both training and prediction packages, and may already be installed.
+
+3. Open the configuration file for your client application (*appsettings.json* for C# or *.env* for Python) and update the configuration values it contains to reflect the endpoint and key for your Custom Vision *prediction* resource, the project ID for the classification project, and the name of your published model (which should be *fruit-detector*). Save your changes.
+4. Open the code file for your client application (*Program.cs* for C#, *test-detector&period;py* for Python) and review the code it contains, noting the following details:
+    - Namespaces from the package you installed are imported
+    - The **Main** function retrieves the configuration settings, and uses the key and endpoint to create an authenticated **CustomVisionPredictionClient**.
+    - The prediction client object is used to get object detection predictions for the **produce.jpg** image, specifying the project ID and model name in the request. The predicted tagged regions are then drawn on the image, and the result is saved as **output.jpg88.
+5. Return the integrated terminal for the **test-detector** folder, and enter the following SDK-specific command to run the program:
+
+    **C#**
+
+    ```
+    dotnet run
+    ```
+
+    **Python**
+
+    ```
+    python test-detector.py
+    ```
+
+6. After the program has completed, view the resulting **output.jpg** file to see the detected objects in the image.
