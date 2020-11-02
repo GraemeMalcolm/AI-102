@@ -9,24 +9,28 @@ def main():
     global training_client
     global custom_vision_project
 
-    # Get Configuration Settings
-    load_dotenv()
-    training_endpoint = os.getenv('TrainingEndpoint')
-    training_key = os.getenv('TrainingKey')
-    project_id = os.getenv('ProjectID')
+    try:
+        # Get Configuration Settings
+        load_dotenv()
+        training_endpoint = os.getenv('TrainingEndpoint')
+        training_key = os.getenv('TrainingKey')
+        project_id = os.getenv('ProjectID')
 
-    # Authenticate a client for the training API
-    credentials = ApiKeyCredentials(in_headers={"Training-key": training_key})
-    training_client = CustomVisionTrainingClient(training_endpoint, credentials)
+        # Authenticate a client for the training API
+        credentials = ApiKeyCredentials(in_headers={"Training-key": training_key})
+        training_client = CustomVisionTrainingClient(training_endpoint, credentials)
 
-    # Get the Custom Vision project
-    custom_vision_project = training_client.get_project(project_id)
+        # Get the Custom Vision project
+        custom_vision_project = training_client.get_project(project_id)
 
-    # Upload and tag images
-    Upload_Images('more-training-images')
+        # Upload and tag images
+        Upload_Images('more-training-images')
 
-    # Train the model
-    Train_Model()
+        # Train the model
+        Train_Model()
+        
+    except Exception as ex:
+        print(ex)
 
 def Upload_Images(folder):
     print("Uploading images...")

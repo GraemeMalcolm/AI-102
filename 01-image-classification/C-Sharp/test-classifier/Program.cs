@@ -1,7 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Collections.Generic;
-using System.Threading;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction;
 
@@ -11,27 +9,28 @@ namespace test_classifier
 {
     class Program
     {
-
         static CustomVisionPredictionClient prediction_client;
 
         static void Main(string[] args)
         {
-            // Get Configuration Settings
-            IConfigurationBuilder builder = new ConfigurationBuilder().AddJsonFile("appsettings.json");
-            IConfigurationRoot configuration = builder.Build();
-            string prediction_endpoint = configuration["PredictionEndpoint"];
-            string prediction_key = configuration["PredictionKey"];
-            Guid project_id = Guid.Parse(configuration["ProjectID"]);
-            string model_name = configuration["ModelName"];
-
-            // Authenticate a client for the prediction API
-            prediction_client = new CustomVisionPredictionClient(new Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.ApiKeyServiceClientCredentials(prediction_key))
+            try
             {
-                Endpoint = prediction_endpoint
-            };
+                // Get Configuration Settings
+                IConfigurationBuilder builder = new ConfigurationBuilder().AddJsonFile("appsettings.json");
+                IConfigurationRoot configuration = builder.Build();
+                string prediction_endpoint = configuration["PredictionEndpoint"];
+                string prediction_key = configuration["PredictionKey"];
+                Guid project_id = Guid.Parse(configuration["ProjectID"]);
+                string model_name = configuration["ModelName"];
 
-            // Classify test images
-            String[] images = Directory.GetFiles("test-images");
+                // Authenticate a client for the prediction API
+                prediction_client = new CustomVisionPredictionClient(new Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.ApiKeyServiceClientCredentials(prediction_key))
+                {
+                    Endpoint = prediction_endpoint
+                };
+
+                // Classify test images
+                String[] images = Directory.GetFiles("test-images");
                 foreach(var image in images)
                 {
                     Console.Write(image + ": ");
@@ -47,7 +46,11 @@ namespace test_classifier
                         }
                     }
                 }
-
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+            }
         }
     }
 }

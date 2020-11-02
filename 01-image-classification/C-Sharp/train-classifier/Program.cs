@@ -6,7 +6,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training;
 using Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models;
 
-// dotnet add package Microsoft.Extensions.Configuration.Json
 // dotnet add package Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training --version 2.0.0
 
 namespace train_classifier
@@ -25,20 +24,27 @@ namespace train_classifier
             string training_key = configuration["TrainingKey"];
             Guid project_id = Guid.Parse(configuration["ProjectID"]);
 
-            // Authenticate a client for the training API
-            training_client = new CustomVisionTrainingClient(new Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.ApiKeyServiceClientCredentials(training_key))
+            try
             {
-                Endpoint = training_endpoint
-            };
+                // Authenticate a client for the training API
+                training_client = new CustomVisionTrainingClient(new Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.ApiKeyServiceClientCredentials(training_key))
+                {
+                    Endpoint = training_endpoint
+                };
 
-            // Get the Custom Vision project
-            custom_vision_project = training_client.GetProject(project_id);
+                // Get the Custom Vision project
+                custom_vision_project = training_client.GetProject(project_id);
 
-            // Upload and tag images
-            Upload_Images("./more-training-images");
-            
-            // Retrain the model
-            Train_Model();
+                // Upload and tag images
+                Upload_Images("more-training-images");
+                
+                // Retrain the model
+                Train_Model();
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+            }
 
         }
 
