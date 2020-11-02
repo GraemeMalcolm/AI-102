@@ -4,10 +4,10 @@ In this exercise, you will use the Custom Vision service to train an image class
 
 ## Clone the repository for this course
 
-If you have not already done so, you must clone the code respository for this course:
+If you have not already done so, you must clone the code repository for this course:
 
 1. Start Visual Studio Code.
-2. Open the palette (SHIFT+CTRL+P) and run a `Git: Clone` command to clone the `https://github/com/GraemeMalcolm/AI-102` respository to a local folder.
+2. Open the palette (SHIFT+CTRL+P) and run a `Git: Clone` command to clone the `https://github/com/GraemeMalcolm/AI-102` repository to a local folder.
 3. When the repository has been cloned, open the folder in Visual Studio Code.
 
 ## Create Custom Vision resources

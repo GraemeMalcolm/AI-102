@@ -4,15 +4,15 @@ In this exercise, you will use the Custom Vision service to train an *object det
 
 ## Clone the repository for this course
 
-If you have not already done so, you must clone the code respository for this course:
+If you have not already done so, you must clone the code repository for this course:
 
 1. Start Visual Studio Code.
-2. Open the palette (SHIFT+CTRL+P) and run a `Git: Clone` command to clone the `https://github/com/GraemeMalcolm/AI-102` respository to a local folder.
+2. Open the palette (SHIFT+CTRL+P) and run a `Git: Clone` command to clone the `https://github/com/GraemeMalcolm/AI-102` repository to a local folder.
 3. When the repository has been cloned, open the folder in Visual Studio Code.
 
 ## Create Custom Vision resources
 
-You should have created **Custom Vision** resources for training and prediction in a previous exercise, but of not (or if you have dleted them), use the following instructions to create them.
+You should have created **Custom Vision** resources for training and prediction in a previous exercise, but of not (or if you have deleted them), use the following instructions to create them.
 
 1. In a new browser tab, open the Azure portal at [https://portal.azure.com](https://portal.azure.com), and sign in using the Microsoft account associated with your Azure subscription.
 2. Select the **&#65291;Create a resource** button, search for *custom vision*, and create a **Custom Vision** resource with the following settings:
