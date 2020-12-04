@@ -81,7 +81,7 @@ You can use the graphical tool in the Custom Vision portal to tag your images, b
 2. Under **General** (on the left), note the **Project Id** that uniquely identifies this project.
 3. On the left, under **Resources** note that the details for the *training* resource, including its key and endpoint are shown (you can also obtain this information by viewing the resource in the Azure portal).
 4. In Visual Studio Code open the **AI-102** project, and in the **Explorer** pane, browse to the **object-detection** folder and expand the **C-Sharp** or **Python** folder depending on your language preference.
-5. Right-click the **train-detector** folder and open an integrated terminal. Then enter install the Custom Vision Training package by running the appropriate command for your language preference:
+5. Right-click the **train-detector** folder and open an integrated terminal. Then install the Custom Vision Training package by running the appropriate command for your language preference:
 
    **C#**
 
@@ -92,7 +92,7 @@ You can use the graphical tool in the Custom Vision portal to tag your images, b
    **Python**
 
    ```
-   pip install azure-cognitiveservices-vision-customvision
+   pip install azure-cognitiveservices-vision-customvision==2.0.0
    ```
 
 6. View the contents of the **train-detector** folder, and note that it contains a file named **tagged-images.json**. Open this file and examine the JSON it contains. The JSON defines a list of images, each containing one or more tagged regions. Each tagged region includes a tag name, and the top and left coordinates and width and height dimensions of the bounding box containing the tagged object.
