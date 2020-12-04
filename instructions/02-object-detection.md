@@ -166,7 +166,7 @@ Now that you've published the image classification model, you can use it from a 
      **Python**
 
    ```
-   pip install azure-cognitiveservices-vision-customvision
+   pip install azure-cognitiveservices-vision-customvision==2.0.0
    ```
 
    > **Note**: The Python SDK package includes both training and prediction packages, and may already be installed.
