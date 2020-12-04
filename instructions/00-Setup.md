@@ -25,7 +25,6 @@ dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /nores
 wsl --set-default-version 2 
 ```
  
-
 ## Docker 
 
 1. Download **Docker Desktop** from https://www.docker.com/get-started 
@@ -34,16 +33,18 @@ wsl --set-default-version 2
 
 Docker will start automatically.
 
-## .NET Core SDK 
+(If you use a non-Admin user for development, add your user account to **docker-users** group)
+
+## .NET Core SDK
 
 1. Download and install from https://dotnet.microsoft.com/download (download .NET Core SDK - not just the runtime)
 
-## Node.JS 
+## Node.JS
 
 1. Download the latest LTS version from https://nodejs.org/en/download/ 
 2. Install using the default options
 
-## Python (and required packages) 
+## Python (and required packages)
 
 1. Download version 3.8 from https://docs.conda.io/en/latest/miniconda.html 
 2. Run setup to install - **Important**: Select the options to add Miniconda to the PATH variable and to register Miniconda as the default Python environment.
@@ -53,12 +54,12 @@ Docker will start automatically.
 pip install flask requests python-dotenv pylint matplotlib pillow 
 ```
 
-## Azure CLI 
+## Azure CLI
 
 1. Download from https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest 
-2. Install using the default options 
+2. Install using the default options
 
-## Visual Studio Code (and extensions) 
+## Visual Studio Code (and extensions)
 
 1. Download from https://code.visualstudio.com/Download 
 2. Install using the default options 
