@@ -42,19 +42,19 @@ When you created your cognitive services resource, two authentication keys were 
 
     If you are not already signed in, a web browser will open and prompt you to sign into Azure. Do so, and then close the browser and return to Visual Studio Code.
 
-3. If you have multiple subscriptions, you'll need to ensure that you are working in the one that contains your cognitive services resource.  Use this command to determine your current subscription.
+    > **Tip**: If you have multiple subscriptions, you'll need to ensure that you are working in the one that contains your cognitive services resource.  Use this command to determine your current subscription.
+    >
+    > ```azurecli
+    > az account show
+    > ```
+    >
+    > If you need to change the subscription, run this command, changing *&lt;subscriptionName&gt;* to the correct subscription name.
+    >
+    > ```azurecli
+    > az account set --subscription <subscriptionName>
+    > ```
 
-    ```azurecli
-    az account show
-    ```
-
-4. If you need to change the subscription, run this command, changing *&lt;subscriptionName&gt;* to the correct subscription name.
-
-    ```azurecli
-    az account set --subscription <subscriptionName>
-    ```
-
-5. Now you can use the following command to get the list of cognitive services keys, replacing *&lt;resourceName&gt;* with the name of your cognitive services resource, and *&lt;resourceGroup&gt;* with the name of the resource group in which you created it.
+3. Now you can use the following command to get the list of cognitive services keys, replacing *&lt;resourceName&gt;* with the name of your cognitive services resource, and *&lt;resourceGroup&gt;* with the name of the resource group in which you created it.
 
     ```azurecli
     az cognitiveservices account keys list --name <resourceName> --resource-group <resourceGroup>
@@ -62,7 +62,7 @@ When you created your cognitive services resource, two authentication keys were 
 
     The command returns a list of the keys for your cognitive services resource - there are two keys, named **key1** and **key2**.
 
-6. To test your cognitive service, you can use *curl* - a command line tool for HTTP requests. Enter the following command (on a single line), replacing *&lt;yourEndpoint&gt;* and *&lt;yourKey&gt;* with your endpoint URI and **Key1** key to use the Text Analytics API in your cognitive services resource.
+4. To test your cognitive service, you can use *curl* - a command line tool for HTTP requests. Enter the following command (on a single line), replacing *&lt;yourEndpoint&gt;* and *&lt;yourKey&gt;* with your endpoint URI and **Key1** key to use the Text Analytics API in your cognitive services resource.
 
     ```curl
     curl -X POST "<yourEndpoint>/text/analytics/v3.0/languages?" -H "Content-Type: application/json" -H "Ocp-Apim-Subscription-Key: <yourKey>" --data-ascii "{'documents':[{'id':1,'text':'hello'}]}"
@@ -70,7 +70,7 @@ When you created your cognitive services resource, two authentication keys were 
 
     The command returns a JSON document containing information about the language detected in the input data (which should be English).
 
-7. If a key becomes compromised, or the developers who have it no longer require access, you can regenerate it in the portal or by using the Azure CLI. Run the following command to regenerate your **key1** key (replacing *&lt;resourceName&gt;* and *&lt;resourceGroup&gt;* for your resource).
+5. If a key becomes compromised, or the developers who have it no longer require access, you can regenerate it in the portal or by using the Azure CLI. Run the following command to regenerate your **key1** key (replacing *&lt;resourceName&gt;* and *&lt;resourceGroup&gt;* for your resource).
 
     ```azurecli
     az cognitiveservices account keys regenerate --name <resourceName> --resource-group <resourceGroup> --key-name key1
@@ -78,8 +78,8 @@ When you created your cognitive services resource, two authentication keys were 
 
     The list of keys for your cognitive services resource is returned - note that **key1** has changed since you last retrieved them.
 
-8. Re-run the *curl* command with the old key (you can use the **^** key to cycle through previous commands), and verify that it now fails.
-9. Re-run the *curl* command, replacing the key with the new **key1** value and verify that it succeeds.
+6. Re-run the *curl* command with the old key (you can use the **^** key to cycle through previous commands), and verify that it now fails.
+7. Re-run the *curl* command, replacing the key with the new **key1** value and verify that it succeeds.
 
 > **Tip**: In this exercise, you used the full names of Azure CLI parameters, such as ``` --resource-group ```.  You can also use shorter alternatives, such as ``` -g ```, to make your commands less verbose (but a little harder to understand).  The [Cognitive Services CLI command reference](https://docs.microsoft.com/cli/azure/cognitiveservices?view=azure-cli-latest) lists the parameter options for each cognitive services CLI command.
 
