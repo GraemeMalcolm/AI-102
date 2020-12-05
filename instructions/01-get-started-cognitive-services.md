@@ -117,5 +117,5 @@ You can write code that consumes cognitive services REST APIs directly, but ther
     python rest-client.py
     ```
 
-6. When prompted, enter some text and review the language that is detected by the service. For example, try entering "Goodbye", "Au revior", and "Hasta la vista".
+6. When prompted, enter some text and review the language that is detected by the service. For example, try entering "Goodbye", "Au revoir", and "Hasta la vista".
 7. When you have finished testing the application, enter "quit" to stop the program.
