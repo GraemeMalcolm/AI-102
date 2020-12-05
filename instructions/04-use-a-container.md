@@ -43,8 +43,8 @@ Many of the most commonly used cognitive services APIs are available in containe
 3. When prompted, allow access through the firewall. If you are using a hosted lab environment, enter the password you logged in with.
 4. Note that the container will run until you press CTRL+C in the terminal window. Leave this terminal running for now.
 5. In a new web browser tab, browse to http://localhost:5000 and verify that the container is running at this endpoint.
-6. Browse to http://localhost:5000/swagger to view information about the REST functions you can call in the cointainerized service.
-7. Return to Visual Studio Code and open a new terminal window. Then in the new terminal, enter the following command to call the language detection API on your local container. Note that you do not need to specify the cognitive services endpoint or key - the request is processed by the containerized service, which only communicates with the service in Azure to report usage for billing.
+6. Browse to http://localhost:5000/swagger to view information about the REST functions you can call in the containerized service.
+7. Return to Visual Studio Code and open a new terminal window. Then in the new terminal, enter the following command to call the language detection REST API on your local container. Note that you do not need to specify the cognitive services endpoint or key - the request is processed by the containerized service, which only communicates with the service in Azure to report usage for billing.
 
     ```curl
     curl -X POST "http://localhost:5000/text/analytics/v3.0/languages?" -H "Content-Type: application/json" --data-ascii "{'documents':[{'id':1,'text':'hello'}]}"
