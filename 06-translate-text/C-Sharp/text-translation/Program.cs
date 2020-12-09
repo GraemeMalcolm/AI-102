@@ -39,7 +39,7 @@ namespace translate_text
 
                     // Detect the language
                     string language = await GetLanguage(text);
-                    Console.WriteLine(language);
+                    Console.WriteLine("Language: " + language);
 
                     // Translate if not already English
                     if (language != "en")

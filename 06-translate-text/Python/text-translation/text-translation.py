@@ -24,6 +24,7 @@ def main():
 
             # Detect the language
             language = GetLanguage(text)
+            print('Language:',language)
 
             # Translate if not already English
             if language != 'en':
