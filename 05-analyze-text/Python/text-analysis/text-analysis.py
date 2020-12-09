@@ -19,7 +19,7 @@ def main():
         for file_name in os.listdir(reviews_folder):
             # Read the file contents
             print('\n-------------\n' + file_name)
-            text = open(os.path.join(reviews_folder, file_name)).read()
+            text = open(os.path.join(reviews_folder, file_name), encoding='utf8').read()
             print('\n' + text)
 
             # Get language
