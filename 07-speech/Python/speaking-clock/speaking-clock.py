@@ -18,11 +18,9 @@ def main():
         
 
         # Get user input (until they say "stop")
-        print('Say "stop" to end')
         command =''
         while command.lower() != 'stop.':
             command = TranscribeCommand()
-            print(command)
             if command.lower() == 'what time is it?':
                 TellTime()
 
@@ -31,7 +29,6 @@ def main():
 
 def TranscribeCommand():
     command = 'stop.'
-    print('Speak now...')
 
     # Configure speech recognition
 

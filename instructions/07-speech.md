@@ -112,7 +112,7 @@ In this exercise, you'll complete a partially implemented client application tha
     python speaking-clock.py
     ```
 
-7. Observe the output as the code should run without error, displaying the region of the speech service resource the application will use.
+7. If you are using C#, you can ignore the warnings about using the **await** operator in asynchronous methods - we'll fix that later. The code should display the region of the speech service resource the application will use.
 
 ## Recognize speech
 
@@ -124,7 +124,7 @@ Now that you have a **SpeechConfig** for the speech service in your cognitive se
    **C#**
 
     ```C#
-    /// Configure speech recognition
+    // Configure speech recognition
     using AudioConfig audioConfig = AudioConfig.FromDefaultMicrophoneInput();
     using SpeechRecognizer speechRecognizer = new SpeechRecognizer(speechConfig, audioConfig);
     ```
@@ -145,30 +145,34 @@ Now that you have a **SpeechConfig** for the speech service in your cognitive se
 
     ```C#
     // Process speech input
-        SpeechRecognitionResult speech = await speechRecognizer.RecognizeOnceAsync();
-        if (speech.Reason == ResultReason.RecognizedSpeech)
+    Console.WriteLine("Say 'stop' to end...");
+    SpeechRecognitionResult speech = await speechRecognizer.RecognizeOnceAsync();
+    if (speech.Reason == ResultReason.RecognizedSpeech)
+    {
+        command = speech.Text;
+        Console.WriteLine(command);
+    }
+    else
+    {
+        Console.WriteLine(speech.Reason);
+        if (speech.Reason == ResultReason.Canceled)
         {
-            command = speech.Text;
+            var cancellation = CancellationDetails.FromResult(speech);
+            Console.WriteLine(cancellation.Reason);
+            Console.WriteLine(cancellation.ErrorDetails);
         }
-        else
-        {
-            Console.WriteLine(speech.Reason);
-            if (speech.Reason == ResultReason.Canceled)
-            {
-                var cancellation = CancellationDetails.FromResult(speech);
-                Console.WriteLine(cancellation.Reason);
-                Console.WriteLine(cancellation.ErrorDetails);
-            }
-        }
+    }
     ```
 
     **Python**
 
     ```Python
     # Process speech input
+    print('Say "stop" to end...')
     speech = speech_recognizer.recognize_once_async().get()
     if speech.reason == speech_sdk.ResultReason.RecognizedSpeech:
         command = speech.text
+        print(command)
     else:
         print(speech.reason)
         if speech.reason == speech_sdk.ResultReason.Canceled:
@@ -191,7 +195,7 @@ Now that you have a **SpeechConfig** for the speech service in your cognitive se
     python speaking-clock.py
     ```
 
-5. When prompted, speak clearly into the microphone and say "what time is it?". The program should transcribe your spoken input and display the time (based on the local time of the computer where you are running the code - this may not be the correct time where you are!). When prompted again, say "stop" to end the program.
+5. When prompted, speak clearly into the microphone and say "what time is it?". The program should transcribe your spoken input and display the time (based on the local time of the computer where the code is running, which may not be the correct time where you are). When prompted again, say "stop" to end the program.
 
     > **Note** *The SpeechRecognizer gives you around 5 seconds to speak. If it detects no spoken input, it produces a "No match" result. Since the code in the application uses a default command of "stop.", the program will then end.*
     > 
@@ -257,3 +261,43 @@ Your speaking clock application accepts spoken input, but it doesn't actually sp
     ```
 
 5. When prompted, speak clearly into the microphone and say "what time is it?". The program should speak, telling you the time. When prompted again, say "stop" to end the program.
+
+## Use a different voice
+
+Your speaking clock application uses a default voice, which you can change. The Speech service supports a range of *standard* voices as well as more human-like *neural* voices. You can also create *custom* voices.
+
+> **Note**: For a list of neural and standard voices, see [Language and voice support](https://docs.microsoft.com/azure/cognitive-services/speech-service/language-support#text-to-speech) in the Speech service documentation.  Availability of standard, neural, and custom voices varies by region. See [Speech service supported regions](https://docs.microsoft.com/azure/cognitive-services/speech-service/regions#standard-and-neural-voices) for more details.
+
+1. In the **TellTime** function, under the comment **Configure speech synthesis**, modify the code as follows to specify an alternative voice before creating the **SpeechSynthesizer** client:
+
+   **C#**
+
+    ```C#
+    // Configure speech synthesis
+    speechConfig.SpeechSynthesisVoiceName = "en-GB-George"; // add this
+    using SpeechSynthesizer speechSynthesizer = new SpeechSynthesizer(speechConfig);
+    ```
+
+    **Python**
+
+    ```Python
+    # Configure speech synthesis
+    speech_config.speech_synthesis_voice_name = 'en-GB-George' # add this
+    speech_synthesizer = speech_sdk.SpeechSynthesizer(speech_config)
+    ```
+
+2. Save your changes and return to the integrated terminal for the **speaking-clock** folder, and enter the following command to run the program:
+
+    **C#**
+
+    ```
+    dotnet run
+    ```
+
+    **Python**
+
+    ```
+    python speaking-clock.py
+    ```
+
+3. When prompted, speak clearly into the microphone and say "what time is it?". The program should speak in the specified voice, telling you the time. When prompted again, say "stop" to end the program.

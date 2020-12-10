@@ -28,7 +28,6 @@ namespace speaking_clock
                 while (command.ToLower() != "stop.")
                 {
                     command = await TranscribeCommand();
-                    Console.WriteLine(command);
                     if (command.ToLower()=="what time is it?")
                     {
                         await TellTime();
@@ -44,8 +43,7 @@ namespace speaking_clock
         static async Task<string> TranscribeCommand()
         {
             string command = "stop.";
-            Console.WriteLine("Speak now...");
-
+            
             // Configure speech recognition
 
 
@@ -58,8 +56,8 @@ namespace speaking_clock
 
         static async Task TellTime()
         {
-            var date = DateTime.Now;
-            string responseText = "The time is " + date.Hour.ToString() + ":" + date.Minute.ToString("D2");
+            var now = DateTime.Now;
+            string responseText = "The time is " + now.Hour.ToString() + ":" + now.Minute.ToString("D2");
                         
             // Configure speech synthesis
 
