@@ -331,3 +331,7 @@ In addition to categorized entities, the Text Analytics API can detect entities 
     ```
 
 3. Observe the output, noting the linked entities that are identified.
+
+## More information
+
+For more information about using the **Text Analytics** service, see the [Text Analytics documentation](https://docs.microsoft.com/azure/cognitive-services/text-analytics/).

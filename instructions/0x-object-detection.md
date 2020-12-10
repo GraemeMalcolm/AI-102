@@ -191,3 +191,7 @@ Now that you've published the image classification model, you can use it from a 
     ```
 
 6. After the program has completed, view the resulting **output.jpg** file to see the detected objects in the image.
+
+## More information
+
+For more information about object detection with the Custom Vision service, see the [Custom Vision documentation](https://docs.microsoft.com/azure/cognitive-services/custom-vision-service/).

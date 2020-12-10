@@ -119,3 +119,7 @@ You can write code that consumes cognitive services REST APIs directly, but ther
 
 6. When prompted, enter some text and review the language that is detected by the service. For example, try entering "Goodbye", "Au revoir", and "Hasta la vista".
 7. When you have finished testing the application, enter "quit" to stop the program.
+
+## More information
+
+For more information about Azure Cognitive Services, see the [Cognitive Services documentation](https://docs.microsoft.com/azure/cognitive-services/what-are-cognitive-services).

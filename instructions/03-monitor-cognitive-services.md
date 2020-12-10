@@ -85,3 +85,7 @@ As well as defining alerts, you can view metrics for your cognitive services res
 
 5. Re-run the *curl* command multiple times to generate some call activity (you can use the **^** key to cycle through previous commands).
 6. Return to the **Metrics** page in the Azure portal and refresh the **Total Calls** count chart. It may take a few minutes for the calls you made using *curl* to be reflected in the chart - keep refreshing the chart until it updates to include them.
+
+## More information
+
+One of the options for monitoring cognitive services is to use *diagnostic logging*. Once enabled, diagnostic logging captures rich information about your cognitive services resource usage, and can be a useful monitoring and debugging tool. It can take over an hour after setting up diagnostic logging to generate any information, which is why we haven't explored it in this exercise; but you can learn more about it in the [Cognitive Services documentation](https://docs.microsoft.com/azure/cognitive-services/diagnostic-logging).

@@ -54,3 +54,7 @@ Many of the most commonly used cognitive services APIs are available in containe
 
 8. In Visual Studio Code, in the terminal pane, switch to the **docker** terminal where the container is running, and then press **CTRL+C** to stop the container.
 9. In the system tray, right-click the Docker Desktop icon and quit Docker Desktop.
+
+## More information
+
+For more information about containerizing cognitive services, see the [Cognitive Services containers documentation](https://docs.microsoft.com/azure/cognitive-services/containers/).

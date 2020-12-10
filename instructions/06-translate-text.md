@@ -230,3 +230,7 @@ Now that your application can determine the language in which reviews are writte
     ```
 
 4. Observe the output, noting that non-English reviews are translated into English.
+
+## More information
+
+For more information about using the **Translator** service, see the [Translator documentation](https://docs.microsoft.com/azure/cognitive-services/translator/).

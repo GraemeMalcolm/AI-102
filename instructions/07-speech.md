@@ -301,3 +301,7 @@ Your speaking clock application uses a default voice, which you can change. The 
     ```
 
 3. When prompted, speak clearly into the microphone and say "what time is it?". The program should speak in the specified voice, telling you the time. When prompted again, say "stop" to end the program.
+
+## More information
+
+For more information about using the **Speech-to-text** and **Text-to-speech** APIs, see the [Speech-to-text documentation](https://docs.microsoft.com/azure/cognitive-services/speech-service/index-speech-to-text) and [Text-to-speech documentation](https://docs.microsoft.com/azure/cognitive-services/speech-service/index-text-to-speech).
