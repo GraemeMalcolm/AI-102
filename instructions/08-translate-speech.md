@@ -25,7 +25,7 @@ If you don't already have on in your subscription, you'll need to provision a **
     - **Pricing tier**: Standard S0
 3. Select the required checkboxes and create the resource.
 4. Wait for deployment to complete, and then view the deployment details.
-5. When the resource has been deployed, go to it and view its **Keys and Endpoint** page. You will need one of the keys and the region in which the service is provisioned from this page in the next procedure.
+5. When the resource has been deployed, go to it and view its **Keys and Endpoint** page. You will need one of the keys and the location in which the service is provisioned from this page in the next procedure.
 
 ## Prepare to use the Speech Translation service
 
@@ -52,7 +52,7 @@ In this exercise, you'll complete a partially implemented client application tha
     - **C#**: appsettings.json
     - **Python**: .env
 
-    Open the configuration file and update the configuration values it contains to include an authentication key for your cognitive services resource, and the region where it is deployed. Save your changes.
+    Open the configuration file and update the configuration values it contains to include an authentication **key** for your cognitive services resource, and the **location** where it is deployed. Save your changes.
 4. Note that the **translator** folder contains a code file for the client application:
 
     - **C#**: Program.cs
@@ -87,7 +87,7 @@ In this exercise, you'll complete a partially implemented client application tha
     translationConfig.AddTargetLanguage("fr");
     translationConfig.AddTargetLanguage("es");
     translationConfig.AddTargetLanguage("hi");
-    Console.WriteLine("Ready to translate from " + translationConfig.SpeechRecognitionLanguage)
+    Console.WriteLine("Ready to translate from " + translationConfig.SpeechRecognitionLanguage);
     ```
 
     **Python**
@@ -99,7 +99,7 @@ In this exercise, you'll complete a partially implemented client application tha
     translation_config.add_target_language('fr')
     translation_config.add_target_language('es')
     translation_config.add_target_language('hi')
-    print('Ready to translate from',translation_config.SpeechRecognitionLanguage)
+    print('Ready to translate from',translation_config.speech_recognition_language)
     ```
 
 6. You will use the **SpeechTranslationConfig** to translate speech into text, but you will also use a **SpeechConfig** to synthesize translations into speech. Add the following code under the comment **Configure speech**:
@@ -132,7 +132,7 @@ In this exercise, you'll complete a partially implemented client application tha
     python translator.py
     ```
 
-8. If you are using C#, you can ignore the warnings about using the **await** operator in asynchronous methods - we'll fix that later. The code should display a message that it is ready to translate from en-US.
+8. If you are using C#, you can ignore any warnings about using the **await** operator in asynchronous methods - we'll fix that later. The code should display a message that it is ready to translate from en-US. Press ENTER to end the program.
 
 ## Implement speech translation
 
@@ -184,7 +184,7 @@ Now that you have a **SpeechTranslationConfig** for the speech service in your c
     python translator.py
     ```
 
-4. When prompted, enter a valid language code (*fr*, *es*, or *hi*), and then speak clearly into the microphone and say "where is the station?" or some other phrase you might use when traveling abroad. The program should transcribe your spoken input and translate it to the language you specified (French, Spanish, or Hindi). Repeat this process, trying each language supported by the application. When you're finished, enter anything other than the three valid language codes to end the program.
+4. When prompted, enter a valid language code (*fr*, *es*, or *hi*), and then speak clearly into the microphone and say "where is the station?" or some other phrase you might use when traveling abroad. The program should transcribe your spoken input and translate it to the language you specified (French, Spanish, or Hindi). Repeat this process, trying each language supported by the application. When you're finished, press ENTER to end the program.
 
     > **Note** *The TranslationRecognizer gives you around 5 seconds to speak. If it detects no spoken input, it produces a "No match" result.*
     >
@@ -245,7 +245,7 @@ So far, your application translates spoken input to text; which might be suffici
     python translator.py
     ```
 
-3. When prompted, enter a valid language code (*fr*, *es*, or *hi*), and then speak clearly into the microphone and say a phrase you might use when traveling abroad. The program should transcribe your spoken input and respond with a spoken translation. Repeat this process, trying each language supported by the application. When you're finished, enter anything other than the three valid language codes to end the program.
+3. When prompted, enter a valid language code (*fr*, *es*, or *hi*), and then speak clearly into the microphone and say a phrase you might use when traveling abroad. The program should transcribe your spoken input and respond with a spoken translation. Repeat this process, trying each language supported by the application. When you're finished, press ENTER to end the program.
 
     > **Note** *In this example, you've used a **SpeechTranslationConfig** to translate speech to text, and then used a **SpeechConfig** to synthesize the translation as speech. You can in fact use the **SpeechTranslationConfig** to synthesize the translation directly, but this only works when translating to a single language, and results in an audio stream that is typically saved as a file rather than sent directly to a speaker.*
 

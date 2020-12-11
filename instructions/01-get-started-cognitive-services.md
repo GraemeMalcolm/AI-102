@@ -39,7 +39,7 @@ The cognitive services APIs are REST-based, so you can consume them by submittin
     - **C#**: appsettings.json
     - **Python**: .env
 
-    Open the configuration file and update the configuration values it contains to reflect the endpoint and an authentication key for your cognitive services resource. Save your changes.
+    Open the configuration file and update the configuration values it contains to reflect the **endpoint** and an authentication **key** for your cognitive services resource. Save your changes.
 4. Note that the **rest-client** folder contains a code file for the client application:
 
     - **C#**: Program.cs
@@ -93,7 +93,7 @@ You can write code that consumes cognitive services REST APIs directly, but ther
     - **C#**: appsettings.json
     - **Python**: .env
 
-    Open the configuration file and update the configuration values it contains to reflect the endpoint and an authentication key for your cognitive services resource. Save your changes.
+    Open the configuration file and update the configuration values it contains to reflect the **endpoint** and an authentication **key** for your cognitive services resource. Save your changes.
 4. Note that the **sdk-client** folder contains a code file for the client application:
 
     - **C#**: Program.cs

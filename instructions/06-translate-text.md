@@ -25,7 +25,7 @@ If you don't already have on in your subscription, you'll need to provision a **
     - **Pricing tier**: Standard S0
 3. Select the required checkboxes and create the resource.
 4. Wait for deployment to complete, and then view the deployment details.
-5. When the resource has been deployed, go to it and view its **Keys and Endpoint** page. You will need one of the keys and the region in which the service is provisioned from this page in the next procedure.
+5. When the resource has been deployed, go to it and view its **Keys and Endpoint** page. You will need one of the keys and the location in which the service is provisioned from this page in the next procedure.
 
 ## Prepare to use the Translator service
 
@@ -38,7 +38,7 @@ In this exercise, you'll complete a partially implemented client application tha
     - **C#**: appsettings.json
     - **Python**: .env
 
-    Open the configuration file and update the configuration values it contains to include an authentication key for your cognitive services resource, and the region where it is deployed. Save your changes.
+    Open the configuration file and update the configuration values it contains to include an authentication **key** for your cognitive services resource, and the **location** where it is deployed. Save your changes.
 3. Note that the **text-translation** folder contains a code file for the client application:
 
     - **C#**: Program.cs

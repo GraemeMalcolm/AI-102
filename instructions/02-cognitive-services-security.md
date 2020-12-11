@@ -165,7 +165,7 @@ Now you're ready to use the service principal identity in an application, so it 
     - **C#**: appsettings.json
     - **Python**: .env
 
-    Open the configuration file and update the configuration value it contains to reflect the endpoint for your Cognitive Services resource and the name of the Azure Key Vault resource. Save your changes.
+    Open the configuration file and update the configuration value it contains to reflect the **endpoint** for your Cognitive Services resource and the name of the Azure Key Vault resource. Save your changes.
 4. Note that the **keyvault-client** folder contains a code file for the client application:
 
     - **C#**: Program.cs
