@@ -1,0 +1,47 @@
+
+> LUIS application information
+> !# @app.name = Clock
+> !# @app.desc = NLP clock
+> !# @app.versionId = 0.1
+> !# @app.culture = en-us
+> !# @app.luis_schema_version = 7.0.0
+> !# @app.tokenizerVersion = 1.0.0
+
+
+> # Intent definitions
+
+# GetDay
+- what day is it?
+- what is the day today?
+
+
+# GetTime
+- what is the current time in {@Location=new york}?
+- what is the time?
+- what time is it in {@Location=havana}?
+- what time is it in {@Location=london}?
+- what time is it?
+- what's the time in {@Location=seattle}?
+
+
+# None
+- goodbye
+- hello
+
+
+> # Entity definitions
+
+@ ml Location
+
+
+> # PREBUILT Entity definitions
+
+
+> # Phrase list definitions
+
+
+> # List entities
+
+> # RegEx entities
+
+

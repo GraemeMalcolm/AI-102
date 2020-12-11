@@ -1,14 +1,14 @@
 # Create a Language Understanding Application
 
-The Language Understanding service enables you to define a language model that applications can use to interpret natural language input from users,  predict the users *intent* (what they want to achieve), and identify any *entities* to which the intent should be applied.
+The Language Understanding service enables you to define an app that encapsulates a language model that applications can use to interpret natural language input from users,  predict the users *intent* (what they want to achieve), and identify any *entities* to which the intent should be applied.
 
-For example, a language model for a clock application might be expected to process input such as:
+For example, a language understanding app for a clock application might be expected to process input such as:
 
 *What is the time in London?*
 
 This kind of input is an example of an *utterance* (something a user might say or type), for which the desired *intent* is to get the time in a specific location (an *entity*); in this case, London.
 
-> **Note**: The task of the language model is to predict the user's intent, and identify any entities to which the intent applies. It is <u>not</u> the job of the language model to actually perform the actions required to satisfy the intent. For example, the clock application can use a language model to discern that the user wants to know the time in London; but the application itself must then implement the logic to determine the correct time and present it to the user.
+> **Note**: The task of the language understanding app is to predict the user's intent, and identify any entities to which the intent applies. It is <u>not</u> its job to actually perform the actions required to satisfy the intent. For example, the clock application can use a language app to discern that the user wants to know the time in London; but the client application itself must then implement the logic to determine the correct time and present it to the user.
 
 ## Clone the repository for this course
 
@@ -22,10 +22,10 @@ If you have not already done so, you must clone the code repository for this cou
 
 To use the Language Understanding service, you need two kinds of resource:
 
-- An *authoring* resource: used to define, train, and test the language model. This must be a **Language Understanding - Authoring** resource in your Azure subscription.
-- A *prediction* resource: used to publish model and handle requests from client applications that use it. This can be either a **Language Understanding** or **Cognitive Services** resource in your Azure subscription.
+- An *authoring* resource: used to define, train, and test the language understanding app. This must be a **Language Understanding - Authoring** resource in your Azure subscription.
+- A *prediction* resource: used to publish your language understanding app and handle requests from client applications that use it. This can be either a **Language Understanding** or **Cognitive Services** resource in your Azure subscription.
 
-     > **Important**: Authoring resources must be created in one of three *regions* (Europe, Australia, or US). Models created in European or Australian authoring resources can only be deployed to prediction resources in Europe or Australia respectively; models created in US authoring resources can be deployed to prediction resources in any Azure location other than Europe and Australia. See the [authoring and publishing regions documentation](https://docs.microsoft.com/azure/cognitive-services/luis/luis-reference-regions) for details about matching authoring and prediction locations.
+     > **Important**: Authoring resources must be created in one of three *regions* (Europe, Australia, or US). Language Understanding apps created in European or Australian authoring resources can only be deployed to prediction resources in Europe or Australia respectively; models created in US authoring resources can be deployed to prediction resources in any Azure location other than Europe and Australia. See the [authoring and publishing regions documentation](https://docs.microsoft.com/azure/cognitive-services/luis/luis-reference-regions) for details about matching authoring and prediction locations.
 
 1. Open the Azure portal at [https://portal.azure.com](https://portal.azure.com), and sign in using the Microsoft account associated with your Azure subscription.
 2. Select the **&#65291;Create a resource** button, search for *language understanding*, and create a **Language Understanding** resource with the following settings:
@@ -35,7 +35,7 @@ To use the Language Understanding service, you need two kinds of resource:
     - **Name**: *Enter a unique name*
     - **Authoring location**: *Select your preferred location*
     - **Authoring pricing tier**: F0
-    - **Prediction location**: *Choose a location in the same region as your authoring location*
+    - **Prediction location**: *Choose a location in the same authoring region as your authoring location*
     - **Prediction pricing tier**: F0
 3. Wait for the resources to be created, and note that two Language Understanding resources are provisioned; one for authoring, and another for prediction. You can view both of these by navigating to the resource group where you created them.
 
@@ -84,7 +84,7 @@ The first thing well do in the new app is to define some intents.
 Now that you've added some intents, let's train the app model and see if it can correctly predict them from user input.
 
 1. At the top right of the portal, select **Train** to train the app.
-2. When the app is trained, select **Test** to display the Test pane, and then enter the following test utterance:
+2. When the app is trained, select **Test** to display the Test panel, and then enter the following test utterance:
 
     *what's the time now?*
 
@@ -108,7 +108,7 @@ Now that you've added some intents, let's train the app model and see if it can 
 
     This should return the **None** intent.
 
-6. Close the Test pane.
+6. Close the Test panel.
 
 ## Add an entity
 
@@ -129,12 +129,94 @@ So far you've defined some simple utterances that map to intents. Most real appl
 7. When the utterance has been added, select the words ***new york***, and map them to the **Location** entity.
 
 8. At the top right of the portal, select **Train** to retrain the app.
-9. When the app is trained, select **Test** to display the Test pane, and then enter the following test utterance:
+9. When the app is trained, select **Test** to display the Test panel, and then enter the following test utterance:
 
     *what's the time in Edinburgh?*
 
-10. Review the result that is returned, which should hopefully predict the **GetTime** intent. Then select **Inspect** and in the additional inspection pane that is displayed, examine the **ML entities** section. The model should have predicted that "edinburgh" is an instance of a **Location** entity.
+10. Review the result that is returned, which should hopefully predict the **GetTime** intent. Then select **Inspect** and in the additional inspection panel that is displayed, examine the **ML entities** section. The model should have predicted that "edinburgh" is an instance of a **Location** entity.
 
-3. Close the inspection pane.
+3. Close the inspection panel.
 
 ## Perform batch testing
+
+You can use the test pane to test individual utterances interactively, but for more complex language models it is generally more efficient to perform *batch testing*.
+
+1. In Visual Studio Code, in the **AI-102** project, open the **batch-test.json** file in the **09-luis-app** folder. This file consists of a JSON document that contains multiple test cases for the clock language model you created.
+2. In the Language Understanding portal, in the Test panel, select **Batch testing panel**. Then select **&#65291; Import** and import the **batch-test.json** file, assigning the name **clock-test**.
+3. In the Batch testing panel, run the **clock-test** test.
+4. When the test has completed, select **See results**.
+5. On the results page, view the confusion matrix that represents the prediction results. It shows true positive, false positive, true negative, and false negative predictions for the intent or entity that is selected in the list on the right.
+
+    ![A confusion matrix for a language understanding batch test](./images/luis-confusion-matrix.jpg)
+
+    > **Note**: Each utterance is scored as *positive* or *negative* for each intent - so for example "what time is it?" should be scored as *positive* for the **GetTime** intent, and *negative* for the **GetDate** intent. The points on the confusion matrix show which utterances were predicted correctly (*true*) and incorrectly (*false*) as *positive* and *negative* for the selected intent.
+
+6. With the **GetDate** intent selected, select any of the points on the confusion matrix to see the details of the prediction - including the utterance and the confidence score for the prediction. Then select the **GetTime** and **None** intents and view their prediction results. The app should have done well at predicting the intents correctly.
+7. Select the **Location** entity and view the prediction results in the confusion matrix. In particular, note the predictions that were *false negatives* - these were cases where the app failed to detect the specified location in the utterance, indicating that you may need to add more sample utterances to the intents and retrain the model.
+8. Close the Batch testing panel.
+
+## Publish the app
+
+In a real project, you'd iteratively refine intents and entities, retrain, and retest until you are satisfied with the predictive performance. Then, you can publish the app for client applications to use.
+
+1. At the top right of the Language Understanding portal, select **Publish**.
+2. Select **Production slot**, and publish the app.
+3. After publishing is complete, at the top of the Language Understanding portal, select **Manage**.
+4. On the **Settings** page, note the **App ID**. Client applications need this to use your app.
+5. On the **Azure Resources** page, note the **Primary Key**, **Secondary Key**, and **Endpoint URL** for the prediction resource to which the app has been published. Client applications need the endpoint and one of the keys to connect to the prediction resource and be authenticated.
+6. In Visual Studio Code, in the **09-luis-app** folder, select the **GetIntent.cmd** batch file and view the code it contains. This command-line script uses cURL to call the Language Understanding REST API for the specified application and prediction endpoint.
+7. Replace the placeholder values in the script with the **App ID**, **Endpoint URL**, and either the **Primary Key** or **Secondary Key** for your Language Understanding app; and then save the updated file.
+8. Right-click the **09-luis-app** folder and open an integrated terminal. Then enter the following command (be sure to include the quotation marks!):
+
+    ```bash
+    GetIntent "What's the time?"
+    ```
+
+9. Review the JSON response returned by your app, which should indicate the top scoring intent predicted for your input.
+10. Try the following command:
+
+    ```bash
+    GetIntent "What time is it in Sydney?"
+    ```
+
+11. Examine the response and verify that it includes a **Location** entity.
+
+12. Try this command:
+
+    ```bash
+    GetIntent "What's the time in Nairobi?"
+    ```
+
+13. Again, examine the response. This time the **Location** entity may not have been detected.
+
+14. Try a few more variations - the goal is to generate some responses that correctly predict the **GetTime** intent, but fail to detect a **Location** entity.
+
+    Keep the terminal open. You will return to it later.
+
+## Apply *active learning*
+
+You can improve a Language Understanding app based on historical utterances submitted to the endpoint. This practice is called *active learning*.
+
+In the previous procedure, you used cURL to submit requests to your app's endpoint. These requests included the option to log the queries, which enables the app to track them for use in active learning.
+
+1. In the Language Understanding portal, Select **Build** and view the **Review endpoint utterances** page. This page lists logged utterances that the service has flagged for review because of low confidence scores (or similar confidence scores for multiple intents or entities).
+2. Find an example of an utterance in which the **GetTime** intent and a **Location** entity are correctly predicted, but which does <u>not</u> exist in the example utterances you defined for the intent (the examples you were instructed to use were *what time is it in London?* and *what is the current time in New York?*); and select **&#10003;** to add the utterance to the intent.
+3. Find an example of an utterance in which the **GetTime** intent was correctly identified, but a **Location** entity was <u>not</u> identified; and select **&#10003;** to add the utterance to the intent.
+4. Go to the **Intents** page and open the **GetTime** intent. Then find the utterance with the undetected **Location** entity that you added in the previous step, select the location in the utterance, and map it to the **Location** entity.
+5. At the top of the Language Understanding portal, select **Train** to retrain the app.
+6. At the top right of the Language Understanding portal, select **Publish** and republish the app to the **Production slot**.
+7. Return to the terminal for the **09-luis-app** folder, and use the **GetIntent** command to submit the utterance you added and corrected during active learning.
+8. Verify that the result now includes the **Location** entity. Then try another utterance that uses the same phrasing but specifies a different location (for example, *Berlin*).
+
+## Export the app
+
+You can use the Language Understanding portal to develop and test your language app, but in a software development process for DevOps, you should maintain a source controlled definition of the app that can be included in continuous integration and delivery (CI/CD) pipelines. While you *could* use code scripts to create and train the app, a simpler way is to use the portal to create the app, and export it as a *.lu* file that can be imported and retrained in another Language Understanding instance. This approach enables you to make use of the productivity benefits of the portal while maintaining portability and reproducability for the app.
+
+1. In the Language Understanding portal, select **Manage**.
+2. On the **Versions** page, select the current version of the app (there should only be one).
+3. In the **Export** drop-down list, select **Export as LU**. Then, when prompted by your browser, save the file in the **09-luis-app** folder.
+4. In Visual Studio Code, open the **.lu** file you just exported and downloaded (if you are prompted to search the marketplace for an extension that can read it, ignore the prompt). Note that the LU format is human-readable, making it an effective way to document the definition of your app in a team development environment.
+
+## More information
+
+For more information about using the **Language Understanding** service, see the [Language Understanding documentation](https://docs.microsoft.com/azure/cognitive-services/luis/).
