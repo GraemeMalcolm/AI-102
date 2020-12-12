@@ -13,15 +13,24 @@
 # GetDay
 - what day is it?
 - what is the day today?
+- what is today?
+- what day is today?
+- what day is it today?
 
 
 # GetTime
-- what is the current time in {@Location=new york}?
 - what is the time?
-- what time is it in {@Location=havana}?
-- what time is it in {@Location=london}?
 - what time is it?
+- what is the time now?
+- what time is it now?
+- what is the current time?
+- what time is it in {@Location=los angeles}?
+- what time is it in {@Location=london}?
 - what's the time in {@Location=seattle}?
+- what is the time in {@Location=san franscisco}?
+- what is the time now in {@Location=delhi}?
+- what is the time in {@Location=san jose} now?
+- what is the current time in {@Location=new york}?
 
 
 # None

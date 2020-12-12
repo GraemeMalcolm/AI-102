@@ -27,6 +27,8 @@ To use the Language Understanding service, you need two kinds of resource:
 
      > **Important**: Authoring resources must be created in one of three *regions* (Europe, Australia, or US). Language Understanding apps created in European or Australian authoring resources can only be deployed to prediction resources in Europe or Australia respectively; models created in US authoring resources can be deployed to prediction resources in any Azure location other than Europe and Australia. See the [authoring and publishing regions documentation](https://docs.microsoft.com/azure/cognitive-services/luis/luis-reference-regions) for details about matching authoring and prediction locations.
 
+If you don't already have Language Understanding authoring and prediction resources:
+
 1. Open the Azure portal at [https://portal.azure.com](https://portal.azure.com), and sign in using the Microsoft account associated with your Azure subscription.
 2. Select the **&#65291;Create a resource** button, search for *language understanding*, and create a **Language Understanding** resource with the following settings:
     - **Create option**: Both
@@ -39,7 +41,7 @@ To use the Language Understanding service, you need two kinds of resource:
     - **Prediction pricing tier**: F0
 3. Wait for the resources to be created, and note that two Language Understanding resources are provisioned; one for authoring, and another for prediction. You can view both of these by navigating to the resource group where you created them.
 
-## Create a Language Understanding App
+## Create a Language Understanding app
 
 Now that you have created an authoring resource, you can use it to create a Language Understanding app.
 
@@ -163,7 +165,7 @@ In a real project, you'd iteratively refine intents and entities, retrain, and r
 2. Select **Production slot**, and publish the app.
 3. After publishing is complete, at the top of the Language Understanding portal, select **Manage**.
 4. On the **Settings** page, note the **App ID**. Client applications need this to use your app.
-5. On the **Azure Resources** page, note the **Primary Key**, **Secondary Key**, and **Endpoint URL** for the prediction resource to which the app has been published. Client applications need the endpoint and one of the keys to connect to the prediction resource and be authenticated.
+5. On the **Azure Resources** page, note the **Primary Key**, **Secondary Key**, and **Endpoint URL** for the prediction resource through which the app can be consumed. Client applications need the endpoint and one of the keys to connect to the prediction resource and be authenticated.
 6. In Visual Studio Code, in the **09-luis-app** folder, select the **GetIntent.cmd** batch file and view the code it contains. This command-line script uses cURL to call the Language Understanding REST API for the specified application and prediction endpoint.
 7. Replace the placeholder values in the script with the **App ID**, **Endpoint URL**, and either the **Primary Key** or **Secondary Key** for your Language Understanding app; and then save the updated file.
 8. Right-click the **09-luis-app** folder and open an integrated terminal. Then enter the following command (be sure to include the quotation marks!):
@@ -210,12 +212,12 @@ In the previous procedure, you used cURL to submit requests to your app's endpoi
 
 ## Export the app
 
-You can use the Language Understanding portal to develop and test your language app, but in a software development process for DevOps, you should maintain a source controlled definition of the app that can be included in continuous integration and delivery (CI/CD) pipelines. While you *could* use code scripts to create and train the app, a simpler way is to use the portal to create the app, and export it as a *.lu* file that can be imported and retrained in another Language Understanding instance. This approach enables you to make use of the productivity benefits of the portal while maintaining portability and reproducability for the app.
+You can use the Language Understanding portal to develop and test your language app, but in a software development process for DevOps, you should maintain a source controlled definition of the app that can be included in continuous integration and delivery (CI/CD) pipelines. While you *could* use code scripts to create and train the app, a simpler way is to use the portal to create the app, and export it as a *.lu* file that can be imported and retrained in another Language Understanding instance. This approach enables you to make use of the productivity benefits of the portal while maintaining portability and reproducibility for the app.
 
 1. In the Language Understanding portal, select **Manage**.
 2. On the **Versions** page, select the current version of the app (there should only be one).
 3. In the **Export** drop-down list, select **Export as LU**. Then, when prompted by your browser, save the file in the **09-luis-app** folder.
-4. In Visual Studio Code, open the **.lu** file you just exported and downloaded (if you are prompted to search the marketplace for an extension that can read it, ignore the prompt). Note that the LU format is human-readable, making it an effective way to document the definition of your app in a team development environment.
+4. In Visual Studio Code, open the **.lu** file you just exported and downloaded (if you are prompted to search the marketplace for an extension that can read it, dismiss the prompt). Note that the LU format is human-readable, making it an effective way to document the definition of your app in a team development environment.
 
 ## More information
 
