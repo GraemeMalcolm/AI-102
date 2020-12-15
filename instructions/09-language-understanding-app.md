@@ -55,11 +55,14 @@ Now that you have created an authoring resource, you can use it to create a Lang
     - **Culture**: English (*if this option is not available, leave it blank*)
     - **Description**: Natural language clock
     - **Prediction resource**: *Your Language Understanding prediction resource*
-4. If a panel with tips for creating an effective Language Understanding app is displayed, close it.
+
+    If your **Clock** app isn't opened automatically, open it.
+    
+    If a panel with tips for creating an effective Language Understanding app is displayed, close it.
 
 ## Create intents
 
-The first thing well do in the new app is to define some intents.
+The first thing we'll do in the new app is to define some intents.
 
 1. On the **Intents** page, select **&#65291; Create** to create a new intent named **GetTime**.
 2. In the **GetTime** intent, add the following utterances as example user input:
@@ -74,8 +77,14 @@ The first thing well do in the new app is to define some intents.
 
     *what day is it?*
 
-4. After you've added these utterances, go back to the **Intents** page and select the **None** intent. This is provided as a fallback for input that doesn't map to any of the intents you have defined in your language model.
-5. Add the following utterances to the **None** intent:
+4. After you've added these utterances, go back to the **Intents** page and add another new intent named **GetDate** with the following utterances:
+
+    *what is the date today?*
+
+    *what date is it?*
+
+5. After you've added these utterances, go back to the **Intents** page and select the **None** intent. This is provided as a fallback for input that doesn't map to any of the intents you have defined in your language model.
+6. Add the following utterances to the **None** intent:
 
     *hello*
 
@@ -83,7 +92,7 @@ The first thing well do in the new app is to define some intents.
 
 ## Train and test the app
 
-Now that you've added some intents, let's train the app model and see if it can correctly predict them from user input.
+Now that you've added some intents, let's train the app and see if it can correctly predict them from user input.
 
 1. At the top right of the portal, select **Train** to train the app.
 2. When the app is trained, select **Test** to display the Test panel, and then enter the following test utterance:
@@ -112,9 +121,13 @@ Now that you've added some intents, let's train the app model and see if it can 
 
 6. Close the Test panel.
 
-## Add an entity
+## Add entities
 
 So far you've defined some simple utterances that map to intents. Most real applications include more complex utterances from which specific data entities must be extracted to get more context for the intent.
+
+### Add a *machine learned* entity
+
+The most common kind of entity is a *machine learned* entity, in which the app learns to identify entity values based on examples.
 
 1. On the **Entities** page, select **&#65291; Create** to create a new entity.
 2. In the **Create an entity** dialog box, create a **Machine learned** entity named **Location**.
@@ -130,14 +143,80 @@ So far you've defined some simple utterances that map to intents. Most real appl
 
 7. When the utterance has been added, select the words ***new york***, and map them to the **Location** entity.
 
-8. At the top right of the portal, select **Train** to retrain the app.
-9. When the app is trained, select **Test** to display the Test panel, and then enter the following test utterance:
+### Add a *list* entity
+
+In some cases, valid values for an entity can be restricted to a list of specific terms and synonyms; which can help the app identify instances of the entity in utterances.
+
+1. On the **Entities** page, select **&#65291; Create** to create a new entity.
+2. In the **Create an entity** dialog box, create a **List** entity named **Weekday**.
+3. Add the following **Normalized values** and **synonyms**:
+
+    | Normalized values | synonyms|
+    |-------------------|---------|
+    | Sunday | Sun |
+    | Monday | Mon |
+    | Tuesday | Tue |
+    | Wednesday | Wed |
+    | Thursday | Thu |
+    | Friday | Fri |
+    | Saturday | Sat |
+
+3. After the **Weekday** entity has been created, return to the **Intents** page and select the **GetDate** intent.
+4. Enter the following new example utterance:
+
+    *what date was it on Saturday?*
+
+5. When the utterance has been added, verify that **saturday** has been automatically mapped to the **Weekday** entity. If not, select the word ***saturday***, and in the drop-down list that appears, select **Weekday**.
+6. Add another example utterance:
+
+    *what date will it be on Friday?*
+
+7. When the utterance has been added, ensure **friday** is mapped to the **Weekday** entity.
+
+### Add a *Regex* entity
+
+Sometimes, entities have a specific format, such as a serial number, form code, or date. You can define a regular expression (*regex) that describe an expected format to help your app identify matching entity values.
+
+1. On the **Entities** page, select **&#65291; Create** to create a new entity.
+2. In the **Create an entity** dialog box, create a **Regex** entity named **Date** with the following regex:
+
+    ```regex
+    [0-9]{2}/[0-9]{2}/[0-9]{4}
+    ```
+
+    > **Note**: This is a simple regex that checks for two digits followed by a back slash, another two digits, another backslash, and four digits - for example *01/11/2020*. It allows for invalid dates, such as *56/00/9999*; but it's important to remember that the entity regex is used to identify data entry that is *intended* as a date - not to validate date values.
+
+3. After the **Date** entity has been created, return to the **Intents** page and select the **GetDay** intent.
+4. Enter the following new example utterance:
+
+    *what day was 01/01/1901?*
+
+5. When the utterance has been added, verify that **01/01/1901** has been automatically mapped to the **Date** entity. If not, select ***01/01/1901***, and in the drop-down list that appears, select **Date**.
+6. Add another example utterance:
+
+    *what day will it be on 12/12/2099?*
+
+7. When the utterance has been added, ensure **12/12/2099** is mapped to the **Date** entity.
+
+### Retrain the app
+
+Now that you've modified ths language model, you need to retrain and retest the app.
+
+1. At the top right of the portal, select **Train** to retrain the app.
+2. When the app is trained, select **Test** to display the Test panel, and then enter the following test utterance:
 
     *what's the time in Edinburgh?*
 
-10. Review the result that is returned, which should hopefully predict the **GetTime** intent. Then select **Inspect** and in the additional inspection panel that is displayed, examine the **ML entities** section. The model should have predicted that "edinburgh" is an instance of a **Location** entity.
+3. Review the result that is returned, which should hopefully predict the **GetTime** intent. Then select **Inspect** and in the additional inspection panel that is displayed, examine the **ML entities** section. The model should have predicted that "edinburgh" is an instance of a **Location** entity.
+4. Try testing the following utterances:
 
-3. Close the inspection panel.
+    *what date is it on Friday?*
+
+    *what's the date on Thu?*
+
+    *what was the day on 01/01/2020?*
+
+5. When you have finished testing, close the inspection panel, but leave the test panel open.
 
 ## Perform batch testing
 
@@ -153,7 +232,7 @@ You can use the test pane to test individual utterances interactively, but for m
 
     > **Note**: Each utterance is scored as *positive* or *negative* for each intent - so for example "what time is it?" should be scored as *positive* for the **GetTime** intent, and *negative* for the **GetDate** intent. The points on the confusion matrix show which utterances were predicted correctly (*true*) and incorrectly (*false*) as *positive* and *negative* for the selected intent.
 
-6. With the **GetDate** intent selected, select any of the points on the confusion matrix to see the details of the prediction - including the utterance and the confidence score for the prediction. Then select the **GetTime** and **None** intents and view their prediction results. The app should have done well at predicting the intents correctly.
+6. With the **GetDate** intent selected, select any of the points on the confusion matrix to see the details of the prediction - including the utterance and the confidence score for the prediction. Then select the **GetDay**, **GetTime** and **None** intents and view their prediction results. The app should have done well at predicting the intents correctly.
 7. Select the **Location** entity and view the prediction results in the confusion matrix. In particular, note the predictions that were *false negatives* - these were cases where the app failed to detect the specified location in the utterance, indicating that you may need to add more sample utterances to the intents and retrain the model.
 8. Close the Batch testing panel.
 
@@ -174,24 +253,31 @@ In a real project, you'd iteratively refine intents and entities, retrain, and r
     GetIntent "What's the time?"
     ```
 
-9. Review the JSON response returned by your app, which should indicate the top scoring intent predicted for your input.
+9. Review the JSON response returned by your app, which should indicate the top scoring intent predicted for your input (which should be **GetTime**).
 10. Try the following command:
+
+    ```bash
+    GetIntent "What's today's date?"
+    ```
+
+11. Examine the response and verify that it predicts the **GetDate** intent.
+12. Try the following command:
 
     ```bash
     GetIntent "What time is it in Sydney?"
     ```
 
-11. Examine the response and verify that it includes a **Location** entity.
+13. Examine the response and verify that it includes a **Location** entity.
 
-12. Try this command:
+14. Try this command:
 
     ```bash
     GetIntent "What's the time in Nairobi?"
     ```
 
-13. Again, examine the response. This time the **Location** entity may not have been detected.
+15. Again, examine the response. This time the **Location** entity may not have been detected.
 
-14. Try a few more variations - the goal is to generate some responses that correctly predict the **GetTime** intent, but fail to detect a **Location** entity.
+16. Try a few more variations - the goal is to generate some responses that correctly predict the **GetTime** intent, but fail to detect a **Location** entity.
 
     Keep the terminal open. You will return to it later.
 
@@ -201,9 +287,9 @@ You can improve a Language Understanding app based on historical utterances subm
 
 In the previous procedure, you used cURL to submit requests to your app's endpoint. These requests included the option to log the queries, which enables the app to track them for use in active learning.
 
-1. In the Language Understanding portal, Select **Build** and view the **Review endpoint utterances** page. This page lists logged utterances that the service has flagged for review because of low confidence scores (or similar confidence scores for multiple intents or entities).
-2. Find an example of an utterance in which the **GetTime** intent and a **Location** entity are correctly predicted, but which does <u>not</u> exist in the example utterances you defined for the intent (the examples you were instructed to use were *what time is it in London?* and *what is the current time in New York?*); and select **&#10003;** to add the utterance to the intent.
-3. Find an example of an utterance in which the **GetTime** intent was correctly identified, but a **Location** entity was <u>not</u> identified; and select **&#10003;** to add the utterance to the intent.
+1. In the Language Understanding portal, Select **Build** and view the **Review endpoint utterances** page. This page lists logged utterances that the service has flagged for review.
+2. For any utterances for which the intent and entity (if any) are correctly predicted, select **&#10003;** to add the utterance to the intent as a training example.
+3. Find an example of an utterance in which the **GetTime** intent was correctly identified, but a **Location** entity was <u>not</u> identified; and select **&#10003;** to add the utterance to the intent - you will edit the intent to map the **Location** entity correctly before retraining.
 4. Go to the **Intents** page and open the **GetTime** intent. Then find the utterance with the undetected **Location** entity that you added in the previous step, select the location in the utterance, and map it to the **Location** entity.
 5. At the top of the Language Understanding portal, select **Train** to retrain the app.
 6. At the top right of the Language Understanding portal, select **Publish** and republish the app to the **Production slot**.
@@ -212,12 +298,12 @@ In the previous procedure, you used cURL to submit requests to your app's endpoi
 
 ## Export the app
 
-You can use the Language Understanding portal to develop and test your language app, but in a software development process for DevOps, you should maintain a source controlled definition of the app that can be included in continuous integration and delivery (CI/CD) pipelines. While you *could* use code scripts to create and train the app, a simpler way is to use the portal to create the app, and export it as a *.lu* file that can be imported and retrained in another Language Understanding instance. This approach enables you to make use of the productivity benefits of the portal while maintaining portability and reproducibility for the app.
+You can use the Language Understanding portal to develop and test your language app, but in a software development process for DevOps, you should maintain a source controlled definition of the app that can be included in continuous integration and delivery (CI/CD) pipelines. While you *can* use the Language Understanding SDK or REST API in code scripts to create and train the app, a simpler way is to use the portal to create the app, and export it as a *.lu* file that can be imported and retrained in another Language Understanding instance. This approach enables you to make use of the productivity benefits of the portal while maintaining portability and reproducibility for the app.
 
 1. In the Language Understanding portal, select **Manage**.
 2. On the **Versions** page, select the current version of the app (there should only be one).
 3. In the **Export** drop-down list, select **Export as LU**. Then, when prompted by your browser, save the file in the **09-luis-app** folder.
-4. In Visual Studio Code, open the **.lu** file you just exported and downloaded (if you are prompted to search the marketplace for an extension that can read it, dismiss the prompt). Note that the LU format is human-readable, making it an effective way to document the definition of your app in a team development environment.
+4. In Visual Studio Code, open the **.lu** file you just exported and downloaded (if you are prompted to search the marketplace for an extension that can read it, dismiss the prompt). Note that the LU format is human-readable, making it an effective way to document the definition of your Language Understanding app in a team development environment.
 
 ## More information
 

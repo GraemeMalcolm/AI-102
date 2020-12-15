@@ -97,6 +97,35 @@
         "entities":[]
     },
     {
+        "text": "what day is 12/12/2022?",
+        "intent": "GetDay",
+        "entities":
+        [
+            {
+                "entity": "Date",
+                "startPos": 12,
+                "endPos": 21
+            }
+        ]
+    },
+    {
+        "text": "what's the date?",
+        "intent": "GetDate",
+        "entities":[]
+    },
+    {
+        "text": "what was the date on Monday?",
+        "intent": "GetDate",
+        "entities":
+        [
+            {
+                "entity": "Weekday",
+                "startPos": 21,
+                "endPos": 26
+            }
+        ]
+    },
+    {
         "text": "Hello!",
         "intent": "None",
         "entities":[]
