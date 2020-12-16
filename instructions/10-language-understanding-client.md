@@ -38,7 +38,7 @@ To use the Language Understanding service, you need two kinds of resource:
 
 In this exercise, you'll use an app that contains a language model for clock-related intents. For example, the user input *what is the time?* predicts an intent named **GetTime**.
 
-> **Note**: If you already have a clock app from a previous exercise, you can use it in this exercise. Otherwise, follow these instructions to create it.
+> **Note**: If you already have a **Clock** app from a previous exercise, you can use it in this exercise. Otherwise, follow these instructions to create it.
 
 1. In a new browser tab, open the Language Understanding portal for the location where you created your authoring resource:
     - US: [https://www.luis.ai](https://www.luis.ai)
@@ -46,13 +46,13 @@ In this exercise, you'll use an app that contains a language model for clock-rel
     - Australia: [https://au.luis.ai](https://au.luis.ai)
  2. Sign in using the Microsoft account associated with your Azure subscription. If this is the first time you have signed into the Language Understanding portal, you may need to grant the app some permissions to access your account details. Then complete the *Welcome* steps by selecting your Azure subscription and the authoring resource you just created.
 3. Open the **Conversation Apps** page, next to **&#65291;New app**, view the drop-down list and select **Import As LU**.
-Browse to the **10-luis-client** subfolder in the project folder containing the lab files for this exercise, and select **clock&period;lu**. Then specify a unique name for the clock app.
+Browse to the **10-luis-client** subfolder in the project folder containing the lab files for this exercise, and select **Clock&period;lu**. Then specify a unique name for the clock app.
 4. If a panel with tips for creating an effective Language Understanding app is displayed, close it.
-5. At the top of the Language Understanding portal, select **Train** to retrain the app.
-6. At the top right of the Language Understanding portal, select **Publish** and republish the app to the **Production slot**.
+5. At the top of the Language Understanding portal, select **Train** to train the app.
+6. At the top right of the Language Understanding portal, select **Publish** and publish the app to the **Production slot**.
 7. After publishing is complete, at the top of the Language Understanding portal, select **Manage**.
 8. On the **Settings** page, note the **App ID**. Client applications need this to use your app.
-9. On the **Azure Resources** page, under **Prediction resources**, if no prediction resource is listed, add the prediction resource you created in your Azure subscription.
+9. On the **Azure Resources** page, under **Prediction resources**, if no prediction resource is listed, add the prediction resource in your Azure subscription.
 10. Note the **Primary Key**, **Secondary Key**, and **Endpoint URL** for the prediction resource. Client applications need the endpoint and one of the keys to connect to the prediction resource and be authenticated.
 
 ## Prepare to use the Language Understanding SDK
