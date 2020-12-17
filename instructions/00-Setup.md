@@ -79,7 +79,7 @@ pip install flask requests python-dotenv pylint matplotlib pillow
 
 ## Bot Framework Emulator
 
-Follow the instructions at https://github.com/Microsoft/BotFramework-Emulator/blob/master/README.md to diwnload and install the latest stable version of the Bot Framework Emulator for your operating system.
+Follow the instructions at https://github.com/Microsoft/BotFramework-Emulator/blob/master/README.md to download and install the latest stable version of the Bot Framework Emulator for your operating system.
 
 ## Bot Framework Composer
 
