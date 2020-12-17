@@ -1,4 +1,4 @@
-# Image classification
+# Classify Images with Custom Vision
 
 In this exercise, you will use the Custom Vision service to train an image classification model that can identify three classes of fruit (apple, banana, and orange).
 

@@ -1,4 +1,4 @@
-# Create a Language Understanding Application
+# Create a Language Understanding App
 
 The Language Understanding service enables you to define an app that encapsulates a language model that applications can use to interpret natural language input from users,  predict the users *intent* (what they want to achieve), and identify any *entities* to which the intent should be applied.
 

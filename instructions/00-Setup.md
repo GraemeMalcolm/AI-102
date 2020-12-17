@@ -1,11 +1,20 @@
 # Lab Environment Setup
 
-## Base Operating System
+These exercises are designed to be completed ion a hosted lab environment. However, if you want to complete them on your own computer, you can do so by installing the following software. You may experience unexpected dialogs and behavior when using your own environment.
 
-- Windows 10
-- Install [Edge (Chromium)](https://microsoft.com/edge)
+> **Note**: The instructions below are for a Windows 10 computer. You can also use Linux or MacOS.
 
-## WSL 2 
+## Base Operating System (Windows 10)
+
+### Windows 10
+
+Install Windows 10 and apply all updates.
+
+### Edge
+
+Install [Edge (Chromium)](https://microsoft.com/edge)
+
+### WSL 2 
 
 1. Open PowerShell as Administrator and run the following commands: 
 
@@ -68,10 +77,11 @@ pip install flask requests python-dotenv pylint matplotlib pillow
     - C#
     - Azure Functions
 
+## Bot Framework Emulator
+
+Follow the instructions at https://github.com/Microsoft/BotFramework-Emulator/blob/master/README.md to diwnload and install the latest stable version of the Bot Framework Emulator for your operating system.
+
 ## Bot Framework Composer
 
-Install from https://aka.ms/bf-composer-download-win (open it and allow firewall access)
+Install from https://docs.microsoft.com/en-us/composer/install-composer.
 
-## Clone this repo
-
-Clone this repo to your computer
