@@ -15,7 +15,7 @@ These exercises are currently in development.
 - [Exercise 10: Creating a Language Understanding client application](./instructions/10-language-understanding-client.md)
 - Exercise 11: Use Language Understanding with the Speech service
 - Exercise 12: Create a bot with the Bot Framework SDK
-- Exercise 13: Create a Bot with the Bot Framework Composer
+- [Exercise 13: Create a Bot with the Bot Framework Composer](./instructions/13-bot-composer.md)
 - Exercise 14: Create a QnA app
 - Exercise 15: Analyze images
 - [Exercise 16: Classify images with Custom Vision](./instructions/16-image-classification.md)
