@@ -4,7 +4,7 @@ Bot Framework Composer is a visual designer that lets you quickly and easily bui
 
 ## Get an OpenWeather API key
 
-In this exercise, you will create a bot that retrieves the weather conditions for the zipcode entered by the user. You will require an API key for the service to work so visit the [**OpenWeather site**](https://openweathermap.org/price) to create a user account and get a free API key before you start.
+In this exercise, you will create a bot that retrieves the weather conditions for the zipcode entered by the user. You will require an API key for the service to work so visit the [OpenWeather site*](https://openweathermap.org/price) to create a user account and get a free API key before you start.
 
 ## Clone the repository for this course
 
@@ -130,7 +130,7 @@ The **getWeather** dialog flow so far consists of a simple message. Now you need
 
 1. On the authoring canvas, directly under the **user Input** action for the user zipcode entry, select the **+** symbol to add a new action.
 1. From the list of actions, select **Access external resources** and then **Send an HTTP request**.
-1. Set the properties for the **HTTP request** as follows, specifying your OpenWeather API key:
+1. Set the properties for the **HTTP request** as follows, specifying your [OpenWeather](https://openweathermap.org/price) API key:
     - **HTTP method**: GET
     - **Url**: http://weatherbot-ignite-2019.azurewebsites.net/api/getWeather?zipcode=${user.zipcode}&api_token=*Your_API_Key*
     - **Result property**: dialog.api_response
