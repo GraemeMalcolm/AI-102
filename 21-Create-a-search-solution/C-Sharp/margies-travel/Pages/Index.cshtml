@@ -10,7 +10,7 @@
     
 
     <form name="searchForm" method="get">
-        <input name="search" type="text"/>
+        <input name="search" type="text" value="@Model.SearchTerms"/>
         <input name="submit" type="submit" value="Search"/>
         <p>@Model.SearchTerms</p>
     </form>
@@ -24,14 +24,14 @@
 
             @if (Model != null)
             {
-                @if (Model.resultList != null){
+                @if (Model.search_results != null){
                     // Show the result count.
                     <p>
-                        @Html.DisplayFor(m => m.resultList.TotalCount) Results
+                        @Html.DisplayFor(m => m.search_results.TotalCount) Results
                     </p>
 
                     // Create author filter options
-                    List<string> authors = Model.resultList.Facets["metadata_author"].Select(x => x.Value.ToString()).ToList();
+                    List<string> authors = Model.search_results.Facets["metadata_author"].Select(x => x.Value.ToString()).ToList();
                     if (authors.Count > 0)
                     {
                         <p class="filterTitle">Filter by author:</p>
@@ -54,7 +54,7 @@
                     <input name="refine" type="submit" value="Refine Results" class="refineButton"></input>
 
                     // Display search results
-                    @foreach (var result in Model.resultList.GetResults())
+                    @foreach (var result in Model.search_results.GetResults())
                     {
                         <div class="result">
                             <p class="resultLink"><a href="@result.Document.url" target="_blank">@result.Document.metadata_storage_name</a></p>

@@ -507,8 +507,23 @@ The **margies-travel** folder contains code files for a web application (a Micro
 
 The web app already includes code to process and render the search results.
 
-1. 
-
+1. Open the following code file in the web application, depending on your choice of programming language:
+    - **C#**:Pages/Index.cshtml
+    - **Python**: templates/search&period;html
+2. Examine the code, which renders the page on which the search results are displayed. Observe that:
+    - The page begins with a search form that the user can use to submit a new search (in the Python version of the application, this form is defined in the **base&period;html** template), which is referenced at the beginning of the page.
+    - A second form is then rendered, enabling the user to refine the search results. The code for this form:
+        - Retrieves and displays the count of documents from the search results.
+        - Retrieves the facet values for the **metadata_author** field and displays them as an option list for filtering.
+        - Creates a drop-down list of sort options for the results.
+    - The code then iterates through the search results, rendering each result as follows:
+        - Display the **metadata_storage_name** (file name) field as a link to the address in the **url** field.
+        - Displaying *highlights* for search terms found in the **merged_content** and **imageCaption** fields to help show the search terms in context.
+        - Display the **metadata_author**, **metadata_storage_size**, **metadata_storage_last_modified**, and **language** fields.
+        - Indicate the **sentiment** using an emoticon (&#128578; for scores of 0.5 or higher, and &#128577; for scores less than 0.5).
+        - Display the first five **keyphrases** (if any).
+        - Display the first five **locations** (if any).
+        - Display the first five **imageTags** (if any).
 
 ### Run the web app
 
@@ -532,206 +547,11 @@ The web app already includes code to process and render the search results.
 4. Observe that the results page includes some user interface elements that enable you to refine the results. These include:
     - A *filter* based on the *facetable* **metadata_author** field. You can use facetable fields to return a list of *facets* - fields with a small set of discrete values that can displayed as potential filter values in the user interface.
     - The ability to *order* the results based on a specified field and sort direction (ascending or descending). The default order is based on *relevancy*, which is calculated as a **search.score()** value based on a *scoring profile* that evaluates the frequency and importance of search terms in the index fields.
-
 5. Select the **Reviewer** filter and the **Positive to negative** sort option, and click **Refine Results**.
 6. Observe that the results are filtered to include only reviews, and sorted into descending order of sentiment.
-7. Close the browser tab containing the Margie's Travel web site and return to Visual Studio Code. Then in the Python terminal for the **margies-travel** folder (where the flask application is running), enter Ctrl+C to stop the app.
-
-
-
-## Search the Margie's Travel index
-
-To search the Margie's Travel index, you will use a web application that includes a form in which users can submit search expressions. Select your preferred language at the top of this page, and then follow the steps below to query the Margie's Travel search solution.
-
-:::zone pivot="csharp"
-
-1. In the **01-Create-a-search-solution/C-Sharp** folder, expand the **search-client** folder. This folder contains a simple ASP&#46;NET Core web application for the Margie's Travel web site.
-2. Open the **appsettings.json** file in the **search-client** folder. This file contains configuration values for the web application.
-3. Modify the values in the **appsettings.json** file to reflect the service name (<u>without</u> the .*search&#46;windows&#46;net* suffix) and query key for your Azure Cognitive Search service) and the (be sure to specify the *query* key, and not the *admin* key!). Then save the **appsettings.json** file.
-4. In the **Pages** folder for the web application, open the **Index.cshtml** code file. This file defines the main page of the web application. The page contains a form in which users can submit search terms, and code to render the search results.
-5. Open the **Index.cshtml.cs** code file, which contains C# code to support the web page. Review the **OnGet** function, which is called when the page is requested. It extracts parameters passed in the request, and then uses a **SearchServiceClient** object to submit a query to Azure Cognitive Search. The query includes the following parameters:
-    - **Select**: The index fields to be included in the query results.
-    - **SearchMode**: This value determines how the search query is applied. A value of **All** means that all of the specified search terms must be present for the document to be included in the results. A value of **Any** means that only one or more of the terms must be present.
-    - **HighlightFields**: Fields that can be used to display a snippet of the document data with the search term highlighted. In this case, the results include extracts from the **content** field with up to three instances of the search term shown in context.
-    - **Facets**: Fields that can be used to provide filters in the user interface, enabling users to "drill-down" into the results. In this case, the **author** field is specified, so the results can include navigation elements that enable users to further refine the query by selecting individual author values.
-6. In the **Models** folder, open the **SearchResults.cs** code file. This defines a class for the search results - the query returns a list of these.
-7. Right-click (Ctrl+click if using a Mac) the **C-Sharp/search-client** folder and select **Open in Integrated Terminal** to open a new bash terminal in this folder.
-8. In the terminal for the **search-client** folder, enter the following command:
-    ```bash
-    dotnet run
-    ```
-9. When the following message is displayed, follow the `https://localhost:5000/` link to open the web application in a new browser tab:
-    ```text
-    info: Microsoft.Hosting.Lifetime[0]
-    Now listening on: http://localhost:5000
-    info: Microsoft.Hosting.Lifetime[0]
-    Application started. Press Ctrl+C to shut down.
-    info: Microsoft.Hosting.Lifetime[0]
-    Hosting environment: Development
-    info: Microsoft.Hosting.Lifetime[0]
-    Content root path: /root/workspace/km/01-Create-a-search-solution/C-Sharp/search-client
-   ```
-10. Wait for the web site to open (the web site is being run in the development container, and port forwarding is used to make it available as a locally hosted site in your browser session - you may need to allow access through your firewall).
-11. In the Margie's Travel website, enter **London hotel** into the search box and click **Search**.
-12. Review the search results. They include the file name (with a hyperlink to the file URL), author, size, last modified date, and an extract of the file content with the search terms (*London* and *hotel*) emphasized.
-13. Observe that the **author** facets have been used to create user interface elements for filtering based on the author (the documents in the Margie's Travel data source have two possible author values: **Margies Travel** and **Reviewer**). You'll explore this feature in a later exercise.
-14. Try another search by entering **"New York"** (including the quotation marks) in the search box at the top of the page and clicking **Search**. This time the results reflect a search for the complete phrase "New York".
-15. Try another search by entering new search terms (for example **Luxury hotel in Las Vegas**) in the search box at the top of the page and clicking **Search**.
-16. Close the browser tab containing the Margie's Travel web site and return to Visual Studio Code. Then in the terminal for the **search-client** folder (where the dotnet process is running), enter Ctrl+C to stop the app.
-
-:::zone-end
-
-:::zone pivot="python"
-
-1. In the **01-Create-a-search-solution/Python** folder, expand the **search-client** folder. This folder contains a simple Flask-based web application for the Margie's Travel web site.
-2. Open the **.env** file in the **search-client** folder. This file contains environment variables for the web application.
-3. Modify the values in the **.env** file to reflect the endpoint and query key for your Azure Cognitive Search resources (be sure to specify the *query* key, and not the *admin* key!). Then save the **.env** file.
-4. Open the **app&#46;py** code file. This file contains the code for the Flask web application. The code:
-    - Loads the required Azure Cognitive Search credentials from environment variables.
-    - Defines a function named **azsearch_query** that submits a query as a REST request to an Azure Cognitive Search endpoint.
-    - Defines a route for the web site's home page (*/*) that displays a web page based on the **default.html** template. This template includes a basic search form.
-    - Defines a route for the search results page (*/search*) that retrieves the query text from the search form, constructs parameters for the REST request, submits the query, and renders the results in the **search.html** template.
-    - Defines a route for a more advanced search page (*/filter*) that includes filtering and sorting.
-5. Examine the code in the **search** function (for the **/search** route), and review the **searchParams** definition. This configures the search query performed by Azure Cognitive Search, and includes the following parameters:
-    - **search**: The text to be searched for. In this case, the search terms are passed to the function from the search form on the web page.
-    - **searchMode**: This value determines how the search query is applied. A value of **All** means that all of the specified search terms must be present for the document to be included in the results. A value of **Any** means that only one or more of the terms must be present.
-    - **$count**: Determines whether a value indicating the number of matching results (sometimes known as "search hits") is included in the results.
-    - **queryType**: Indicates the query parser to be used. Azure Cognitive Search supports two query types: **simple**, which is optimized for basic full-text search queries; and **full**, which uses the Lucene query syntax to apply complex filters and other query expressions.
-    - **$select**: The index fields to be included in the query results.
-    - **facet**: Fields that can be used to provide filters in the user interface, enabling users to "drill-down" into the results. In this case, the **author** field is specified, so the results can include navigation elements that enable users to further refine the query by selecting individual author values.
-    - **highlight**: Fields that can be used to display a snippet of the document data with the search term highlighted. In this case, the results include extracts from the **content** field with up to three instances of the search term shown in context.
-    - **api-version**: The version of the Azure Cognitive Search REST API to be used.
-6. Observe that the **search** function goes on to submit the query, extract the following data from the JSON response that is returned, and render it in the **search.html** template page:
-    - **@odata.count**: The number of results, as returned by the **$count** parameter.
-    - The **author** fields in the **@search.facets** collection, which is a list of the discrete **author** vales in the results returned by the **facet** parameter.
-    - **value**: The collection of search results returned by the query.
-7. Right-click (Ctrl+click if using a Mac) the **Python/search-client** folder and select **Open in Integrated Terminal** to open a new bash terminal in this folder.
-8. In the terminal for the **search-client** folder, enter the following command:
-    ```bash
-    flask run
-    ```
-9. When the following message is displayed, follow the `https://127.0.0.1:5000/` link to open the web application in a new browser tab:
-    ```text
-    * Environment: production
-      WARNING: This is a development server. Do not use it in a production deployment.
-      Use a production WSGI server instead.
-   * Debug mode: off
-   * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
-   ```
-10. Wait for the web site to open (the web site is being run in the development container, and port forwarding is used to make it available as a locally hosted site in your browser session - you may need to allow access through your firewall).
-11. In the Margie's Travel website, enter **London hotel** into the search box and click **Search**.
-12. Review the search results. They include the file name (with a hyperlink to the file URL), author, size, last modified date, and an extract of the file content with the search terms (*London* and *hotel*) emphasized.
-13. Observe that the **author** facets have been used to create user interface elements for filtering based on the author (the documents in the Margie's Travel data source have two possible author values: **Margies Travel** and **Reviewer**). You'll explore this feature in a later exercise.
-14. Try another search by entering **"New York"** (including the quotation marks) in the search box at the top of the page and clicking **Search**. This time the results reflect a search for the complete phrase "New York".
-15. Try another search by entering new search terms (for example **Luxury hotel in Las Vegas**) in the search box at the top of the page and clicking **Search**.
-16. Close the browser tab containing the Margie's Travel web site and return to Visual Studio Code. Then in the Python terminal for the **search-client** folder (where the flask application is running), enter Ctrl+C to stop the app.
-
-:::zone-end
-
-> [!NOTE]
-> For more information about querying an index, and details about **simple** and **full** syntax, see [Query types and composition in Azure Cognitive Search](https://docs.microsoft.com/azure/search/search-query-overview) in the Azure Cognitive Search documentation.
-
-## Filter and sort Margie's Travel results
-
-You can apply filtering and sorting to the Margie's Travel search results by submitting a new query that includes a filter and sort order. Select your preferred language at the top of this page, and then follow the steps below to filter and sort results.
-
-:::zone pivot="csharp"
-
-1. In the **C-Sharp/search-client/Pages** folder, open the **Index.cshtml.cs** code file containing the code for the web application's main page.
-2. Examine the code in the **OnGet** function, noting that the parameters that can be submitted to the page include **sort** and **facet**. 
-    - The **sort** parameter defines a sort order that is applied to the query results in the **OrderBy** search parameter. The default sort order is based on a built in field named **@search.score**, which uses a *scoring profile* to calculate a relevance score for each result based on factors like the frequency of search term occurrence, the presence of search terms in the document name, and so on  (you can create custom scoring profiles as alternatives to the default one). You can specify the scoring profile sort order explicitly by using the built-in **search.score()** function, or you can specify an alternative sort order based on user selection. In this case, the user can choose to sort the results into ascending order by file name, descending order by size, or descending order by last modified date.
-    - The **facet** parameter contains the value of the faceted **author** field that the user has selected from the original results. Its value is used to specify a filtering expression in the **Filter** search parameter. In this case, the filter is based on the **author** facet value selected by the user in the user interface, but you could specify any filtering expression that applies comparative logic to any filterable field.
-3. In the **Terminal** pane, select the bash terminal for the **search-client** folder. If you have closed this terminal, right-click (Ctrl+click if using a Mac) the **C-Sharp/search-client** folder and select **Open in Integrated Terminal**.
-4. In the terminal for the **search-client** folder, enter the following command:
-    ```bash
-    dotnet run
-    ```
-5. Follow the link for the `https://localhost:5000/` address to open the web site in a new browser tab. Then in the Margie's Travel website, enter **"San Francisco"** into the search box and click **Search**.
-6. When the results are displayed, select the **Reviewer** filter and the **Largest file size** sort option, and click **Refine Results**.
-7. Observe that the results are filtered to include only reviews, and sorted into descending order of file size.
-8. Close the browser tab containing the Margie's Travel web site and return to Visual Studio Code. Then in the terminal for the **search-client** folder (where the dotnet process is running), enter Ctrl+C to stop the app.
-
-:::zone-end
-
-:::zone pivot="python"
-
-1. In the **Python/search-client** folder, open the **app&#46;py** code file containing the code for the Flask web application.
-2. Examine the code in the **filter** function (for the **/filter** route), and review the **searchParams** definition. This includes some of the same parameters as the basic search function you examined previously, with the following differences:
-    - **queryType**: This parameter has been changed to **Full**, indicating that Lucene syntax for filtering expressions will be used.
-    - **$filter**: This parameter has been used to specify a filtering expression. In this case, the filter is based on the **author** facet value selected by the user in the user interface, but you could specify any filtering expression that applies comparative logic to any filterable field.
-    - **$orderBy**: This parameter specifies a sort order for the results. The default sort order is based on a built-in field named **@search.score**, which uses a *scoring profile* to calculate a relevance score for each result based on factors like the frequency of search term occurrence, the presence of search terms in the document name, and so on  (you can create custom scoring profiles as alternatives to the default one). You can specify the scoring profile sort order explicitly by using the built-in **search.score()** function, or you can specify an alternative sort order based on user selection. In this case, the user can choose to sort the results into ascending order by file name, descending order by size, or descending order by last modified date.
-3. In the **Terminal** pane, select the bash terminal for the **search-client** folder. If you have closed this terminal, right-click (Ctrl+click if using a Mac) the **Python/search-client** folder and select **Open in Integrated Terminal**.
-4. In the terminal for the **search-client** folder, enter the following command:
-    ```bash
-    flask run
-    ```
-5. Follow the link for the `https://127.0.0.1:5000/` address to open the web site in a new browser tab. Then in the Margie's Travel website, enter **"San Francisco"** into the search box and click **Search**.
-6. When the results are displayed, select the **Reviewer** filter and the **Largest file size** sort option, and click **Refine Results**.
-7. Observe that the results are filtered to include only reviews, and sorted into descending order of file size.
-8. Close the browser tab containing the Margie's Travel web site and return to Visual Studio Code. Then in the Python terminal for the **search-client** folder (where the flask application is running), enter Ctrl+C to stop the app.
-
-:::zone-end
-
-> [!NOTE]
-> For more information about using filters, see [Filters in Azure Cognitive Search](https://docs.microsoft.com/azure/search/search-filters). For information about working with results, including sorting and hit highlighting, see [How to work with search results in Azure Cognitive Search](https://docs.microsoft.com/azure/search/search-pagination-page-layout).
-
-## Enhancing the Margie's Travel index
-
-Let's enhance the Margie's Travel index by adding synonyms for common geographic entities.
-
-Select your preferred language at the top of this page, and then follow the steps below to enhance your search solution.
-
-:::zone pivot="csharp"
-
-1. In the **Terminal** pane, select the bash terminal for the **C-Sharp/search-client** folder. If you have closed this terminal, right-click (CTRL+click if using a Mac) the **search-client** folder and select **Open in Terminal**.
-2. In the terminal for the **search-client** folder, enter the following command:
-    ```bash
-    dotnet run
-    ```
-3. Follow the link for the `https://localhost:5000/` address to open the web site in a new browser tab. Then in the Margie's Travel website, enter **"United Kingdom"** into the search box and click **Search**. Then review the results.
-4. Enter **UK** into the search box and click **Search** and review the results. The results are different, even though a user might commonly use *UK* as an alternative term for *United Kingdom*. To address this issue, you will add a synonym map to your index.
-5. Leaving the Margie's Travel website running, switch back to Visual Studio Code and in the **C-Sharp/create-index** folder, open the **Program.cs** file and review the code in the **AddSynonyms** function, which creates a synonym map and applies it to the **content** field of the index.
-6. In the **Terminal** pane, select the bash terminal for the **C-Sharp/create-index** folder. If you have closed this terminal, right-click (Ctrl+click if using a Mac) the **C-Sharp/create-index** folder and select **Open in Integrated Terminal**.
-7. In the terminal for the **create-index** folder, enter the following command:
-    ```bash
-    dotnet run
-    ```
-8. When prompted, press **4** to add a synonym map. Then wait while the program creates the synonym map and updates the index.
-9. When the prompt is redisplayed, press **q** to quit the program.
-10. After the index has been updated, switch back to the Margie's Travel website tab and search for **UK**. The results this time should include documents in which the term *United Kingdom* is highlighted.
-11. Close the browser tab containing the Margie's Travel web site and return to Visual Studio Code. Then in the *dotnet* terminal for the **search-client** folder (where the web application is running), enter CTRL+C to stop the app.
-
-:::zone-end
-
-:::zone pivot="python"
-
-1. In the **Terminal** pane, select the bash terminal for the **Python/search-client** folder. If you have closed this terminal, right-click (CTRL+click if using a Mac) the **search-client** folder and select **Open in Terminal**.
-2. In the terminal for the **search-client** folder, enter the following command:
-    ```bash
-    flask run
-    ```
-3. Follow the link for the `https://127.0.0.1:5000/` address to open the web site in a new browser tab. Then in the Margie's Travel website, enter **"United Kingdom"** into the search box and click **Search**. Then review the results.
-4. Enter **UK** into the search box and click **Search** and review the results. The results are different, even though a user might commonly use *UK* as an alternative term for *United Kingdom*. To address this issue, you will add a synonym map to your index.
-5. Leaving the Margie's Travel website running, switch back to Visual Studio Code and in the **create-index** folder, open the **synonyms.json** file. This file contains a JSON definition for a synonym map that includes alternative terms for the United States, United Kingdom, and United Arab Emirates.
-6. in the **create-index** folder, open the **updated_index.json** file. This file contains a JSON definition for the index in which the synonym map has been added to the **content** field.
-7. In the **Terminal** pane, select the bash terminal for the **Python/create-index** folder. If you have closed this terminal, right-click (CTRL+click if using a Mac) the **Python/create-index** folder and select **Open in Integrated Terminal**.
-8. In the terminal for the **create-index** folder, enter the following command to create the synonym map:
-    ```bash
-    python3 submit-rest.py 'PUT' 'synonymmaps/margies-synonyms-py' 'synonyms.json'
-    ```
-9. After the synonym map has been created, enter the following command to update the index:
-    ```bash
-    python3 submit-rest.py 'PUT' 'indexes/margies-index-py' 'updated_index.json'
-    ```
-10. After the index has been updated, switch back to the Margie's Travel website tab and search for **UK**. The results this time should include documents in which the term *United Kingdom* is highlighted.
-11. Close the browser tab containing the Margie's Travel web site and return to Visual Studio Code. Then in the *Python3* terminal for the **search-client** folder (where the flask web application is running), enter CTRL+C to stop the app.
-
-:::zone-end
-
-You've now completed all of the exercises in this module. If you want to remove the Azure resources you created, in the *bash* terminal for the **01-Create-a-search-solution** folder, enter the following command to run the reset script that was created when you provisioned your Azure resources, signing in when prompted:
-
-```bash
-bash reset.sh
-```
-
-
+7. In the **Search** box, enter a new search for **quiet hotel in New York** and review the results.
+8. Try the following search terms:
+    - **Tower of London** (observe that this term is identified as a *key phrase* in some documents).
+    - **skyscraper** (observe that this word doesn't appear in the actual content of any documents, but is found in the *image captions* and *image tags* that were generated for images in some documents).
+    - **Mojave desert** (observe that this term is identified as a *location* in some documents).
+9. Close the browser tab containing the Margie's Travel web site and return to Visual Studio Code. Then in the Python terminal for the **margies-travel** folder (where the dotnet or flask application is running), enter Ctrl+C to stop the app.

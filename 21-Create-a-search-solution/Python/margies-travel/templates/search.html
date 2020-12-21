@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 {% block content %}<hr/>
 <div class="searchBoxForm">
-<form name="facet_form" action="/search" method="GET">
+<form name="refine_form" action="/search" method="GET">
     <p>Search:{{ search_terms }}</p>
-    <p>Results:{{ hitcount }}</p>
+    <p>Results:{{ search_results.get_count() }}</p>
     <p class="filterTitle">Filter by author:</p>
     <input name="search" type="hidden" value="{{ search_terms }}"/>
-    {% for facet in facets: %}
+    {% for facet in search_results.get_facets()['metadata_author']: %}
         <div><input name="facet" value="{{ facet['value'] }}" type="radio">{{ facet['value'] }}</input></div>
     {% endfor %}
     <p class="sortList">Sort by: <select id="sort" name="sort">

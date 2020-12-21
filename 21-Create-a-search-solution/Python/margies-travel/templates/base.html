@@ -10,7 +10,7 @@
         <div class="searchBoxForm">
         <p>Enter a search term</p>
         <form name="search_form" action="/search" method="GET">
-            <input name="search" type="text"></input>
+            <input name="search" type="text" value="{{ search_terms }}"></input>
             <input name="submit" type="submit" value="Search"></input>
         </form>
         </div>
