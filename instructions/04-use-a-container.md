@@ -19,7 +19,7 @@ If you don't already have on in your subscription, you'll need to provision a **
 1. Open the Azure portal at [https://portal.azure.com](https://portal.azure.com), and sign in using the Microsoft account associated with your Azure subscription.
 2. Select the **&#65291;Create a resource** button, search for *cognitive services*, and create a **Cognitive Services** resource with the following settings:
     - **Subscription**: *Your Azure subscription*
-    - **Resource group**: *Choose or create a resource group (if you are using a hosted lab environment, you may not have permission to create a new resource group - use the one provided)*
+    - **Resource group**: *Choose or create a resource group (if you are using a restricted subscription, you may not have permission to create a new resource group - use the one provided)*
     - **Region**: *Choose any available region*
     - **Name**: *Enter a unique name*
     - **Pricing tier**: Standard S0
@@ -40,7 +40,7 @@ Many of the most commonly used cognitive services APIs are available in containe
 
     The command will look for the image on your local machine, and when it doesn't find it there it will pull it from the *mcr&period;microsoft&period;com* image registry and deploy it to your Docker instance. When deployment is complete, the container will start and listen for incoming requests on port 5000.
 
-3. When prompted, allow access through the firewall. If you are using a hosted lab environment, enter the password you logged in with.
+3. When prompted, allow access through the firewall. If you are using a restricted subscription, enter the password you logged in with.
 4. Note that the container will run until you press CTRL+C in the terminal window. Leave this terminal running for now.
 5. In a new web browser tab, browse to http://localhost:5000 and verify that the container is running at this endpoint.
 6. Browse to http://localhost:5000/swagger to view information about the REST functions you can call in the containerized service.

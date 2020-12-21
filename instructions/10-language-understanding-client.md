@@ -23,7 +23,7 @@ To use the Language Understanding service, you need two kinds of resource:
 2. Select the **&#65291;Create a resource** button, search for *language understanding*, and create a **Language Understanding** resource with the following settings:
     - **Create option**: Both
     - **Subscription**: *Your Azure subscription*
-    - **Resource group**: *Choose or create a resource group (if you are using a hosted lab environment, you may not have permission to create a new resource group - use the one provided)*
+    - **Resource group**: *Choose or create a resource group (if you are using a restricted subscription, you may not have permission to create a new resource group - use the one provided)*
     - **Name**: *Enter a unique name*
     - **Authoring location**: *Select your preferred location*
     - **Authoring pricing tier**: F0

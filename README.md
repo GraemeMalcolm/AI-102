@@ -23,6 +23,6 @@ These exercises are currently in development.
 - Exercise 18: Detect and recognize faces
 - Exercise 19: Read text in images
 - Exercise 20: Create a custom form recognition model
-- Exercise 21: Create an Azure Cognitive Search solution
+- [Exercise 21: Create an Azure Cognitive Search solution](./instructions/21-azure-search.md)
 - Exercise 22: Create an enrichment pipeline
 - Exercise 23: Create a knowledge base
