@@ -4,7 +4,7 @@ All organizations rely on information to make decisions, answer questions, and f
 
 For example, suppose *Margie's Travel* is a travel agency that specializes in organizing trips to cities around the world. Over time, the company has amassed a huge amount of information in documents such as brochures, as well as reviews of hotels submitted by customers. This data is a valuable source of insights for travel agents and customers as they plan trips, but the sheer volume of data can make it difficult to find relevant information to answer a specific customer question.
 
-To address this challenge, Margie's Travel can use Azure Cognitive Search to implement a solution in which the documents are indexed and made easy to search.
+To address this challenge, Margie's Travel can use Azure Cognitive Search to implement a solution in which the documents are indexed and enriched by using AI-based cognitive skills to make them easier to search.
 
 ## Clone the repository for this course
 
@@ -18,9 +18,9 @@ If you have not already done so, you must clone the code repository for this cou
 
 The solution you will create for Margie's Travel requires the following resources in your Azure subscription:
 
-- An Azure Storage account with a blob container in which the documents to be searched are stored.
-- - An Azure Cognitive Services resource, which provides AI services for skills that your search solution can use to enrich the data in the data source with AI-generated insights.
-- An Azure Cognitive Search resource, which will manage indexing and querying.
+- A **Storage account** with a blob container in which the documents to be searched are stored.
+- A **Cognitive Services** resource, which provides AI services for skills that your search solution can use to enrich the data in the data source with AI-generated insights.
+- An **Azure Cognitive Search** resource, which will manage indexing and querying.
 
 ### Create a storage account and upload files
 
@@ -38,9 +38,9 @@ The solution you will create for Margie's Travel requires the following resource
 5. In Storage Explorer, right-click **BLOB CONTAINERS** and create a blob container named **margies** with **Blob** level public access (the container will host documents that Margie's Travel makes publicly available in their web site).
 6. Expand **BLOB CONTAINERS** and select your new **margies** container.
 7. In the **margies** container, use the **&#65291;New Folder** button to create a new folder named **collateral**.
-8. In the **margies > collateral** folder, select **Upload**, and in the **Upload blob** pane, select *all* of the files in the local **21-create-a-search-solution/data/collateral** folder (in the folder where you cloned the repo) and upload them.
-9. Use the **&#8593;** button to navigate back up to the root of the **margies** container. Then create a new folder named **reviews**, alongside the existing **collateral** folder.
-10. In the **margies > reviews** folder, select **Upload**, and in the **Upload blob** pane, select *all* of the files in the local **ai-102-ai-engineer/21-create-a-search-solution/data/reviews** folder and upload them.
+8. In the **margies > collateral** folder, select **Upload**, and in the **Upload blob** pane, select *all* of the files in the local **ai-102/21-create-a-search-solution/data/collateral** folder (in the folder where you cloned the repo) and upload them.
+9. Use the **&uarr;** button to navigate back up to the root of the **margies** container. Then create a new folder named **reviews**, alongside the existing **collateral** folder.
+10. In the **margies > reviews** folder, select **Upload**, and in the **Upload blob** pane, select *all* of the files in the local **ai-102/21-create-a-search-solution/data/reviews** folder and upload them.
 
     You should end up with a blob container structure like this:
     
@@ -110,7 +110,7 @@ Now that you have the necessary Azure resources in place, you can create a searc
 
 6. Proceed to the next step (*Customize target index*).
 7. Change the **Index name** to **margies-index**.
-8. Set the **Key** set to **metadata_storage_path** and the **Suggester name** and **Search mode** blank.
+8. Set the **Key** set to **metadata_storage_path** and leave the **Suggester name** and **Search mode** blank.
 9. Make the following changes to the index fields, leaving all other fields with their default settings:
     | Field name | Retrievable | Filterable | Sortable | Facetable | Searchable |
     | ---------- | ----------- | ---------- | -------- | --------- | ---------- |
@@ -384,7 +384,7 @@ Now that you have a useful index, you can use it from a client application. You 
 
 ### Prepare to use the Azure Cognitive Search SDK
 
-1. In Visual Studio Code open the **AI-102** project, and in the **Explorer** pane, browse to the **create-a-search-solution** folder and expand the **C-Sharp** or **Python** folder depending on your language preference.
+1. In Visual Studio Code open the **ai-102** project, and in the **Explorer** pane, browse to the **21-create-a-search-solution** folder and expand the **C-Sharp** or **Python** folder depending on your language preference.
 2. Right-click the **margies-travel** folder and open an integrated terminal. Then install the Azure Cognitive Search SDK package by running the appropriate command for your language preference:
 
    **C#**
@@ -545,9 +545,9 @@ The web app already includes code to process and render the search results.
 2. In the Margie's Travel website, enter **London hotel** into the search box and click **Search**.
 3. Review the search results. They include the file name (with a hyperlink to the file URL), an extract of the file content with the search terms (*London* and *hotel*) emphasized, and other attributes of the file from the index fields.
 4. Observe that the results page includes some user interface elements that enable you to refine the results. These include:
-    - A *filter* based on the *facetable* **metadata_author** field. You can use facetable fields to return a list of *facets* - fields with a small set of discrete values that can displayed as potential filter values in the user interface.
+    - A *filter* based on a facet value for the **metadata_author** field. This demonstrates how you can use *facetable* fields to return a list of *facets* - fields with a small set of discrete values that can displayed as potential filter values in the user interface.
     - The ability to *order* the results based on a specified field and sort direction (ascending or descending). The default order is based on *relevancy*, which is calculated as a **search.score()** value based on a *scoring profile* that evaluates the frequency and importance of search terms in the index fields.
-5. Select the **Reviewer** filter and the **Positive to negative** sort option, and click **Refine Results**.
+5. Select the **Reviewer** filter and the **Positive to negative** sort option, and then select **Refine Results**.
 6. Observe that the results are filtered to include only reviews, and sorted into descending order of sentiment.
 7. In the **Search** box, enter a new search for **quiet hotel in New York** and review the results.
 8. Try the following search terms:
