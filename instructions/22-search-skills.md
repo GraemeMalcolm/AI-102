@@ -1,12 +1,43 @@
-# Graeme is Working on this
+# Create a Custom Skill for Azure Cognitive Search
 
-## Create resources for Margie's Travel
+Azure Cognitive Search uses an enrichment pipeline of cognitive skills to extract AI-generated fields from documents and include them in a search index. There's a comprehensive set of built-in skills that you can use, but if you have a specific requirement that isn't met by these skills, you can create a custom skill.
 
-The solution you will create for Margie's Travel requires the following resources in your Azure subscription:
+In this exercise, you'll create a custom skill that tabulates the frequency of individual words in a document to generate a list of the top five most used words, and add it to a search solution for Margie's Travel - a fictitious travel agency.
+
+## Clone the repository for this course
+
+If you have not already done so, you must clone the code repository for this course:
+
+1. Start Visual Studio Code.
+2. Open the palette (SHIFT+CTRL+P) and run a `Git: Clone` command to clone the `https://github/com/GraemeMalcolm/AI-102` repository to a local folder.
+3. When the repository has been cloned, open the folder in Visual Studio Code.
+
+## Create Azure resources
+
+The solution for Margie's Travel requires the following resources in your Azure subscription:
 
 - An Azure Storage account with a blob container in which the documents to be searched are stored.
 - An Azure Cognitive Search resource, which will manage indexing and querying.
 - An Azure Cognitive Services resource, which provides the AI services for skills in your enrichment pipeline
+
+If you have previously completed the **[Create an Azure Cognitive Search solution](21-azure-search.md)** exercise, and still have these Azure resources in your subscription, you can skip this section and start at the **Create a search solution** section. Otherwise, follow the steps below to provision the required Azure resources.
+
+1. Open the Azure portal at [https://portal.azure.com](https://portal.azure.com), and sign in using the Microsoft account associated with your Azure subscription.
+2. View the **Resource groups** in your subscription.
+3. If you are using a restricted subscription in which a resource group has been provided for you, select the resource group to view its properties. Otherwise, create a new resource group with a name of your choice, and go to it when it has been created.
+4. On the **Overview** page for your resource group, note the **Subscription ID** and **Location**. You will need these values, along with the name of the resource group in subsequent steps.
+5. In Visual Studio Code, in the **AI-102** project, expand the **22-custom-search-skill** folder and select **setup.cmd**. You will use this batch script to run the Azure command line interface (CLI) commands required to create the Azure resources you need.
+6. Right-click the the **22-custom-search-skill** folder and select **Open in Integrated Terminal**.
+7. In the terminal pane, enter the following command to establish an authenticated connection to your Azure subscription.
+
+    ```bash
+    az login --output none
+    ```
+
+8. When prompted, open `https://microsoft.com/devicelogin`, enter the provided code, and sign into your Azure subscription. Then return to Visual Studio Code and wait for the sign-in process to complete.
+
+
+
 
 A script containing Azure command-line interface (CLI) commands to create these resources has been provided. Use the following steps to run it.
 
