@@ -7,40 +7,40 @@ set resource_group=YOUR_RESOURCE_GROUP
 set location=YOUR_LOCATION
 
 rem Get random numbers to create unique resource names
-set unique_id=ai102!random!!random!
+set unique_id=!random!!random!
 
 echo Creating storage...
-call az storage account create --name store!unique_id! --subscription !subscription_id! --resource-group !resource_group! --location !location! --sku Standard_LRS --encryption-services blob --default-action Allow --output none
+call az storage account create --name ai102str!unique_id! --subscription !subscription_id! --resource-group !resource_group! --location !location! --sku Standard_LRS --encryption-services blob --default-action Allow --output none
 
 echo Uploading files...
 rem Hack to get storage key
 for /f "tokens=*" %%a in ( 
-'az storage account keys list --subscription !subscription_id! --resource-group !resource_group! --account-name store!unique_id! --query "[?keyName=='key1']"' 
+'az storage account keys list --subscription !subscription_id! --resource-group !resource_group! --account-name ai102str!unique_id! --query "[?keyName=='key1']"' 
 ) do ( 
 set key_json=!key_json!%%a 
 ) 
 set key_string=!key_json:[ { "keyName": "key1", "permissions": "Full", "value": "=!
 set AZURE_STORAGE_KEY=!key_string:" } ]=!
-call az storage container create --account-name store!unique_id! --name margies --public-access blob --auth-mode key --account-key %AZURE_STORAGE_KEY% --output none
-call az storage blob upload-batch -d margies -s data --account-name store!unique_id! --auth-mode key --account-key %AZURE_STORAGE_KEY%  --output none
+call az storage container create --account-name ai102str!unique_id! --name margies --public-access blob --auth-mode key --account-key %AZURE_STORAGE_KEY% --output none
+call az storage blob upload-batch -d margies -s data --account-name ai102str!unique_id! --auth-mode key --account-key %AZURE_STORAGE_KEY%  --output none
 
 echo Creating cognitive services account...
-call az cognitiveservices account create --kind CognitiveServices --location !location! --name cog!unique_id! --sku S0 --subscription !subscription_id! --resource-group !resource_group! --yes --output none
+call az cognitiveservices account create --kind CognitiveServices --location !location! --name ai102cog!unique_id! --sku S0 --subscription !subscription_id! --resource-group !resource_group! --yes --output none
 
 echo Creating search service...
 echo (If this gets stuck at '- Running ..' for more than a minute, press CTRL+C then select N)
-call az search service create --name search!unique_id! --subscription !subscription_id! --resource-group !resource_group! --location !location! --sku basic --output none
+call az search service create --name ai102srch!unique_id! --subscription !subscription_id! --resource-group !resource_group! --location !location! --sku basic --output none
 
 echo -------------------------------------
-echo Storage account: store!unique_id!
-call az storage account show-connection-string --subscription !subscription_id! --resource-group !resource_group! --name store!unique_id!
+echo Storage account: ai102str!unique_id!
+call az storage account show-connection-string --subscription !subscription_id! --resource-group !resource_group! --name ai102str!unique_id!
 echo ----
-echo Cognitive Services account: cog!unique_id!
-call az cognitiveservices account keys list --subscription !subscription_id! --resource-group !resource_group! --name cog!unique_id!
+echo Cognitive Services account: ai102cog!unique_id!
+call az cognitiveservices account keys list --subscription !subscription_id! --resource-group !resource_group! --name ai102cog!unique_id!
 echo ----
 echo Search Service: search!unique_id!.search.windows.net
 echo  Admin Keys:
-call az search admin-key show --subscription !subscription_id! --resource-group !resource_group! --service-name search!unique_id!
+call az search admin-key show --subscription !subscription_id! --resource-group !resource_group! --service-name ai102srch!unique_id!
 echo  Query Keys:
-call az search query-key list --subscription !subscription_id! --resource-group !resource_group! --service-name search!unique_id!
+call az search query-key list --subscription !subscription_id! --resource-group !resource_group! --service-name ai102srch!unique_id!
 
