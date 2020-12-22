@@ -24,4 +24,4 @@ These exercises are currently in development.
 - Exercise 19: Read text in images
 - Exercise 20: Create a custom form recognition model
 - [Exercise 21: Create an Azure Cognitive Search solution](./instructions/21-azure-search.md)
-- [Exercise 22: Create an enrichment pipeline](./instructions/22-search-skills.md)
+- [Exercise 22: Create a Custom Skill for Azure Cognitive Search](./instructions/22-search-skills.md)
