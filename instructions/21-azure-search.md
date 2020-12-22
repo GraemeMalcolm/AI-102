@@ -199,7 +199,7 @@ The components of the search solution are based on JSON definitions, which you c
     "name": "margies-skillset",
     "description": "Skillset created from the portal....",
     "skills": [
-        /* New skill inserted here */
+        /* Insert the new skill here */
         {
             "@odata.type": "#Microsoft.Skills.Text.SentimentSkill",
             "defaultLanguageCode": "",
@@ -233,29 +233,29 @@ The components of the search solution are based on JSON definitions, which you c
 7. Update the new skill definition like this:
 
     ```json
-		{
-			"@odata.type": "#Microsoft.Skills.Text.SentimentSkill",
-			"defaultLanguageCode": "en",
-			"name": "get-sentiment",
-			"description": "Evaluate sentiment",
-			"context": "/document",
-			"inputs": [
-				{
-					"name": "text",
-					"source": "/document/merged_content"
-				},
-				{
-					"name": "languageCode",
-					"source": "/document/language"
-				}
-			],
-			"outputs": [
-				{
-					"name": "score",
-					"targetName": "sentimentScore"
-				}
-			]
-		},
+        {
+            "@odata.type": "#Microsoft.Skills.Text.SentimentSkill",
+            "defaultLanguageCode": "en",
+            "name": "get-sentiment",
+            "description": "Evaluate sentiment",
+            "context": "/document",
+            "inputs": [
+                {
+                    "name": "text",
+                    "source": "/document/merged_content"
+                },
+                {
+                    "name": "languageCode",
+                    "source": "/document/language"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "score",
+                    "targetName": "sentimentScore"
+                }
+            ]
+        },
     ```
 
     The new skill is named **get-sentiment**, and will evaluate the text found in the **merged_content** field of the document being indexed (which includes the source content as well as any text extracted from images in the content). It uses the extracted **language** of the document (with a default of English), and evaluates a score for the sentiment of the content. This score is then  output as a new field named **sentimentScore** at the **document** level of the object that represents the indexed document.
@@ -288,7 +288,7 @@ The components of the search solution are based on JSON definitions, which you c
     }
     ```
 
-4. The index includes the **metadata_storage_path** field (the URL of the document), which is currently used as the index key. The key is Base-64 encoded, making it efficient as a key but requiring de-encoding to be useful to client applications as a field. We'll resolve this by adding another field that will be mapped to the unencoded value. Add the following field definition immediately after the **sentiment** field you just added:
+4. The index includes the **metadata_storage_path** field (the URL of the document), which is currently used as the index key. The key is Base-64 encoded, making it efficient as a key but requiring client applications to decode it if they want to use the actual URL value as a field. We'll resolve this by adding another field that will be mapped to the unencoded value. Add the following field definition immediately after the **sentiment** field you just added:
 
     ```json
     ,
