@@ -1,1 +1,0 @@
-Create an Azure Function project here

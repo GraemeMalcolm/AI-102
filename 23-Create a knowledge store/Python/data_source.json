@@ -1,9 +1,0 @@
-{   
-    "name" : "margies-docs-py",  
-    "description" : "Documents in Margies website.",  
-    "type" : "azureblob",
-    "credentials" :
-    { "connectionString" : null
-    },  
-    "container" : { "name" : "margies" }
-} 
