@@ -74,8 +74,6 @@ namespace FormRecognizerQuickStart
             Console.WriteLine("Get list of trained models ...");
             await GetListOfModels(formClient);
 
-            Console.WriteLine("Delete Model...");
-            await DeleteModel(formClient, modelId);
         }
         // </snippet_maintask>
 
@@ -251,24 +249,6 @@ namespace FormRecognizerQuickStart
             }
         }
         // </snippet_getmodellist>
-
-        // <snippet_deletemodel>
-        // Delete a model
-        private static async Task DeleteModel(
-            IFormRecognizerClient formClient, Guid modelId)
-        {
-            try
-            {
-                Console.Write("Deleting model: {0}...", modelId.ToString());
-                await formClient.DeleteCustomModelAsync(modelId);
-                Console.WriteLine("done.\n");
-            }
-            catch (ErrorResponseException e)
-            {
-                Console.WriteLine("Delete model : " + e.Message);
-            }
-        }
-        // </snippet_deletemodel>
 
         // <snippet_displayanalyze>
         // Display analyze status
