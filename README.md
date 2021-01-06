@@ -13,7 +13,7 @@ These exercises are currently in development.
 - [Exercise 8: Translate speech](./instructions/08-translate-speech.md)
 - [Exercise 9: Create a Language Understanding app](./instructions/09-language-understanding-app.md)
 - [Exercise 10: Creating a Language Understanding client application](./instructions/10-language-understanding-client.md)
-- Exercise 11: Use Language Understanding with the Speech service
+- [Exercise 11: Use Language Understanding with the Speech service](./instructions/11-language-understanding-speech.md)
 - Exercise 12: Create a bot with the Bot Framework SDK
 - [Exercise 13: Create a Bot with the Bot Framework Composer](./instructions/13-bot-composer.md)
 - Exercise 14: Create a QnA app
