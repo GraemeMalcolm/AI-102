@@ -13,22 +13,21 @@ def main():
         # Get Configuration Settings
         load_dotenv()
         lu_app_id = os.getenv('LU_APP_ID')
-        lu_prediction_endpoint = os.getenv('LU_PREDICTION_ENDPOINT')
+        lu_prediction_region = os.getenv('LU_PREDICTION_REGION')
         lu_prediction_key = os.getenv('LU_PREDICTION_KEY')
 
-        # Create a client for the LU app
-        
-
-         # Get user input (until they enter "quit")
-        userText =''
-        while userText.lower() != 'quit':
-            userText = input('\nEnter some text ("quit" to stop)\n')
-            if userText.lower() != 'quit':
-
-                # Call the LU app to get intent and entities
+        # Configure speech service and get intent recognizer
 
 
-                # Apply the appropriate action
+        # Get the model from the AppID and add the intents we want to use
+
+
+         # Loop until stopped
+        intent =''
+        while intent.lower().replace('.', '') != 'stop':
+            print ('\nSay something...')
+
+            # Process speech input
 
 
     except Exception as ex:
@@ -73,18 +72,19 @@ def GetDate(day):
     date_string = 'I can only determine dates for today or named days of the week.'
 
     weekdays = {
-        "Monday":0,
-        "Tuesday":1,
-        "Wednesday":2,
-        "Thusday":3,
-        "Friday":4,
-        "Saturday":5,
-        "Sunday":6
+        "monday":0,
+        "tuesday":1,
+        "wednesday":2,
+        "thusday":3,
+        "friday":4,
+        "saturday":5,
+        "sunday":6
     }
 
     today = date.today()
 
     # To keep things simple, assume the named day is in the current week (Sunday to Saturday)
+    day = day.lower()
     if day == 'today':
         date_string = today.strftime("%m/%d/%Y")
     elif day in weekdays:

@@ -73,18 +73,19 @@ def GetDate(day):
     date_string = 'I can only determine dates for today or named days of the week.'
 
     weekdays = {
-        "Monday":0,
-        "Tuesday":1,
-        "Wednesday":2,
-        "Thusday":3,
-        "Friday":4,
-        "Saturday":5,
-        "Sunday":6
+        "monday":0,
+        "tuesday":1,
+        "wednesday":2,
+        "thusday":3,
+        "friday":4,
+        "saturday":5,
+        "sunday":6
     }
 
     today = date.today()
 
     # To keep things simple, assume the named day is in the current week (Sunday to Saturday)
+    day = day.lower()
     if day == 'today':
         date_string = today.strftime("%m/%d/%Y")
     elif day in weekdays:

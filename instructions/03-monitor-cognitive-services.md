@@ -2,15 +2,6 @@
 
 Azure Cognitive Services can be a critical part of an overall application infrastructure. It's important to be able to monitor activity and get alerted to issues that may need attention.
 
-## Clone the repository for this course
-
-If you have not already done so, you must clone the code repository for this course:
-
-1. Start Visual Studio Code.
-2. Open the palette (SHIFT+CTRL+P) and run a `Git: Clone` command to clone the `https://github/com/GraemeMalcolm/AI-102` repository to a local folder.
-3. When the repository has been cloned, open the folder in Visual Studio Code.
-4. Wait while additional files are installed to support the C# code projects in the repo.
-
 ## Provision a Cognitive Services resource
 
 If you don't already have on in your subscription, you'll need to provision a **Cognitive Services** resource.

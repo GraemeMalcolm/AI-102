@@ -35,11 +35,11 @@ To use the Language Understanding service, you need two kinds of resource:
 
 3. Wait for the resources to be created, and note that two Language Understanding resources are provisioned; one for authoring, and another for prediction. You can view both of these by navigating to the resource group where you created them.
 
-## Import, train, and publish a Language Understanding app
+## Prepare a Language Understanding app
 
 In this exercise, you'll use an app that contains a language model for clock-related intents. For example, the user input *what is the time?* predicts an intent named **GetTime**.
 
-> **Note**: If you already have a **Clock** app from a previous exercise, you can use it in this exercise. Otherwise, follow these instructions to create it.
+> **Note**: If you already have a **Clock** app from a previous exercise, open it in the Language Udnerstanding portal. Otherwise, follow these instructions to create it.
 
 1. In a new browser tab, open the Language Understanding portal for the location where you created your authoring resource:
     - US: [https://www.luis.ai](https://www.luis.ai)
@@ -47,14 +47,17 @@ In this exercise, you'll use an app that contains a language model for clock-rel
     - Australia: [https://au.luis.ai](https://au.luis.ai)
  2. Sign in using the Microsoft account associated with your Azure subscription. If this is the first time you have signed into the Language Understanding portal, you may need to grant the app some permissions to access your account details. Then complete the *Welcome* steps by selecting your Azure subscription and the authoring resource you just created.
 3. Open the **Conversation Apps** page, next to **&#65291;New app**, view the drop-down list and select **Import As LU**.
-Browse to the **10-luis-client** subfolder in the project folder containing the lab files for this exercise, and select **Clock&period;lu**. Then specify a unique name for the clock app.
+Browse to the **11-luis-speech** subfolder in the project folder containing the lab files for this exercise, and select **Clock&period;lu**. Then specify a unique name for the clock app.
 4. If a panel with tips for creating an effective Language Understanding app is displayed, close it.
-5. At the top of the Language Understanding portal, select **Train** to train the app.
-6. At the top right of the Language Understanding portal, select **Publish** and publish the app to the **Production slot**.
-7. After publishing is complete, at the top of the Language Understanding portal, select **Manage**.
-8. On the **Settings** page, note the **App ID**. Client applications need this to use your app.
-9. On the **Azure Resources** page, under **Prediction resources**, if no prediction resource is listed, add the prediction resource in your Azure subscription.
-10. Note the **Primary Key**, **Secondary Key**, and **Endpoint URL** for the prediction resource. Client applications need the endpoint and one of the keys to connect to the prediction resource and be authenticated.
+
+## Train and publish the app with *Speech Priming*
+
+1. At the top of the Language Understanding portal, select **Train** to train the app.
+2. At the top right of the Language Understanding portal, select **Publish**. Then select the **Production slot** and modify the settings to enable **Speech Priming** (this will result in better performance for speech recognition).
+3. After publishing is complete, at the top of the Language Understanding portal, select **Manage**.
+4. On the **Settings** page, note the **App ID**. Client applications need this to use your app.
+5. On the **Azure Resources** page, under **Prediction resources**, if no prediction resource is listed, add the prediction resource in your Azure subscription.
+6. Note the **Primary Key**, **Secondary Key**, and **Location** for the prediction resource. Speech SDK client applications need the location and one of the keys to connect to the prediction resource and be authenticated.
 
 ## Prepare to use the Speech SDK with Language Understanding
 
@@ -77,161 +80,249 @@ In this exercise, you'll complete a partially implemented client application tha
    pip install azure-cognitiveservices-speech==1.14.0
    ```
 
-3. View the contents of the **clock-client** folder, and note that it contains a file for configuration settings:
+3. View the contents of the **speaking-clock-client** folder, and note that it contains a file for configuration settings:
     - **C#**: appsettings.json
     - **Python**: .env
 
-    Open the configuration file and update the configuration values it contains to include the **APP ID** for your Language Understanding app, and the **Endpoint URL** and one of the **Keys** for its prediction resource (from the **Manage** page for your app in the Language Understanding portal).
+    Open the configuration file and update the configuration values it contains to include the **App ID** for your Language Understanding app, and the **Location** (<u>not</u> the full endpoint - for example, *eastus*) and one of the **Keys** for its prediction resource (from the **Manage** page for your app in the Language Understanding portal).
 
-4. Note that the **clock-client** folder contains a code file for the client application:
+4. Note that the **speaking-clock-client** folder contains a code file for the client application:
 
     - **C#**: Program.cs
-    - **Python**: clock-client&period;py
+    - **Python**: speaking-clock-client&period;py
 
-    Open the code file and at the top, under the existing namespace references, find the comment **Import namespaces**. Then, under this comment, add the following language-specific code to import the namespaces you will need to use the Language Understanding prediction SDK:
+    Open the code file and at the top, under the existing namespace references, find the comment **Import namespaces**. Then, under this comment, add the following language-specific code to import the namespaces you will need to use the Speech SDK:
 
     **C#**
 
     ```C#
     // Import namespaces
-    using Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime;
-    using Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models;
+    using Microsoft.CognitiveServices.Speech;
+    using Microsoft.CognitiveServices.Speech.Intent;
     ```
 
     **Python**
 
     ```Python
     # Import namespaces
-    from azure.cognitiveservices.language.luis.runtime import LUISRuntimeClient
-    from msrest.authentication import CognitiveServicesCredentials
+    import azure.cognitiveservices.speech as speech_sdk
     ```
 
-## Get a prediction from the Language Understanding app
+## Get a predicted intent from spoken input
 
-Now you're ready to implement code that uses the SDK to get a prediction from your Language Understanding app.
+Now you're ready to implement code that uses the Speech SDK to get a predicted intent from spoken input.
 
-1. In the **Main** function, note that code to load the App ID, prediction endpoint, and key from the configuration file has already been provided. Then find the comment **Create a client for the LU app** and add the following code to create a prediction client for your Language Understanding app:
+1. In the **Main** function, note that code to load the App ID, prediction region, and key from the configuration file has already been provided. Then find the comment **Configure speech service and get intent recognizer** and add the following code to create a Speech SDK **SpeechConfig** and **IntentRecognizer** using your Language Understanding prediction resource details:
 
     **C#**
 
     ```C#
-    // Create a client for the LU app
-    var credentials = new Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.ApiKeyServiceClientCredentials(predictionKey);
-    var luClient = new LUISRuntimeClient(credentials) { Endpoint = predictionEndpoint };
+    // Configure speech service and get intent recognizer
+    SpeechConfig speechConfig = SpeechConfig.FromSubscription(predictionKey, predictionRegion);
+    IntentRecognizer recognizer = new IntentRecognizer(speechConfig);
     ```
 
     **Python**
 
     ```Python
-    # Create a client for the LU app
-    credentials = CognitiveServicesCredentials(lu_prediction_key)
-    lu_client = LUISRuntimeClient(lu_prediction_endpoint, credentials)
+    # Configure speech service and get intent recognizer
+    speech_config = speech_sdk.SpeechConfig(subscription=lu_prediction_key, region=lu_prediction_region)
+    recognizer = speech_sdk.intent.IntentRecognizer(speech_config)
     ```
-
-2. Note that the code in the **Main** function prompts for user input until the user enters "quit". Within this loop, find the comment **Call the LU app to get intent and entities** and add the following code:
+2. Immediately beneath the code you just added, find the comment **Get the model from the AppID and add the intents we want to use** and add the following code to get your Language Understanding model (based on its App ID) and specify the intents that we want the recognizer to identify.
 
     **C#**
 
     ```C#
-    // Call the LU app to get intent and entities
-    var slot = "Production";
-    var request = new PredictionRequest { Query = userText };
-    PredictionResponse predictionResponse = await luClient.Prediction.GetSlotPredictionAsync(luAppId, slot, request);
-    Console.WriteLine(JsonConvert.SerializeObject(predictionResponse, Formatting.Indented));
-    Console.WriteLine("--------------------\n");
-    Console.WriteLine(predictionResponse.Query);
-    var topIntent = predictionResponse.Prediction.TopIntent;
-    var entities = predictionResponse.Prediction.Entities;
+    // Get the model from the AppID and add the intents we want to use
+    var model = LanguageUnderstandingModel.FromAppId(luAppId);
+    recognizer.AddIntent(model, "GetTime", "time");
+    recognizer.AddIntent(model, "GetDate", "date");
+    recognizer.AddIntent(model, "GetDay", "day");
+    recognizer.AddIntent(model, "None", "none");
+    ```
+
+    *Note that you can specify a string-based ID for each intent*
+
+    **Python**
+
+    ```Python
+    # Get the model from the AppID and add the intents we want to use
+    model = speech_sdk.intent.LanguageUnderstandingModel(app_id=lu_app_id)
+    intents = [
+        (model, "GetTime"),
+        (model, "GetDate"),
+        (model, "GetDay"),
+        (model, "None")
+    ]
+    recognizer.add_intents(intents)
+    ```
+
+3. Note that the code in the **Main** loops continually until the user says "stop". Within this loop, find the comment **Process speech input** and add the following code, which uses the recognizer to asynchronously call the Language Understanding service with spoken input, and retrieve response. If the response includes a predicted intent, the spoken query, predicted intent, and full JSON response are displayed. Otherwise the code handles the response based on the reason returned.
+
+    **C#**
+
+    ```C
+    // Process speech input
+    var result = await recognizer.RecognizeOnceAsync().ConfigureAwait(false);
+    if (result.Reason == ResultReason.RecognizedIntent)
+    {
+        // Intent was identified
+        intent = result.IntentId;
+        Console.WriteLine($"Query: {result.Text}");
+        Console.WriteLine($"Intent Id: {intent}.");
+        string jsonResponse = result.Properties.GetProperty(PropertyId.LanguageUnderstandingServiceResponse_JsonResult);
+        Console.WriteLine($"JSON Response:\n{jsonResponse}\n");
+        
+        // Get the first entity (if any)
+
+        // Apply the appropriate action
+        
+    }
+    else if (result.Reason == ResultReason.RecognizedSpeech)
+    {
+        // Speech was recognized, but no intent was identified.
+        intent = result.Text;
+        Console.Write($"I don't know what {intent} means.");
+    }
+    else if (result.Reason == ResultReason.NoMatch)
+    {
+        // Speech wasn't recognized
+        Console.WriteLine($"Sorry. I didn't understand that.");
+    }
+    else if (result.Reason == ResultReason.Canceled)
+    {
+        // Something went wrong
+        var cancellation = CancellationDetails.FromResult(result);
+        Console.WriteLine($"CANCELED: Reason={cancellation.Reason}");
+
+        if (cancellation.Reason == CancellationReason.Error)
+        {
+            Console.WriteLine($"CANCELED: ErrorCode={cancellation.ErrorCode}");
+            Console.WriteLine($"CANCELED: ErrorDetails={cancellation.ErrorDetails}");
+        }
+    }
     ```
 
     **Python**
 
     ```Python
-    # Call the LU app to get intent and entities
-    request = { "query" : userText }
-    slot = 'Production'
-    prediction_response = lu_client.prediction.get_slot_prediction(lu_app_id, slot, request)
-    top_intent = prediction_response.prediction.top_intent
-    entities = prediction_response.prediction.entities
-    print('Top Intent: {}'.format(top_intent))
-    print('Entities: {}'.format (entities))
-    print('-----------------\n{}'.format(prediction_response.query))
+    # Process speech input
+    result = recognizer.recognize_once_async().get()
+    if result.reason == speech_sdk.ResultReason.RecognizedIntent:
+        intent = result.intent_id
+        print("Query: {}".format(result.text))
+        print("Intent: {}".format(intent))
+        json_response = json.loads(result.intent_json)
+        print("JSON Response:\n{}\n".format(json.dumps(json_response, indent=2)))
+        
+        # Get the first entity (if any)
+        
+        # Apply the appropriate action
+        
+    elif result.reason == speech_sdk.ResultReason.RecognizedSpeech:
+        # Speech was recognized, but no intent was identified.
+        intent = result.text
+        print("I don't know what {} means.".format(intent))
+    elif result.reason == speech_sdk.ResultReason.NoMatch:
+        # Speech wasn't recognized
+        print("Sorry. I didn't understand that.")
+    elif result.reason == speech_sdk.ResultReason.Canceled:
+        # Something went wrong
+        print("Intent recognition canceled: {}".format(result.cancellation_details.reason))
+        if result.cancellation_details.reason == speech_sdk.CancellationReason.Error:
+            print("Error details: {}".format(result.cancellation_details.error_details))
     ```
 
-    The call to the Language Understanding app returns a prediction, which includes the top (most likely) intent as well as any entities that were detected in the input utterance. Your client application must now use that prediction to determine and perform the appropriate action.
+    The code you've added so far identifies the *intent*, but some intents can reference *entities*, so you must add code to extract the entity information from the JSON returned by the service.
 
-3. Find the comment **Apply the appropriate action**, and add the following code, which checks for intents supported by the application (**GetTime**, **GetDate**, and **GetDay**) and determines if any relevant entities have been detected, before calling an existing function to produce an appropriate response.
+4. In the code you just added, find the comment **Get the first entity (if any)** and add the following code beneath it:
+
+    **C#**
+
+    ```C
+    // Get the first entity (if any)
+    JObject jsonResults = JObject.Parse(jsonResponse);
+    string entityType = "";
+    string entityValue = "";
+    if (jsonResults["entities"].HasValues)
+    {
+        JArray entities = new JArray(jsonResults["entities"][0]);
+        entityType = entities[0]["type"].ToString();
+        entityValue = entities[0]["entity"].ToString();
+        Console.WriteLine(entityType + ": " + entityValue);
+    }
+    ```
+
+    **Python**
+
+    ```Python
+    # Get the first entity (if any)
+    entity_type = ''
+    entity_value = ''
+    if len(json_response["entities"]) > 0:
+        entity_type = json_response["entities"][0]["type"]
+        entity_value = json_response["entities"][0]["entity"]
+        print(entity_type + ': ' + entity_value)
+    ```
+    
+    Your code now uses the Language Understanding app to predict an intent as well as any entities that were detected in the input utterance. Your client application must now use that prediction to determine and perform the appropriate action.
+
+5. Beneath the code you just added, find the comment **Apply the appropriate action**, and add the following code, which checks for intents supported by the application (**GetTime**, **GetDate**, and **GetDay**) and determines if any relevant entities have been detected, before calling an existing function to produce an appropriate response.
 
     **C#**
 
     ```C#
     // Apply the appropriate action
-    switch (topIntent)
+    switch (intent)
     {
-        case "GetTime":
+        case "time":
             var location = "local";
             // Check for entities
-            if (entities.Count > 0)
+            if (entityType == "Location")
             {
-                // Check for a location entity
-                if (entities.ContainsKey("Location"))
-                {
-                    //Get the JSON for the entity
-                    var entityJson = JArray.Parse(entities["Location"].ToString());
-                    // ML entities are strings, get the first one
-                    location = entityJson[0].ToString();
-                }
+                location = entityValue;
             }
-
             // Get the time for the specified location
             var getTimeTask = Task.Run(() => GetTime(location));
             string timeResponse = await getTimeTask;
             Console.WriteLine(timeResponse);
             break;
-
-        case "GetDay":
+        case "day":
             var date = DateTime.Today.ToShortDateString();
             // Check for entities
-            if (entities.Count > 0)
+            if (entityType == "Date")
             {
-                // Check for a Date entity
-                if (entities.ContainsKey("Date"))
-                {
-                    //Get the JSON for the entity
-                    var entityJson = JArray.Parse(entities["Date"].ToString());
-                    // Regex entities are strings, get the first one
-                    date = entityJson[0].ToString();
-                }
+                date = entityValue;
             }
             // Get the day for the specified date
             var getDayTask = Task.Run(() => GetDay(date));
             string dayResponse = await getDayTask;
             Console.WriteLine(dayResponse);
             break;
-
-        case "GetDate":
+        case "date":
             var day = DateTime.Today.DayOfWeek.ToString();
             // Check for entities
-            if (entities.Count > 0)
+            if (entityType == "Weekday")
             {
-                // Check for a Weekday entity
-                if (entities.ContainsKey("Weekday"))
-                {
-                    //Get the JSON for the entity
-                    var entityJson = JArray.Parse(entities["Weekday"].ToString());
-                    // List entities are lists
-                    day = entityJson[0][0].ToString();
-                }
+                day = entityValue;
             }
-            // Get the date for the specified day
+
             var getDateTask = Task.Run(() => GetDate(day));
             string dateResponse = await getDateTask;
             Console.WriteLine(dateResponse);
             break;
-
         default:
             // Some other intent (for example, "None") was predicted
-            Console.WriteLine("Try asking me for the time, the day, or the date.");
+            Console.WriteLine("You said " + result.Text.ToLower());
+            if (result.Text.ToLower().Replace(".", "") == "stop")
+            {
+                intent = result.Text;
+            }
+            else
+            {
+                Console.WriteLine("Try asking me for the time, the day, or the date.");
+            }
             break;
     }
     ```
@@ -240,45 +331,41 @@ Now you're ready to implement code that uses the SDK to get a prediction from yo
 
     ```Python
     # Apply the appropriate action
-    if top_intent == 'GetTime':
+    if intent == 'GetTime':
         location = 'local'
         # Check for entities
-        if len(entities) > 0:
-            # Check for a location entity
-            if 'Location' in entities:
-                # ML entities are strings, get the first one
-                location = entities['Location'][0]
+        if entity_type == 'Location':
+            location = entity_value
         # Get the time for the specified location
         print(GetTime(location))
 
-    elif top_intent == 'GetDay':
+    elif intent == 'GetDay':
         date_string = date.today().strftime("%m/%d/%Y")
         # Check for entities
-        if len(entities) > 0:
-            # Check for a Date entity
-            if 'Date' in entities:
-                # Regex entities are strings, get the first one
-                date_string = entities['Date'][0]
+        if entity_type == 'Date':
+            date_string = entity_value
         # Get the day for the specified date
         print(GetDay(date_string))
 
-    elif top_intent == 'GetDate':
+    elif intent == 'GetDate':
         day = 'today'
         # Check for entities
-        if len(entities) > 0:
-            # Check for a Weekday entity
-            if 'Weekday' in entities:
-                # List entities are lists
-                day = entities['Weekday'][0][0]
+        if entity_type == 'Weekday':
+            # List entities are lists
+            day = entity_value
         # Get the date for the specified day
         print(GetDate(day))
 
     else:
         # Some other intent (for example, "None") was predicted
-        print('Try asking me for the time, the day, or the date.')
+        print('You said {}'.format(result.text))
+        if result.text.lower().replace('.', '') == 'stop':
+            intent = result.text
+        else:
+            print('Try asking me for the time, the day, or the date.')
     ```
 
-4. Save your changes and return to the integrated terminal for the **clock-client** folder, and enter the following command to run the program:
+6. Save your changes and return to the integrated terminal for the **speaking-clock-client** folder, and enter the following command to run the program:
 
     **C#**
 
@@ -289,28 +376,22 @@ Now you're ready to implement code that uses the SDK to get a prediction from yo
     **Python**
 
     ```
-    python clock-client.py
+    python speaking-clock-client.py
     ```
-5. When prompted, enter utterances to test the application. For example, try:
+7. When prompted, enter utterances to test the application. For example, try:
 
-    *Hello*
+    *What's the time?*
     
     *What time is it?*
 
-    *What's the time in London?*
+    *What day is it?*
+
+    *What is the time in London?*
 
     *What's the date?*
 
     *What date is Sunday?*
 
-    *What day is it?*
+    > **Note**: The logic in the application is deliberately simple, and has a number of limitations, but should serve the purpose of testing the ability for the Language Understanding model to predict intents from spoken input using the Speech SDK. You may have trouble recognizing the **GetDay** intent with a specific date entity due to the difficulty in verbalizing a date in *MM/DD/YYYY* format!
 
-    *What day is 01/01/2025?*
-
-    > **Note**: The logic in the application is deliberately simple, and has a number of limitations. For example, when getting the time, only a restricted set of cities is supported and daylight savings time is ignored. The goal is to see an example of a typical pattern for using Language Understanding in which your application must:
-    >
-    >   1. Connect to a prediction endpoint.
-    >   2. Submit an utterance to get a prediction.
-    >   3. Implement logic to respond appropriately to the predicted intent and entities.
-
-6. When you have finished testing, enter *quit*.
+8. When you have finished testing, say "stop".
