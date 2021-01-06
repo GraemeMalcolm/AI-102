@@ -7,8 +7,9 @@ In this exercise, you'll get started with Cognitive Services by creating a **Cog
 If you have not already done so, you must clone the code repository for this course:
 
 1. Start Visual Studio Code.
-2. Open the palette (SHIFT+CTRL+P) and run a `Git: Clone` command to clone the `https://github/com/GraemeMalcolm/AI-102` repository to a local folder.
+2. Open the palette (SHIFT+CTRL+P) and run a `Git: Clone` command to clone the `https://github.com/GraemeMalcolm/AI-102` repository to a local folder.
 3. When the repository has been cloned, open the folder in Visual Studio Code.
+4. Wait while additional files are installed to support the C# code projects in the repo.
 
 ## Provision a Cognitive Services resource
 
@@ -66,7 +67,7 @@ The cognitive services APIs are REST-based, so you can consume them by submittin
     python rest-client.py
     ```
 
-6. When prompted, enter some text and review the language that is detected by the service. For example, try entering "Hello", "Bonjour", and "Hola".
+6. When prompted, enter some text and review the language that is detected by the service, which is returned in the JSON response. For example, try entering "Hello", "Bonjour", and "Hola".
 7. When you have finished testing the application, enter "quit" to stop the program.
 
 ## Use an SDK

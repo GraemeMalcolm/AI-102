@@ -14,39 +14,13 @@ Install Windows 10 and apply all updates.
 
 Install [Edge (Chromium)](https://microsoft.com/edge)
 
-### WSL 2 
-
-1. Open PowerShell as Administrator and run the following commands: 
-
-```
-dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart 
-
-dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
-```
-
-2. Restart Windows and sign in again. 
-
-3. Download and install the [x64](https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi) or [ARM64](https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_arm64.msi) version of WSL 2, depending on your hardware architecture. 
-
-4. Reopen PowerShell as Administrator and run the following command: 
-
-```
-wsl --set-default-version 2 
-```
- 
-## Docker 
-
-1. Download **Docker Desktop** from https://www.docker.com/get-started 
-2. Run setup
-3. Sign out and in again
-
-Docker will start automatically.
-
-(If you use a non-Admin user for development, add your user account to **docker-users** group)
-
 ## .NET Core SDK
 
 1. Download and install from https://dotnet.microsoft.com/download (download .NET Core SDK - not just the runtime)
+
+## C++ Redistributable
+
+1. Download and install the Visual C++ Redistributable (x64) from https://aka.ms/vs/16/release/vc_redist.x64.exe.
 
 ## Node.JS
 
@@ -68,6 +42,11 @@ pip install flask requests python-dotenv pylint matplotlib pillow
 1. Download from https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest 
 2. Install using the default options
 
+## Git
+
+1. Download and install from https://git-scm.com/download.html, using the default options
+
+
 ## Visual Studio Code (and extensions)
 
 1. Download from https://code.visualstudio.com/Download 
@@ -76,6 +55,7 @@ pip install flask requests python-dotenv pylint matplotlib pillow
     - Python
     - C#
     - Azure Functions
+
 
 ## Bot Framework Emulator
 

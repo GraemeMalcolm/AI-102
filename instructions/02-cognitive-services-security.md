@@ -9,8 +9,9 @@ Access to cognitive services is typically controlled through authentication keys
 If you have not already done so, you must clone the code repository for this course:
 
 1. Start Visual Studio Code.
-2. Open the palette (SHIFT+CTRL+P) and run a `Git: Clone` command to clone the `https://github/com/GraemeMalcolm/AI-102` repository to a local folder.
+2. Open the palette (SHIFT+CTRL+P) and run a `Git: Clone` command to clone the `https://github.com/GraemeMalcolm/AI-102` repository to a local folder.
 3. When the repository has been cloned, open the folder in Visual Studio Code.
+4. Wait while additional files are installed to support the C# code projects in the repo.
 
 ## Provision a Cognitive Services resource
 
@@ -150,7 +151,7 @@ Now you're ready to use the service principal identity in an application, so it 
     ```
     dotnet add package Azure.AI.TextAnalytics --version 5.0.0
     dotnet add package Azure.Identity --version 1.3.0
-    dotnet add package Azure.Security.KeyVaults.Secrets --version 4.2.0-beta.3
+    dotnet add package Azure.Security.KeyVaults.Secrets --version 4.1.0
     ```
 
    **Python**
@@ -198,6 +199,15 @@ Now you're ready to use the service principal identity in an application, so it 
 
 6. When prompted, enter some text and review the language that is detected by the service. For example, try entering "Hello", "Bonjour", and "Hola".
 7. When you have finished testing the application, enter "quit" to stop the program.
+
+### Reset the security context
+
+1. In the Terminal window, enter the command `az logout` to log out of your Azure subscription.
+2. In the Windows Search box, enter **Edit the system environment variables**. Then in the **System Properties** dialog box, select **Environment variables**.
+3. Delete the following system environment variables:
+    - AZURE_CLIENT_ID
+    - AZURE_TENANT_ID
+    - AZURE_CLIENT_SECRET
 
 ## More information
 
