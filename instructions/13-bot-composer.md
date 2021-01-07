@@ -1,4 +1,4 @@
-# Create a Bot with the Bot Framework Composer
+# Create a Bot with Bot Framework Composer
 
 Bot Framework Composer is a visual designer that lets you quickly and easily build sophisticated conversational bots without writing code. The composer is an open-source tool that presents a visual canvas for building bots. It uses the latest SDK features so you can build sophisticated bots with relative ease.
 

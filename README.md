@@ -14,14 +14,16 @@ These exercises are currently in development.
 - [Exercise 9: Create a Language Understanding app](./instructions/09-language-understanding-app.md)
 - [Exercise 10: Creating a Language Understanding client application](./instructions/10-language-understanding-client.md)
 - [Exercise 11: Use Language Understanding with the Speech service](./instructions/11-language-understanding-speech.md)
-- Exercise 12: Create a bot with the Bot Framework SDK
-- [Exercise 13: Create a Bot with the Bot Framework Composer](./instructions/13-bot-composer.md)
-- Exercise 14: Create a QnA app
-- Exercise 15: Analyze images
+- [Exercise 12: Create a bot with the Bot Framework SDK](./instructions/12-bot-framework.md)
+- [Exercise 13: Create a bot with Bot Framework Composer](./instructions/13-bot-composer.md)
+- Exercise 14: Create a QnA bot
+- Exercise 15: Analyze images with Computer Vision
 - [Exercise 16: Classify images with Custom Vision](./instructions/16-image-classification.md)
-- [Exercise 17: Detect Objects in Images with Custom Vision](./instructions/17-object-detection.md)
+- [Exercise 17: Detect objects in images with Custom Vision](./instructions/17-object-detection.md)
 - Exercise 18: Detect and recognize faces
-- Exercise 19: Read text in images
-- Exercise 20: Create a custom form recognition model
-- [Exercise 21: Create an Azure Cognitive Search solution](./instructions/21-azure-search.md)
-- [Exercise 22: Create a Custom Skill for Azure Cognitive Search](./instructions/22-search-skills.md)
+- Exercise 19: Read text in images with Computer Vision
+- Exercise 20: Create a custom form recognition model with Form Recognizer
+- Exercise 21: Analyze video with Video Indexer
+- [Exercise 22: Create an Azure Cognitive Search solution](./instructions/21-azure-search.md)
+- [Exercise 23: Create a custom skill for Azure Cognitive Search](./instructions/22-search-skills.md)
+- Exercise 24: Create a knowledge store with Azure Cognitive Search
