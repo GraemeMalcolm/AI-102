@@ -247,7 +247,7 @@ Now that you have the required Azure resources in place, you can prepare your co
 
     **Python**
 
-    *Python dependencies are managed on the deployment target through the inclusion of a `requirements.txt` file in the folder containing the code files. In this case, there are no package dependencies, so there is not need to create a requirements file*
+    > *Python dependencies are managed on the deployment target through the inclusion of a `requirements.txt` file in the folder containing the code files. In this case, there are no package dependencies, so there is not need to create a requirements file*
 
 2. In Visual Studio Code, in the terminal pane for your **TimeBot** folder, enter the following command to package your code files in a zip for deployment.
 
