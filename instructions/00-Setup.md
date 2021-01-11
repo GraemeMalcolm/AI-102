@@ -31,10 +31,11 @@ Install [Edge (Chromium)](https://microsoft.com/edge)
 
 1. Download version 3.8 from https://docs.conda.io/en/latest/miniconda.html 
 2. Run setup to install - **Important**: Select the options to add Miniconda to the PATH variable and to register Miniconda as the default Python environment.
-3. After installation, open the Anaconda prompt and enter the following command to install packages: 
+3. After installation, open the Anaconda prompt and enter the following commands to install packages: 
 
 ```
-pip install flask requests python-dotenv pylint matplotlib pillow 
+pip install flask requests python-dotenv pylint matplotlib pillow
+pip install --upgrade numpy
 ```
 
 ## Azure CLI
