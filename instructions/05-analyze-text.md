@@ -28,7 +28,7 @@ If you don't already have on in your subscription, you'll need to provision a **
 4. Wait for deployment to complete, and then view the deployment details.
 5. When the resource has been deployed, go to it and view its **Keys and Endpoint** page. You will need the endpoint and one of the keys from this page in the next procedure.
 
-## Prepare to use the SDK
+## Prepare to use the Text Analytics SDK
 
 In this exercise, you'll complete a partially implemented client application that uses the Text Analysis SDK to analyze hotel reviews.
 

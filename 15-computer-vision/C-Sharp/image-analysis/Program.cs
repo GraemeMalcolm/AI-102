@@ -1,13 +1,13 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Drawing;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json.Linq;
 
 // Import namespaces
-using Microsoft.Azure.CognitiveServices.Vision.ComputerVision;
-using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
+
 
 namespace image_analysis
 {
@@ -26,20 +26,17 @@ namespace image_analysis
                 string cogSvcKey = configuration["CognitiveServiceKey"];
 
                 // Authenticate Computer Vision client
-                ApiKeyServiceClientCredentials credentials = new ApiKeyServiceClientCredentials(cogSvcKey);
-                cvClient = new ComputerVisionClient(credentials)
-                {
-                    Endpoint = cogSvcEndpoint
-                };
+
 
                 // Get image
-                string imageFile = "images/building.jpg";
+                string imageFile = "images/street.jpg";
 
-                // Get captions
-                await GetImageCaption(imageFile);
+                // Analyze image
+                await AnalyzeImage(imageFile);
 
-                // Get landmarks
-                await GetLandmarks(imageFile);
+                // Get thumbnail
+                await GetThumnail(imageFile);
+
                
             }
             catch (Exception ex)
@@ -48,31 +45,25 @@ namespace image_analysis
             }
         }
 
-        static async Task GetImageCaption(string imageFile)
+        static async Task AnalyzeImage(string imageFile)
         {
-            using (var imageData = File.OpenRead(imageFile))
-            {
-               var results = await cvClient.DescribeImageInStreamAsync(imageData);
-               foreach (var caption in results.Captions)
-                {
-                    Console.WriteLine($"Description: {caption.Text} (confidence: {caption.Confidence.ToString("P")})");
-                }
-            }
+            Console.WriteLine($"Analyzing {imageFile}");
+
+            // Specify features to be retrieved
+
+
+            // Get image analysis
+                
         }
 
-        static async Task GetLandmarks(string imageFile)
+        static async Task GetThumnail(string imageFile)
         {
-            using (var imageData = File.OpenRead(imageFile))
-            {
-                DomainModelResults response = await cvClient.AnalyzeImageByDomainInStreamAsync("Landmarks", imageData);
-                Console.WriteLine("Landmarks:");
-                foreach (var landmark in JObject.Parse(response.Result.ToString())["landmarks"])
-                {
-                    Console.WriteLine($" - {landmark["name"]} (confidence: {landmark["confidence"]})");
-                }
+            Console.WriteLine("Generating thumbnail");
 
-            }
+            // Generate a thumbnail
+
         }
+
 
     }
 }

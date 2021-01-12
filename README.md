@@ -17,7 +17,7 @@ These exercises are currently in development.
 - [Exercise 12: Create a bot with the Bot Framework SDK](./instructions/12-bot-framework.md)
 - [Exercise 13: Create a bot with Bot Framework Composer](./instructions/13-bot-composer.md)
 - [Exercise 14: Create a QnA bot](./instructions/14-qna-maker.md)
-- Exercise 15: Analyze images with Computer Vision
+- [Exercise 15: Analyze images with Computer Vision](./instructions/15-computer-vision.md)
 - [Exercise 16: Classify images with Custom Vision](./instructions/16-image-classification.md)
 - [Exercise 17: Detect objects in images with Custom Vision](./instructions/17-object-detection.md)
 - Exercise 18: Detect and recognize faces
