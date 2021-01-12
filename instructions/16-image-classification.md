@@ -1,5 +1,7 @@
 # Classify Images with Custom Vision
 
+The **Custom Vision** service enables you to create computer vision models that are trained on your own images. You can use it to train *image classification* and *object detection* models; which you can then publish and consume from applications.
+
 In this exercise, you will use the Custom Vision service to train an image classification model that can identify three classes of fruit (apple, banana, and orange).
 
 ## Clone the repository for this course
