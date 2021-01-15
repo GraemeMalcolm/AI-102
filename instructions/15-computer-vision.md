@@ -28,7 +28,7 @@ If you don't already have on in your subscription, you'll need to provision a **
 
 ## Prepare to use the Computer Vision SDK
 
-In this exercise, you'll complete a partially implemented client application that uses the Computer Vision SDK to analyze hotel reviews.
+In this exercise, you'll complete a partially implemented client application that uses the Computer Vision SDK to analyze images.
 
 > **Note**: You can choose to use the SDK for either **C#** or **Python**. In the steps below, perform the actions appropriate for your preferred language.
 
@@ -107,7 +107,7 @@ Now you're ready to use the SDK to call the Computer Vision service and analyze 
     cv_client = ComputerVisionClient(cog_endpoint, credential)
     ```
 
-2. In the **Main** function, under the code you just added, note that the code specifies the path to an image file and then passes the image path to two other functions (**AnalayzeImage** and **GetThumbnail**). These functions are not yet fully implemented.
+2. In the **Main** function, under the code you just added, note that the code specifies the path to an image file and then passes the image path to two other functions (**AnalyzeImage** and **GetThumbnail**). These functions are not yet fully implemented.
 
 3. In the **AnalyzeImage** function, under the comment **Specify features to be retrieved**, add the following code:
 

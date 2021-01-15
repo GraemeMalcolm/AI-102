@@ -20,7 +20,7 @@ These exercises are currently in development.
 - [Exercise 15: Analyze images with Computer Vision](./instructions/15-computer-vision.md)
 - [Exercise 16: Classify images with Custom Vision](./instructions/16-image-classification.md)
 - [Exercise 17: Detect objects in images with Custom Vision](./instructions/17-object-detection.md)
-- Exercise 18: Detect and recognize faces
+- [Exercise 18: Detect and recognize faces](./instructions/18-face-service.md)
 - Exercise 19: Read text in images with Computer Vision
 - Exercise 20: Create a custom form recognition model with Form Recognizer
 - Exercise 21: Analyze video with Video Indexer
