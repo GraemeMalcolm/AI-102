@@ -21,14 +21,14 @@ The solution for Margie's Travel requires the following resources in your Azure 
 - An Azure Cognitive Search resource, which will manage indexing and querying.
 - An Azure Cognitive Services resource, which provides the AI services for skills in your enrichment pipeline
 
-If you have previously completed the **[Create an Azure Cognitive Search solution](21-azure-search.md)** exercise, and still have these Azure resources in your subscription, you can skip this section and start at the **Create a search solution** section. Otherwise, follow the steps below to provision the required Azure resources.
+If you have previously completed the **[Create an Azure Cognitive Search solution](22-azure-search.md)** exercise, and still have these Azure resources in your subscription, you can skip this section and start at the **Create a search solution** section. Otherwise, follow the steps below to provision the required Azure resources.
 
 1. Open the Azure portal at [https://portal.azure.com](https://portal.azure.com), and sign in using the Microsoft account associated with your Azure subscription.
 2. View the **Resource groups** in your subscription.
 3. If you are using a restricted subscription in which a resource group has been provided for you, select the resource group to view its properties. Otherwise, create a new resource group with a name of your choice, and go to it when it has been created.
 4. On the **Overview** page for your resource group, note the **Subscription ID** and **Location**. You will need these values, along with the name of the resource group in subsequent steps.
 5. In Visual Studio Code, in the **AI-102** project, expand the **22-custom-search-skill** folder and select **setup.cmd**. You will use this batch script to run the Azure command line interface (CLI) commands required to create the Azure resources you need.
-6. Right-click the the **22-custom-search-skill** folder and select **Open in Integrated Terminal**.
+6. Right-click the the **23-custom-search-skill** folder and select **Open in Integrated Terminal**.
 7. In the terminal pane, enter the following command to establish an authenticated connection to your Azure subscription.
 
     ```bash
@@ -75,7 +75,7 @@ Now that you have the necessary Azure resources, you can create a search solutio
 
 In this exercise, you'll use the Azure Cognitive Search REST interface to create these components by submitting JSON requests.
 
-1. In Visual Studio Code, in the **22-custom-search-skill** folder, expand the **create-search** folder and select **data_source.json**. This file contains a JSON definition for a data source named **margies-custom-data**.
+1. In Visual Studio Code, in the **23-custom-search-skill** folder, expand the **create-search** folder and select **data_source.json**. This file contains a JSON definition for a data source named **margies-custom-data**.
 2. Replace the **YOUR_CONNECTION_STRING** placeholder with the connection string for your Azure storage account, which should resemble the following:
 
     ```text
@@ -138,7 +138,7 @@ To implement the word count functionality as a custom skill, you'll create an Az
 
     ### **C#**
 
-    - **Folder**: Browse to **22-custom-search-skill/C-Sharp/wordcount**
+    - **Folder**: Browse to **23-custom-search-skill/C-Sharp/wordcount**
     - **Language**: C#
     - **Template**: HTTP trigger
     - **Function name**: wordcount
@@ -147,7 +147,7 @@ To implement the word count functionality as a custom skill, you'll create an Az
 
     ### **Python**
 
-    - **Folder**: Browse to **22-custom-search-skill/Python/wordcount**
+    - **Folder**: Browse to **23-custom-search-skill/Python/wordcount**
     - **Language**: Python
     - **Virtual environment**: Skip virtual environment
     - **Template**: HTTP trigger
