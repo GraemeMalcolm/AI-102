@@ -40,7 +40,7 @@ The indexing process extracts insights from the video, which you can view in the
 
 3. At the top left of the portal, select the **View** symbol (which looks similar to &#128455;), and in the list of insights, in addition to **Transcript**, select **OCR** and **Speakers**.
 
-![Video indexer view menu with Transcript, OCR, and Speakers selected.](./images/video-indexer-view-menu.png)
+![Video indexer view menu with Transcript, OCR, and Speakers selected](./images/video-indexer-view-menu.png)
 
 4. Observe that the **Timeline** pane now includes:
     - Transcript of audio narration.
@@ -64,7 +64,7 @@ You can use Video indexer to search the video for insights.
 2. Observe that one matching *label* is found, with its location in the video indicated beneath.
 3. Select the beginning of the section where the presence of a bee is indicated, and view the video at that point (you may need to pause the video and select carefully - the bee only appears briefly!)
 
-![Video indexer search results for Bee.](./images/video-indexer-search.png)
+![Video indexer search results for Bee](./images/video-indexer-search.png)
 
 ## Edit insights
 
@@ -72,23 +72,23 @@ You can use Video Indexer to edit the insights that have been found, adding cust
 
 1. Rewind the video to the start and view the **people** listed at the top of the **Insights** pane. Observe that some people have been recognized, including **Eric Horwitz**, a computer scientist and Technical Fellow at Microsoft.
 
-![Video indexer insights for a known person.](./images/video-indexer-known-person.png)
+![Video indexer insights for a known person](./images/video-indexer-known-person.png)
 
 2. Select the photo of Eric Horwitz, and view the information underneath - expanding the **Show biography** section to see information about this person.
 3. Observe that the locations in the video where this person appears are indicated. You can use these to view those sections of the video.
 4. In the video player, find the person speaking at approximately 0:34:
 
-![Video indexer insights for an unknown person.](./images/video-indexer-unknown-person.png)
+![Video indexer insights for an unknown person](./images/video-indexer-unknown-person.png)
 
 5. Observe that this person is not recognized, and has been assigned a generic name such as **Unknown #1**. However, the video does include a caption with this person's name, so we can enrich the insights by editing the details for this person.
 6. At the top right of the portal, select the **Edit** icon (&#x1F589;). Then change the name of the unknown person to **Natasha Crampton**.
 
-![Editing a person in Video Indexer.](./images/video-indexer-edit-name.png)
+![Editing a person in Video Indexer](./images/video-indexer-edit-name.png)
 
 7. After you have made the name change, search the **Insights** pane for *Natasha*. The results should include one person, and indicate the sections of the video in which they appear.
 8. At the top left of the portal, expand the menu (&#8801;) and select the **Model customizations** page. Then on the **People** tab, observe that the **Default** people model has one person in it. Video Indexer has added the person you named to a people model, so that they will be recognized in any future videos you index in your account.
 
-![Editing a person in Video Indexer.](./images/video-indexer-custom-model.png)
+![The default people model in Video Indexer](./images/video-indexer-custom-model.png)
 
 You can add images of people to the default people model, or add new models of your own. This enables you to define collections of people with images of their face so that Video Indexer can recognize them in your videos.
 
@@ -109,6 +109,8 @@ The Video Indexer portal is a useful interface to manage video indexing projects
 8. Save the file. Then in the **Explorer** pane, right-click **analyze-video.html** and select **Reveal in File Explorer**.
 9. In File Explorer, open **analyze-video.html** in your browser to see the web page.
 10. Experiment with the widgets, using the **Insights** widget to search for insights and jump to them in the video.
+
+![Video Indexer widgets in a web page](./images/video-indexer-widgets.png)
 
 ## More information
 
