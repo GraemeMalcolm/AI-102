@@ -76,7 +76,7 @@ Before you can train a model, you will need to create a **Form Recognizer** Azur
 
 3. Wait for the resources to be created, and then view the deployment details by navigating to the resource group where you created them.
 
-## Train a custom model using the *training* API
+## Train a custom model using the API
 
 Now we will use Form Recognizer via the SDK.  
 
