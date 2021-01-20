@@ -103,8 +103,24 @@ Now we will use Form Recognizer via the SDK.
     - **C#**: appsettings.json
     - **Python**: .env
 
-    Open the configuration file and update the configuration values it contains to reflect the endpoint and key for your Form Recognizer resource. Save your changes.
+    Open the configuration file. 
 
+    ### Get Container's Shared Access Signature
+
+    From the main menu of your Storage Account, navigate to **Storage Explorer**, select **BLOB CONTAINERS**, and right click on the container with your form training data. 
+    [image here for clarity] 
+     Select **Get Shared Access Signature**. Then use the following configurations: 
+   
+    - Access Policy: (none)
+    - Start time: *leave as is for this exercise* 
+    - End time: *leave as is for this exercise* 
+    - Time Zone: Local 
+    - Permissions: _Select **Read** and **List**_ 
+
+    Select **Create** and copy the **URI** to the **STORAGE_URL** configuration value.
+
+     Update the configuration values it contains to reflect the endpoint and key for your Form Recognizer resource, and container Shared Access Signature. 
+  
 4. Note that the **train-without-labels** folder contains a code file for the client application:
 
     - **C#**: Program.cs
@@ -125,7 +141,7 @@ Now we will use Form Recognizer via the SDK.
     **Python**
 
     ```
-    python train-without-labels.py
+    python train-custom-model.py
     ```
 
 6. Wait for the program to end. 
