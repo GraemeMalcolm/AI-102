@@ -16,7 +16,8 @@ If you have not already done so, you must clone the code repository for this cou
 
 We want to create a custom model that will recognize the data in our industry-specific forms. To do this, we will upload a set of training data to a container, create a Form Recognizer resource, train a model, and deploy for prediction. 
 
-We can train a custom Form Recognizer model with labeled or unlabeled data. In this exercise we will first look at training a model with unlabeled data. 
+### (!) Important
+We can train a custom Form Recognizer model with labeled data or  data without labels. In this exercise we will train a model with data without labels. 
 
 Next we will store a set of training data to a container. 
 
