@@ -1,26 +1,28 @@
-import os
+import os 
+from dotenv import load_dotenv
+
 from azure.core.exceptions import ResourceNotFoundError
 from azure.ai.formrecognizer import FormRecognizerClient
 from azure.ai.formrecognizer import FormTrainingClient
 from azure.core.credentials import AzureKeyCredential
 
-class TrainFormModelWithoutLabels(object): 
+def main(): 
+        
+    try: 
+    
+        # Get configuration settings 
+        load_dotenv()
+        form_endpoint = os.getenv('FORM_ENDPOINT')
+        print(form_endpoint)
+        form_key = os.getenv('FORM_KEY')
+        print(form_key)
+        # To train a model you need your Blob URI to access your training files
+        trainingDataUrl = os.getenv('STORAGE_URL')
+        print(trainingDataUrl)
 
-    def train_form_model_without_labels(self): 
-        
-        try: 
-        
-            form_endpoint = os.getenv['FORM_ENDPOINT']
-            form_key = os.getenv['FORM_KEY']
-            # To train a model you need an Azure Storage account.
-            # Use the SAS URL to access your training files.
-            trainingDataUrl = os.environ['STORAGE_URL']
-
-            form_recognizer_client = FormRecognizerClient(form_endpoint, AzureKeyCredential(form_key))
-            form_training_client = FormTrainingClient(form_endpoint, AzureKeyCredential(form_key))
-        
-        except Exception as ex:
-            print(ex)
+        # Create client using endpoint and key
+        form_recognizer_client = FormRecognizerClient(form_endpoint, AzureKeyCredential(form_key))
+        form_training_client = FormTrainingClient(form_endpoint, AzureKeyCredential(form_key))
 
         poller = form_training_client.begin_training(trainingDataUrl, use_training_labels=False)
         model = poller.result()
@@ -51,7 +53,8 @@ class TrainFormModelWithoutLabels(object):
             print("Document page count: {}".format(doc.page_count))
             print("Document errors: {}".format(doc.errors))
 
+    except Exception as ex:
+        print(ex)
 
 if __name__ == '__main__': 
-    sample = TrainFormModelWithoutLabels()
-    sample.train_form_model_without_labels()
+    main()
