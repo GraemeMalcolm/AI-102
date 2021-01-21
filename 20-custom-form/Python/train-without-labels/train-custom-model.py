@@ -13,12 +13,9 @@ def main():
         # Get configuration settings 
         load_dotenv()
         form_endpoint = os.getenv('FORM_ENDPOINT')
-        print(form_endpoint)
         form_key = os.getenv('FORM_KEY')
-        print(form_key)
         # To train a model you need your Blob URI to access your training files
         trainingDataUrl = os.getenv('STORAGE_URL')
-        print(trainingDataUrl)
 
         # Create client using endpoint and key
         form_recognizer_client = FormRecognizerClient(form_endpoint, AzureKeyCredential(form_key))
