@@ -1,6 +1,6 @@
 # Use the Form Recognizer to train a custom model 
 
-In this exercise, you will use the Form Recognizer service to train a custom form recognition model.  
+**Form Recognizer** is a cognitive service that can extract key, value pairs of information from documents using optical character recognition (OCR). Form Recognizer has pre-built models for recognizing invoices, receipts, and business cards. The service also gives you the capability to create custom models, trained for your industry-specific forms. In this exercise, you will use the Form Recognizer service to train and test a custom form recognition model.  
 
 ## Clone the repository for this course
 
@@ -12,12 +12,12 @@ If you have not already done so, you must clone the code repository for this cou
 
 ## Getting started 
 
-(Case scenario setup TBD)
+Suppose the travel company Margie's Travels requires customers to apply for travel insurance by filling out a form. Although the forms are returned digitally, an employee at Margie's Travels is still manually transferring the data in the forms from the PDF to a database. 
 
-We want to create a custom model that will recognize the data in our industry-specific forms. To do this, we will upload a set of training data to a container, create a Form Recognizer resource, train a model, and deploy for prediction. 
+We want to create a custom model that will recognize the data in our industry-specific forms and give an output of accurate key, value pairs in a JSON file, which can be used to automate the process. In order to create a custom model, we will upload a set of training documents to a container, create a Form Recognizer resource, train a model, and test the model. 
 
 ### (!) Important
-We can train a custom Form Recognizer model with labeled data or  data without labels. In this exercise we will train a model with data without labels. 
+We can train a custom Form Recognizer model with labeled data or data without labels. In this exercise we will train a model with data without labels. 
 
 Next we will store a set of training data to a container. 
 
