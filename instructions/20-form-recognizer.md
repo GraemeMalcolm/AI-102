@@ -21,7 +21,9 @@ We can train a custom Form Recognizer model with labeled data or data without la
 
 Next we will store a set of training data to a container. 
 
-## Create An Azure Storage blob 
+## Gather training data 
+
+### Create An Azure Storage blob 
 
 To provide your own training data to the Train Custom Model operation, you need to provide a minimum of **five** filled-in forms or an empty form (you must include the word "empty" in the file name) and two filled-in forms.
 
