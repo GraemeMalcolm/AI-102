@@ -29,7 +29,7 @@ namespace train_custom_form
                 var trainingClient = new FormTrainingClient(new Uri(formEndpoint), credential);
          
                 // Get form data for training   
-                string trainingStorageUri = configuration["StorageURI"];
+                string trainingStorageUri = configuration["StorageUri"];
 
                 // Train model 
                 CustomFormModel model = await trainingClient

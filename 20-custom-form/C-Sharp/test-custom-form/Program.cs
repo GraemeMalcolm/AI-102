@@ -27,30 +27,32 @@ namespace test_custom_form
                 
                 // Authenticate Form Recognizer Client 
                 var credential = new AzureKeyCredential(formKey);
-                var trainingClient = new FormRecognizerClient(new Uri(formEndpoint), credential);
+                var recognizerClient = new FormRecognizerClient(new Uri(formEndpoint), credential);
 
-                // Get forms for testing   
-                String form_file = "Insurance_Form_07.pdf";
-   
-                // Analyze forms 
-                RecognizedFormCollection forms = await recognizerClient
-                .StartRecognizeCustomFormsFromUri(modelId, new Uri(formUrl))
-                .WaitForCompletionAsync();
-                  
-                foreach (RecognizedForm form in forms)
+                // Get form url for testing   
+                string image_file = "Insurance_Form_07.pdf";
+                using (var image_data = File.OpenRead(image_file))
                 {
-                    Console.WriteLine($"Form of type: {form.FormType}");
-                    foreach (FormField field in form.Fields.Values)
+                    // Use trained model with new form 
+                    RecognizedFormCollection forms = await recognizerClient
+                    .StartRecognizeCustomForms(modelId, image_data)
+                    .WaitForCompletionAsync();
+                    
+                    foreach (RecognizedForm form in forms)
                     {
-                        Console.WriteLine($"Field '{field.Name}: ");
-
-                        if (field.LabelData != null)
+                        Console.WriteLine($"Form of type: {form.FormType}");
+                        foreach (FormField field in form.Fields.Values)
                         {
-                            Console.WriteLine($"    Label: '{field.LabelData.Text}");
-                        }
+                            Console.WriteLine($"Field '{field.Name}: ");
 
-                        Console.WriteLine($"    Value: '{field.ValueData.Text}");
-                        Console.WriteLine($"    Confidence: '{field.Confidence}");
+                            if (field.LabelData != null)
+                            {
+                                Console.WriteLine($"    Label: '{field.LabelData.Text}");
+                            }
+
+                            Console.WriteLine($"    Value: '{field.ValueData.Text}");
+                            Console.WriteLine($"    Confidence: '{field.Confidence}");
+                        }
                     }
                 }
             }
