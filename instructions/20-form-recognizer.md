@@ -108,7 +108,9 @@ Now we will use Form Recognizer via the SDK.
     ### Get Container's Shared Access Signature
 
     From the main menu of your Storage Account, navigate to **Storage Explorer**, select **BLOB CONTAINERS**, and right click on the container with your form training data. 
-    [image here for clarity] 
+
+    ![Visual of how to get shared access signature.](../20-custom-form/shared_access_sig.jpg)
+ 
      Select **Get Shared Access Signature**. Then use the following configurations: 
    
     - Access Policy: (none)
