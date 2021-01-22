@@ -17,7 +17,7 @@ Suppose the travel company Margie's Travels requires customers to apply for trav
 We want to create a custom model that will recognize the data in our industry-specific forms and give an output of accurate key, value pairs in a JSON file, which can be used to automate the process. In order to create a custom model, we will upload a set of training documents to a container, create a Form Recognizer resource, train a model, and test the model. 
 
 ### (!) Important
-We can train a custom Form Recognizer model with labeled data or data without labels. In this exercise we will train a model with data without labels. 
+We can train a custom Form Recognizer model with labeled data or data without labels. In this exercise we will train a model with data without labels.
 
 Next we will store a set of training data to a container. 
 
@@ -84,8 +84,8 @@ Now we will use Form Recognizer via the SDK.
 > **Note**: In this exercise, you can choose to use the API from either the **C#** or **Python** SDK. In the steps below, perform the actions appropriate for your preferred language.
 
 1. In Visual Studio Code open the **AI-102** project, and in the **Explorer** pane, browse to the **20-custom-form** folder and expand the **C-Sharp** or **Python** folder depending on your language preference.
-1. 
-1. Right-click the **train-without-labels** folder and open an integrated terminal. Then install the Form Recognizer package by running the appropriate command for your language preference:
+ 
+2. Right-click the **train-without-labels** folder and open an integrated terminal. Then install the Form Recognizer package by running the appropriate command for your language preference:
 
    **C#**
 
@@ -146,12 +146,12 @@ Now we will use Form Recognizer via the SDK.
 
 6. Wait for the program to end. 
 7. Review the model. 
+8. Copy the Model ID in the terminal output. You will use your Model ID when analzying new forms.  
 
-## Get the custom form recognizer model ID
+## Analyze new forms 
 
-Now you're ready use your trained model. There are two methods you can use: 
-- StartRecognizeCustomForms
-- StartRecognizeCustomFormsFromUri
+Now you're ready use your trained model. Notice how we trained our model using files from a storage container URI. We could also have trained our model using local files. Similarily, we can test our model using forms from a URI or from local files. We will test our form model with a local file using the **StartRecognizeCustomForms** method. However, you can also analyze new forms from a URI using the **StartRecognizeCustomFormsFromUri** method. 
+
 
 ## Use the custom model from a client application
 
