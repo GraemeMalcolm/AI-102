@@ -149,7 +149,9 @@ Now we will use Form Recognizer via the SDK.
 
 ## Get the custom form recognizer model ID
 
-Now you're ready to publish your trained model so that it can be used from a client application.
+Now you're ready use your trained model. There are two methods you can use: 
+- StartRecognizeCustomForms
+- StartRecognizeCustomFormsFromUri
 
 ## Use the custom model from a client application
 
