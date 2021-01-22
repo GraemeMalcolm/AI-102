@@ -15,7 +15,7 @@ namespace train_custom_form
     class Program
     {     
         static async Task Main(string[] args)
-        {     
+        {   
             try
             {   
                 // Get configuration settings from AppSettings
@@ -28,7 +28,7 @@ namespace train_custom_form
                 var credential = new AzureKeyCredential(formKey);
                 var trainingClient = new FormTrainingClient(new Uri(formEndpoint), credential);
          
-                // Get form data for training   
+                // Get form data for training from storage blob   
                 string trainingStorageUri = configuration["StorageUri"];
 
                 // Train model 
@@ -46,7 +46,7 @@ namespace train_custom_form
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-            }         
+            }  
         }
     }
 }
