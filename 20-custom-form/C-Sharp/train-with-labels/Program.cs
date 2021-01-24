@@ -31,9 +31,9 @@ namespace train_custom_form
                 // Get form data for training from storage blob   
                 string trainingStorageUri = configuration["StorageUri"];
 
-                // Train model 
+                // Train model using labels = true 
                 CustomFormModel model = await trainingClient
-                .StartTrainingAsync(new Uri(trainingStorageUri), useTrainingLabels: false)
+                .StartTrainingAsync(new Uri(trainingStorageUri), useTrainingLabels: true)
                 .WaitForCompletionAsync();
 
                 // Get model info
