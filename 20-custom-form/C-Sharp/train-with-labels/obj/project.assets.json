@@ -565,11 +565,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\sheryang\\Documents\\learn-pr\\AI-102\\20-custom-form\\C-Sharp\\train-without-labels\\train-without-labels.csproj",
-      "projectName": "train-without-labels",
-      "projectPath": "C:\\Users\\sheryang\\Documents\\learn-pr\\AI-102\\20-custom-form\\C-Sharp\\train-without-labels\\train-without-labels.csproj",
+      "projectUniqueName": "C:\\Users\\sheryang\\Documents\\learn-pr\\AI-102\\20-custom-form\\C-Sharp\\train-with-labels\\train-with-labels.csproj",
+      "projectName": "train-with-labels",
+      "projectPath": "C:\\Users\\sheryang\\Documents\\learn-pr\\AI-102\\20-custom-form\\C-Sharp\\train-with-labels\\train-with-labels.csproj",
       "packagesPath": "C:\\Users\\sheryang\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\sheryang\\Documents\\learn-pr\\AI-102\\20-custom-form\\C-Sharp\\train-without-labels\\obj\\",
+      "outputPath": "C:\\Users\\sheryang\\Documents\\learn-pr\\AI-102\\20-custom-form\\C-Sharp\\train-with-labels\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\sheryang\\AppData\\Roaming\\NuGet\\NuGet.Config"
