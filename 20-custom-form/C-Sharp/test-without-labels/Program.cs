@@ -10,7 +10,7 @@ using Azure.AI.FormRecognizer;
 using Azure.AI.FormRecognizer.Models;
 using Azure.AI.FormRecognizer.Training;
 
-namespace test_custom_form
+namespace test_model_without_labels
 {
     class Program
     {     
