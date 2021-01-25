@@ -17,7 +17,7 @@ Suppose the company Margie's Travels requires customers to apply for travel insu
 We want to create a custom model that will recognize the data in our industry-specific forms and give an output of accurate key, value pairs in a JSON file, which can be used to automate the process. In order to create a custom model, we will upload a set of training documents to a container, create a Form Recognizer resource, train a model, and test the model. 
 
 ### (!) Important
-We can train a custom Form Recognizer model with labeled data or data without labels. In this exercise we will train a model with data without labels.
+We can train a custom Form Recognizer model with labeled data or data without labels. We will first train a model using forms without labels and test it. Then we will train a model using forms with labels and test that model. 
 
 Next we will store a set of training data to a container. 
 
@@ -43,7 +43,7 @@ We'll use the sample forms in the sample_forms folder and upload the set of form
     - **Location**: *Choose any available region*
     - **Performance**: Standard
     - **Account kind**: StorageV2 (general purpose v2)
-    - **Replication**: Read-access geo-redundant stoarge (RA-GRS)
+    - **Replication**: Read-access geo-redundant storage (RA-GRS)
 
 Click Review + Create.  
 
@@ -79,7 +79,7 @@ Before you can train a model, you will need to create a **Form Recognizer** Azur
 
 3. Wait for the resources to be created, and then view the deployment details by navigating to the resource group where you created them.
 
-## Train a custom model using the API
+## Train a model without labels using the API
 
 Now we will use Form Recognizer via the SDK.  
 
@@ -128,7 +128,7 @@ Now we will use Form Recognizer via the SDK.
 4. Note that the **train-without-labels** folder contains a code file for the client application:
 
     - **C#**: Program.cs
-    - **Python**: train-custom-model&period;py
+    - **Python**: train-model-without-labels&period;py
 
     Open the code file and review the code it contains, noting the following details:
     - Namespaces from the package you installed are imported
@@ -145,28 +145,27 @@ Now we will use Form Recognizer via the SDK.
     **Python**
 
     ```
-    python train-custom-model.py
+    python train-model-without-labels.py
     ```
 
 6. Wait for the program to end. 
 7. Review the model. 
-8. Copy the Model ID in the terminal output. You will use your Model ID when analzying new forms.  
+8. Copy the Model ID in the terminal output. You will use your Model ID when analyzing new forms.  
 
 ## Analyze new forms 
 
-Now you're ready use your trained model. Notice how we trained our model using files from a storage container URI. We could also have trained our model using local files. Similarily, we can test our model using forms from a URI or from local files. We will test our form model with a local file using the **StartRecognizeCustomForms** method. However, you can also analyze new forms from a URI using the **StartRecognizeCustomFormsFromUri** method. 
+Now you're ready use your trained model. Notice how we trained our model using files from a storage container URI. We could also have trained our model using local files. Similarly, we can test our model using forms from a URI or from local files. We will test our form model with a local file using the **StartRecognizeCustomForms** method. However, you can also analyze new forms from a URI using the **StartRecognizeCustomFormsFromUri** method. 
 
-
-## Use the custom model from a client application
+## Test the model 
 
 Now that you've got the model ID, you can use it from a client application. Once again, you can choose to use **C#** or **Python**.
 
-1. In Visual Studio Code, in the **AI-102** project, browse to the **20-custom-form** folder and in the folder for your preferred language (**C-Sharp** or **Python**), expand the **test-custom-form** folder.
-2. Right-click the **test-custom-form** folder. Open the code file for your client application (*Program.cs* for C#, *test-custom-model&period;py* for Python) and review the code it contains, noting the following details:
+1. In Visual Studio Code, in the **AI-102** project, browse to the **20-custom-form** folder and in the folder for your preferred language (**C-Sharp** or **Python**), expand the **test-without-labels** folder.
+2. Right-click the **test-without-labels** folder. Open the code file for your client application (*Program.cs* for C#, *test-model-without-labels&period;py* for Python) and review the code it contains, noting the following details:
     - Namespaces from the package you installed are imported
     - The **Main** function retrieves the configuration settings, and uses the key and endpoint to create an authenticated **Client**.
     
-5. Return the integrated terminal for the **test-custom-form** folder, and enter the following SDK-specific command to run the program:
+5. Return the integrated terminal for the **test-without-labels** folder, and enter the following SDK-specific command to run the program:
 
     **C#**
 
@@ -177,7 +176,117 @@ Now that you've got the model ID, you can use it from a client application. Once
     **Python**
 
     ```
-    python test-custom-model.py
+    python test-model-without-labels.py
+    ```
+
+6. View the output. 
+
+Now we will train a model using labels. 
+
+## Train a model with labels using the API
+
+Now suppose the company Hero Limited sends invoices to its customers. We want to create a custom model that will recognize the data in our industry-specific forms and give an output of accurate key, value pairs in a JSON file, which can be used to automate the process. In order to create a custom model, we will upload a set of training documents to a container, create a Form Recognizer resource, train a model, and test the model. 
+
+We will be using labeled forms this time. Take a look at the folder to see what we mean.
+
+> **Note**: In this exercise, you can choose to use the API from either the **C#** or **Python** SDK. In the steps below, perform the actions appropriate for your preferred language.
+
+1. In Visual Studio Code open the **AI-102** project, and in the **Explorer** pane, browse to the **20-custom-form** folder and expand the **C-Sharp** or **Python** folder depending on your language preference.
+ 
+2. Right-click the **train-with-labels** folder and open an integrated terminal. Then install the Form Recognizer package by running the appropriate command for your language preference:
+
+   **C#**
+
+    ```
+    dotnet add package Azure.AI.FormRecognizer --version 3.0.0 
+    ```
+
+   **Python**
+
+   ```
+   pip install azure-ai-formrecognizer
+   ```
+
+3. In addition to using the Azure Portal, we can use the command line interface to create a storage account and container. We will create a second container in our storage account and upload the form files. 
+
+Notice there are four types of files: 
+- **.json**
+- **.jpg**
+- **.jpg.labels.json**
+- **jpg.ocr.json**
+
+4. View the contents of the **train-with-labels** folder, and note that it contains a file for configuration settings:
+    - **C#**: appsettings.json
+    - **Python**: .env
+
+    Open the configuration file. 
+
+    ### Get Container's Shared Access Signature
+
+    From the main menu of your Storage Account, navigate to **Storage Explorer**, select **BLOB CONTAINERS**, and right click on the container with your form training data. 
+
+    ![Visual of how to get shared access signature.](../20-custom-form/shared_access_sig.jpg)
+ 
+     Select **Get Shared Access Signature**. Then use the following configurations: 
+   
+    - Access Policy: (none)
+    - Start time: *leave as is for this exercise* 
+    - End time: *leave as is for this exercise* 
+    - Time Zone: Local 
+    - Permissions: _Select **Read** and **List**_ 
+
+    Select **Create** and copy the **URI** to the **STORAGE_URL** configuration value.
+
+     Update the configuration values it contains to reflect the endpoint and key for your Form Recognizer resource, and container Shared Access Signature. 
+  
+5. Note that the **train-with-labels** folder contains a code file for the client application:
+
+    - **C#**: Program.cs
+    - **Python**: train-model-with-labels&period;py
+
+    Open the code file and review the code it contains, noting the following details:
+    - Namespaces from the package you installed are imported
+    - The **Main** function retrieves the configuration settings, and uses the key and endpoint to create an authenticated **Client**.
+    - The **Train_Model** function creates a new training iteration for the project and waits for training to complete.
+6. Return the integrated terminal for the **train-with-labels** folder, and enter the following command to run the program:
+
+    **C#**
+
+    ```
+    dotnet run
+    ```
+
+    **Python**
+
+    ```
+    python train-model-with-labels.py
+    ```
+
+7. Wait for the program to end. 
+8. Review the model output. 
+9. Copy the Model ID in the terminal output. You will use your Model ID when analyzing new forms.  
+
+## Test the model
+
+Now that you've got the model ID, test out the model. Once again, you can choose to use **C#** or **Python**.
+
+1. In Visual Studio Code, in the **AI-102** project, browse to the **20-custom-form** folder and in the folder for your preferred language (**C-Sharp** or **Python**), expand the **test-with-labels** folder.
+2. Right-click the **test-with-labels** folder. Open the code file for your client application (*Program.cs* for C#, *test-model-with-labels&period;py* for Python) and review the code it contains, noting the following details:
+    - Namespaces from the package you installed are imported
+    - The **Main** function retrieves the configuration settings, and uses the key and endpoint to create an authenticated **Client**.
+    
+5. Return the integrated terminal for the **test-with-labels** folder, and enter the following SDK-specific command to run the program:
+
+    **C#**
+
+    ```
+    dotnet run
+    ```
+
+    **Python**
+
+    ```
+    python test-model-with-labels.py
     ```
 
 6. View the output. 
