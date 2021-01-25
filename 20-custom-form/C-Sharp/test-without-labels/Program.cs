@@ -30,7 +30,7 @@ namespace test_model_without_labels
                 var recognizerClient = new FormRecognizerClient(new Uri(formEndpoint), credential);
 
                 // Get form url for testing   
-                string image_file = "Insurance_Form_07.pdf";
+                string image_file = "test1.jpg";
                 using (var image_data = File.OpenRead(image_file))
                 {
                     // Use trained model with new form 
