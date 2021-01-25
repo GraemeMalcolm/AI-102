@@ -12,6 +12,22 @@ If you have not already done so, you must clone the code repository for this cou
 2. Open the palette (SHIFT+CTRL+P) and run a `Git: Clone` command to clone the `https://github/com/MicrosoftLearning/AI-102-AIEngineer` repository to a local folder.
 3. When the repository has been cloned, open the folder in Visual Studio Code.
 
+## Create a Form Recognizer resource
+
+You will need to create a **Form Recognizer** Azure resource.  
+
+1. Navigate to the Microsoft account associated with your Azure subscription at [https://portal.azure.com](https://portal.azure.com).
+2. Select the **&#65291;Create a resource** button, search for *Form Recognizer*, and create a **Form Recognizer** resource with the following settings:
+    - **Subscription**: *Your Azure subscription*
+    - **Resource group**: *Choose or create a resource group (if you are using a restricted subscription, you may not have permission to create a new resource group - use the one provided)*
+    - **Region**: *Choose any available region*
+    - **Name**: *Enter a unique name*
+    - **Pricing tier**: F0
+
+    > **Note**: If you already have an F0 custom vision service in your subscription, select **S0** for this one.
+
+3. Wait for the resources to be created, and then view the deployment details by navigating to the resource group where you created them.
+
 ## Custom Form Case: Margie's Travels 
 ### Training a custom model with forms without labels 
 
@@ -21,7 +37,6 @@ We want to create a custom model that will recognize the data in our industry-sp
 
 ## Gather training data 
 
-Take a look at the 
 ### Create An Azure Storage blob 
 
 To provide your own training data to the Train Custom Model operation, you need to provide a minimum of **five** filled-in forms or an empty form (you must include the word "empty" in the file name) and two filled-in forms.
@@ -58,25 +73,9 @@ You do not need to configure Advanced settings for this exercise. Select **Creat
 We use block blobs to store data in the cloud, like files, images, and videos. Upload a block blob with your training forms to your container following these steps: 
 
 1. Navigate to the container you just created above.  
-2. Select the **Upload** button and browse your local file system. You will want to access the local folder where you cloned this repository. The path to the sample forms is 20-custom-form/...
+2. Select the **Upload** button and browse your local file system. You will want to access the local folder where you cloned this repository. Select the pdf forms located in the **20-custom-form/forms-without-labels/train** folder. 
 
-3. Select the files and upload as a block blob by selecting **Upload**. You do not need to configure Advanced settings for this exercise. 
-
-## Create a Form Recognizer resource
-
-Before you can train a model, you will need to create a **Form Recognizer** Azure resource.  
-
-1. Stay in the Microsoft account associated with your Azure subscription at [https://portal.azure.com](https://portal.azure.com).
-2. Select the **&#65291;Create a resource** button, search for *Form Recognizer*, and create a **Form Recognizer** resource with the following settings:
-    - **Subscription**: *Your Azure subscription*
-    - **Resource group**: *Choose or create a resource group (if you are using a restricted subscription, you may not have permission to create a new resource group - use the one provided)*
-    - **Region**: *Choose any available region*
-    - **Name**: *Enter a unique name*
-    - **Pricing tier**: F0
-
-    > **Note**: If you already have an F0 custom vision service in your subscription, select **S0** for this one.
-
-3. Wait for the resources to be created, and then view the deployment details by navigating to the resource group where you created them.
+3. Upload the files as a block blob by selecting **Upload**. You do not need to configure Advanced settings for this exercise. 
 
 ## Train a model without labels using the API
 
@@ -132,7 +131,7 @@ Now we will use Form Recognizer via the SDK.
     Open the code file and review the code it contains, noting the following details:
     - Namespaces from the package you installed are imported
     - The **Main** function retrieves the configuration settings, and uses the key and endpoint to create an authenticated **Client**.
-    - The **Train_Model** function creates a new training iteration for the project and waits for training to complete.
+
 5. Return the integrated terminal for the **train-without-labels** folder, and enter the following command to run the program:
 
     **C#**
@@ -184,26 +183,21 @@ Now we will train a model using labels.
 
 
 
-
-
-
-
-
-
-
-
-
 ## Train a model with labels using the API
 
-Now suppose the company Hero Limited sends invoices to its customers. We want to create a custom model that will recognize the data in our industry-specific forms and give an output of accurate key, value pairs in a JSON file, which can be used to automate the process. In order to create a custom model, we will upload a set of training documents to a container, create a Form Recognizer resource, train a model, and test the model. 
+Now suppose the company Hero Limited sends invoices to its customers. We want to create a new custom model. We will be using labeled forms this time. Take a look at the **20-custom-form/forms-with-labels/train** folder to see what we mean.
 
-We will be using labeled forms this time. Take a look at the folder to see what we mean.
+Notice there are four types of files: 
+- **.json**
+- **.jpg**
+- **.jpg.labels.json**
+- **jpg.ocr.json**
 
 > **Note**: In this exercise, you can choose to use the API from either the **C#** or **Python** SDK. In the steps below, perform the actions appropriate for your preferred language.
 
 1. In Visual Studio Code open the **AI-102** project, and in the **Explorer** pane, browse to the **20-custom-form** folder and expand the **C-Sharp** or **Python** folder depending on your language preference.
  
-2. Right-click the **train-with-labels** folder and open an integrated terminal. Then install the Form Recognizer package by running the appropriate command for your language preference:
+2. Right-click the **train-with-labels** folder and open an integrated terminal. If you have not already done so, install the Form Recognizer package by running the appropriate command for your language preference:
 
    **C#**
 
@@ -217,13 +211,7 @@ We will be using labeled forms this time. Take a look at the folder to see what 
    pip install azure-ai-formrecognizer
    ```
 
-3. In addition to using the Azure Portal, we can use the command line interface to create a storage account and container. We will create a second container in our storage account and upload the form files. 
-
-Notice there are four types of files: 
-- **.json**
-- **.jpg**
-- **.jpg.labels.json**
-- **jpg.ocr.json**
+3. We will create another Azure Blob in our container and upload our labeled form files from the **20-custom-form/forms-with-labels/train** folder. 
 
 4. View the contents of the **train-with-labels** folder, and note that it contains a file for configuration settings:
     - **C#**: appsettings.json
@@ -257,7 +245,7 @@ Notice there are four types of files:
     Open the code file and review the code it contains, noting the following details:
     - Namespaces from the package you installed are imported
     - The **Main** function retrieves the configuration settings, and uses the key and endpoint to create an authenticated **Client**.
-    - The **Train_Model** function creates a new training iteration for the project and waits for training to complete.
+    
 6. Return the integrated terminal for the **train-with-labels** folder, and enter the following command to run the program:
 
     **C#**
@@ -299,7 +287,7 @@ Now that you've got the model ID, test out the model. Once again, you can choose
     python test-model-with-labels.py
     ```
 
-6. View the output. 
+6. View the output and notice the prediction confidence scores.   
 
 ## More information
 
