@@ -12,30 +12,18 @@ If you have not already done so, you must clone the code repository for this cou
 2. Open the palette (SHIFT+CTRL+P) and run a `Git: Clone` command to clone the `https://github/com/MicrosoftLearning/AI-102-AIEngineer` repository to a local folder.
 3. When the repository has been cloned, open the folder in Visual Studio Code.
 
-## Create a Form Recognizer resource
-
-You will need to create a **Form Recognizer** Azure resource.  
-
-1. Navigate to the Microsoft account associated with your Azure subscription at [https://portal.azure.com](https://portal.azure.com).
-2. Select the **&#65291;Create a resource** button, search for *Form Recognizer*, and create a **Form Recognizer** resource with the following settings:
-    - **Subscription**: *Your Azure subscription*
-    - **Resource group**: *Choose or create a resource group (if you are using a restricted subscription, you may not have permission to create a new resource group - use the one provided)*
-    - **Region**: *Choose any available region*
-    - **Name**: *Enter a unique name*
-    - **Pricing tier**: F0
-
-    > **Note**: If you already have an F0 custom vision service in your subscription, select **S0** for this one.
-
 3. Wait for the resources to be created, and then view the deployment details by navigating to the resource group where you created them.
 
-## Custom Form Case: Margie's Travels 
+## Custom Form Case: Hero Limited
 ### Training a custom model with forms without labels 
 
-Suppose the company Margie's Travels requires customers to apply for travel insurance by filling out a form. Although the forms are returned digitally, an employee at Margie's Travels is still manually transferring the data in the forms from the PDF to a database. 
+Suppose the company Hero Limited sends out invoices. Although the forms are sent digitally, an employee at Hero Limited is still manually transferring the data in the forms to a database. 
 
 We want to create a custom model that will recognize the data in our industry-specific forms and give an output of accurate key, value pairs in a JSON file, which can be used to automate the process. In order to create a custom model, we will upload a set of training documents to a container, create a Form Recognizer resource, train a model, and test the model. 
 
 ## Gather training data 
+
+Take a look at the files in **20-custom-form/sample-forms/train**.  
 
 ### Create An Azure Storage blob 
 
@@ -73,7 +61,7 @@ You do not need to configure Advanced settings for this exercise. Select **Creat
 We use block blobs to store data in the cloud, like files, images, and videos. Upload a block blob with your training forms to your container following these steps: 
 
 1. Navigate to the container you just created above.  
-2. Select the **Upload** button and browse your local file system. You will want to access the local folder where you cloned this repository. Select the pdf forms located in the **20-custom-form/forms-without-labels/train** folder. 
+2. Select the **Upload** button and browse your local file system. You will want to access the local folder where you cloned this repository. Select the pdf forms located in the **20-custom-form/sample-forms/train** folder. 
 
 3. Upload the files as a block blob by selecting **Upload**. You do not need to configure Advanced settings for this exercise. 
 
@@ -103,7 +91,25 @@ Now we will use Form Recognizer via the SDK.
     - **C#**: appsettings.json
     - **Python**: .env
 
-    Open the configuration file. 
+    Open the configuration file. We will need a key, endpoint, and the URI for our stored sample forms.  
+    
+    ## Create a Form Recognizer resource and get Key and Endpoint
+
+    You will need to create a **Form Recognizer** Azure resource.  
+    
+    1. Navigate to the Microsoft account associated with your Azure subscription at [https://portal.azure.com](https://portal.azure.com).
+    2. Select the **&#65291;Create a resource** button, search for *Form Recognizer*, and create a **Form Recognizer** resource with the following settings:
+        - **Subscription**: *Your Azure subscription*
+        - **Resource group**: *Choose or create a resource group (if you are using a restricted subscription, you may not have permission to create a new resource group - use the one provided)*
+        - **Region**: *Choose any available region*
+        - **Name**: *Enter a unique name*
+        - **Pricing tier**: F0
+
+    > **Note**: If you already have an F0 custom vision service in your subscription, select **S0** for this one.
+
+    3. Select **Keys and Endpoint** on the left hand panel. Copy the key and endpoint into the configuration file. 
+    
+    Now we will obtain our storage blob's URI.  
 
     ### Get Container's Shared Access Signature
 
@@ -185,7 +191,7 @@ Now we will train a model using labels.
 
 ## Train a model with labels using the API
 
-Now suppose the company Hero Limited sends invoices to its customers. We want to create a new custom model. We will be using labeled forms this time. Take a look at the **20-custom-form/forms-with-labels/train** folder to see what we mean.
+Now suppose we have labels for the same forms we used to train a model above, and want to train a new custom model with labeled data. We will be using labeled forms this time. Take a look at the **20-custom-form/sample-forms/train** folder to see what we mean.
 
 Notice there are four types of files: 
 - **.json**
