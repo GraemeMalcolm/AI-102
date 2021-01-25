@@ -1,28 +1,27 @@
 # Use the Form Recognizer to train a custom model 
 
-**Form Recognizer** is a cognitive service that can extract key, value pairs of information from documents using optical character recognition (OCR). Form Recognizer has pre-built models for recognizing invoices, receipts, and business cards. The service also gives you the capability to create custom models, trained for your industry-specific forms. In this exercise, you will use the Form Recognizer service to train and test a custom form recognition model.  
+**Form Recognizer** is a cognitive service that can extract key, value pairs of information from documents using optical character recognition (OCR). Form Recognizer has pre-built models for recognizing invoices, receipts, and business cards. The service also gives you the capability to create custom models, trained for your industry-specific forms. In this exercise, you will use the Form Recognizer service to train and test custom form recognition models, first using training forms **without** labels, then using training forms **with** labels. 
+
+We can train a custom Form Recognizer model with labeled data or data without labels. We will first train a model using forms without labels and test it. Then we will train a model using forms with labels and test that model.  
 
 ## Clone the repository for this course
 
 If you have not already done so, you must clone the code repository for this course:
 
 1. Start Visual Studio Code.
-2. Open the palette (SHIFT+CTRL+P) and run a `Git: Clone` command to clone the `https://github/com/GraemeMalcolm/AI-102` repository to a local folder.
+2. Open the palette (SHIFT+CTRL+P) and run a `Git: Clone` command to clone the `https://github/com/MicrosoftLearning/AI-102-AIEngineer` repository to a local folder.
 3. When the repository has been cloned, open the folder in Visual Studio Code.
 
-## Getting started 
+## Custom Form Case: Margie's Travels 
+### Training a custom model with forms without labels 
 
 Suppose the company Margie's Travels requires customers to apply for travel insurance by filling out a form. Although the forms are returned digitally, an employee at Margie's Travels is still manually transferring the data in the forms from the PDF to a database. 
 
 We want to create a custom model that will recognize the data in our industry-specific forms and give an output of accurate key, value pairs in a JSON file, which can be used to automate the process. In order to create a custom model, we will upload a set of training documents to a container, create a Form Recognizer resource, train a model, and test the model. 
 
-### (!) Important
-We can train a custom Form Recognizer model with labeled data or data without labels. We will first train a model using forms without labels and test it. Then we will train a model using forms with labels and test that model. 
-
-Next we will store a set of training data to a container. 
-
 ## Gather training data 
 
+Take a look at the 
 ### Create An Azure Storage blob 
 
 To provide your own training data to the Train Custom Model operation, you need to provide a minimum of **five** filled-in forms or an empty form (you must include the word "empty" in the file name) and two filled-in forms.
@@ -182,6 +181,17 @@ Now that you've got the model ID, you can use it from a client application. Once
 6. View the output. 
 
 Now we will train a model using labels. 
+
+
+
+
+
+
+
+
+
+
+
 
 ## Train a model with labels using the API
 
