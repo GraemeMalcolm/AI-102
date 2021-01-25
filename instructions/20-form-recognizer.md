@@ -34,61 +34,45 @@ Notice there are four types of files:
 
 When we train a model without labels we will only uses the **.jpg** files. When we a train a model with labels we will use both the **.jpg** and the **.json** files.
 
-## Store training data
-
 To provide your own training data to the Train Custom Model operation, you need to provide a minimum of **five** filled-in forms or an empty form (you must include the word "empty" in the file name) and two filled-in forms.
 
 The full custom model input requirements can be found [https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#custom-model-input-requirements](here).    
 
 We'll use the sample forms in the **sample-forms** folder and upload the set of form documents to an Azure blob storage container. To do this we'll create a container and upload a block blob.  
 
-### Create a container 
+## Store training data in an Azure blob storage container 
 
-We'll use the command line interface to create a container and upload our sample forms as a blob. 
+1. Open the Azure portal at [https://portal.azure.com](https://portal.azure.com), and sign in using the Microsoft account associated with your Azure subscription.
+2. View the **Resource groups** in your subscription.
+3. If you are using a restricted subscription in which a resource group has been provided for you, select the resource group to view its properties. Otherwise, create a new resource group with a name of your choice, and go to it when it has been created.
+4. On the **Overview** page for your resource group, note the **Subscription ID** and **Location**. You will need these values, along with the name of the resource group in subsequent steps.
+5. In Visual Studio Code, in the **AI-102** project, expand the **20-custom-form** folder and select **setup.cmd**. You will use this batch script to run the Azure command line interface (CLI) commands required to create the Azure resources you need.
+6. Right-click the the **20-custom-form** folder and select **Open in Integrated Terminal**.
+7. In the terminal pane, enter the following command to establish an authenticated connection to your Azure subscription.
 
-1. Sign in using the Microsoft account associated with your Azure subscription.
+    ```bash
+    az login --output none
+    ```
 
-```
-az-login 
-```
+8. When prompted, open `https://microsoft.com/devicelogin`, enter the provided code, and sign into your Azure subscription. Then return to Visual Studio Code and wait for the sign-in process to complete.
+9. Run the following command to list Azure locations.
 
-2. Create a storage account: 
+    ```bash
+    az account list-locations -o table
+    ```
 
-```
-az storage account create \
-    --name <storage-account> \
-    --resource-group <resource-group> \
-    --location <location> \
-    --sku Standard_ZRS \
-    --encryption-services blob
-```
+10. In the output, find the **Name** value that corresponds with the location of your resource group (for example, for *East US* the corresponding name is *eastus*).
+11. In the **setup.cmd** script, modify the **subscription_id**, **resource_group**, and **location** variable declarations with the appropriate values for your subscription ID, resource group name, and location name. Then save your changes.
+12. In the terminal for the **20-custom-form** folder, enter the following command to run the script:
 
-3. Wait for the resource to be created. 
+    ```bash
+    setup
+    ```
+13. When the script completes, review the output it displays and note the following information about your Azure resources (you will need these values later):
+    - Storage account name
+    - Storage connection string
 
-```
-az ad signed-in-user show --query objectId -o tsv | az role assignment create \
-    --role "Storage Blob Data Contributor" \
-    --assignee @- \
-    --scope "/subscriptions/<subscription>/resourceGroups/<resource-group>/providers/Microsoft.Storage/storageAccounts/<storage-account>"
-
-az storage container create \
-    --account-name <storage-account> \
-    --name <container> \
-    --auth-mode login
-```
- 
-### Upload a block blob 
-
-We use block blobs to store data in the cloud, like files, images, and videos. Upload a block blob with your training forms to your container following these steps: 
-
-```
-az storage blob upload \
-    --account-name <storage-account> \
-    --container-name <container> \
-    --name helloworld \
-    --file helloworld \
-    --auth-mode login
-```
+14. In the Azure portal, refresh the resource group and verify that it contains the Azure Storage account and a blob file with the forms from the **sample-forms** folder. 
 
 ## Train a model **without labels** using the API
 
@@ -118,7 +102,7 @@ Now we will use Form Recognizer via the SDK.
 
     Open the configuration file. We will need a key, endpoint, and the URI for our stored sample forms.  
     
-    ## Create a Form Recognizer resource and get Key and Endpoint
+    ### Create a Form Recognizer resource and get Key and Endpoint
 
     You will need to create a **Form Recognizer** Azure resource.  
     
