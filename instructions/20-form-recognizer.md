@@ -22,7 +22,7 @@ We want to create a custom model that will recognize the data in our industry-sp
 
 ## Gather training data 
 
-![An image of a Hero Limited invoice.](../20-custom-form/sample-forms/Form_1.jpg)
+![An image of a Hero Limited invoice.](../20-custom-form/sample-forms/train/Form_1.jpg)
 
 Take a look at the files in **20-custom-form/sample-forms/train**. We will be using these sample forms to train two models, one with labels, and one without labels. The **sample-forms** file contains all the forms we will need to train both models.  
 
