@@ -45,6 +45,7 @@ The full custom model input requirements can be found [https://docs.microsoft.co
 
 We'll use the sample forms in the **sample-forms** folder and upload the set of form documents to an Azure blob storage container. To do this we'll create a container and upload a block blob.  
 
+<a id="blob"></a>
 ## Store training data in an Azure blob storage container 
 
 1. Open the Azure portal at [https://portal.azure.com](https://portal.azure.com), and sign in using the Microsoft account associated with your Azure subscription.
@@ -86,7 +87,9 @@ Now we will use Form Recognizer via the SDK.
 
 1. In Visual Studio Code open the **AI-102** project, and in the **Explorer** pane, browse to the **20-custom-form** folder and expand the **C-Sharp** or **Python** folder depending on your language preference.
  
-2. Right-click the **train-without-labels** folder and open an integrated terminal. Then install the Form Recognizer package by running the appropriate command for your language preference:
+2. Right-click the **train-without-labels** folder and open an integrated terminal.
+<a id="package"></a>
+Install the Form Recognizer package by running the appropriate command for your language preference:
 
    **C#**
 
@@ -106,6 +109,7 @@ Now we will use Form Recognizer via the SDK.
 
     Open the configuration file. We will need a key, endpoint, and the URI for our stored sample forms.  
     
+    <a id="getform"></a>
     ### Create a Form Recognizer resource and get your Key and Endpoint
 
     You will need to create a **Form Recognizer** Azure resource.  
@@ -123,7 +127,8 @@ Now we will use Form Recognizer via the SDK.
     3. Select **Keys and Endpoint** on the left hand panel. Copy the key and endpoint into the configuration file. 
     
     Now we will obtain our storage blob's URI.  
-
+    
+    <a id ="sig"></a>
     ### Get Container's Shared Access Signature
 
     From the main menu of your Storage Account, navigate to **Storage Explorer**, select **BLOB CONTAINERS**, and right click on the container with your form training data. 
@@ -138,7 +143,7 @@ Now we will use Form Recognizer via the SDK.
     - Time Zone: Local 
     - Permissions: _Select **Read** and **List**_ 
 
-    Select **Create** and copy the **URI** to the **STORAGE_URL** configuration value.
+    Select **Create** and copy the **URI**. Paste it to your local configuration file's **STORAGE_URL** value.
 
      Update the configuration values it contains to reflect the endpoint and key for your Form Recognizer resource, and container Shared Access Signature. 
   
@@ -207,43 +212,18 @@ Now suppose we have labels for the same forms we used to train a model above, an
 
 1. In Visual Studio Code open the **AI-102** project, and in the **Explorer** pane, browse to the **20-custom-form** folder and expand the **C-Sharp** or **Python** folder depending on your language preference.
  
-2. Right-click the **train-with-labels** folder and open an integrated terminal. If you have not already done so, install the Form Recognizer package by running the appropriate command for your language preference:
+2. Right-click the **train-with-labels** folder and open an integrated terminal. If you have not already done so, [see here for directions](#package) to install the Form Recognizer package by running the appropriate command for your language. 
 
-   **C#**
-
-    ```
-    dotnet add package Azure.AI.FormRecognizer --version 3.0.0 
-    ```
-
-   **Python**
-
-   ```
-   pip install azure-ai-formrecognizer
-   ```
-
-3. We will create another Azure Blob in our container and upload our labeled form files from the **20-custom-form/forms-with-labels/train** folder. 
+3. If you have not created an Azure blob yet for the Form Recognizer lab, please [see here for directions](#blob). Otherwise your blob should already contain images of our sample forms and labeled **.json** files. When we trained a model without labels we only used the **.jpg** forms. Now we will train a model using the **.jpg** and **.json** files from this Azure blob.  
 
 4. View the contents of the **train-with-labels** folder, and note that it contains a file for configuration settings:
     - **C#**: appsettings.json
     - **Python**: .env
 
-    Open the configuration file. Use the same key and endpoint from the form recognizer you created earlier. 
+    Open the configuration file. Use the same key and endpoint from the form recognizer you created earlier. You will also want to use the same storage URI (Shared Access Signature) as you did to configure settings to train a model without labels. You can refer to the previous sections if you have not created either your container's Shared Access Signature or a Form Recognizer resource.   
 
-    ### Get Container's Shared Access Signature
-
-    From the main menu of your Storage Account, navigate to **Storage Explorer**, select **BLOB CONTAINERS**, and right click on the container with your form training data. 
-
-    ![Visual of how to get shared access signature.](../20-custom-form/shared_access_sig.jpg)
- 
-     Select **Get Shared Access Signature**. Then use the following configurations: 
-   
-    - Access Policy: (none)
-    - Start time: *leave as is for this exercise* 
-    - End time: *leave as is for this exercise* 
-    - Time Zone: Local 
-    - Permissions: _Select **Read** and **List**_ 
-
-    Select **Create** and copy the **URI** to the **STORAGE_URL** configuration value.
+    - [Get Container's Shared Access Signature](#sig)
+    - [Create a Form Recognizer resource](#getform)
 
      Update the configuration values it contains to reflect the endpoint and key for your Form Recognizer resource, and container Shared Access Signature. 
   
