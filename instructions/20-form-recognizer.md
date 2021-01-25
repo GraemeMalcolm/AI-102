@@ -44,35 +44,51 @@ We'll use the sample forms in the **sample-forms** folder and upload the set of 
 
 ### Create a container 
 
-1. In a new browser tab, open the Azure portal at [https://portal.azure.com](https://portal.azure.com), and sign in using the Microsoft account associated with your Azure subscription.
+We'll use the command line interface to create a container and upload our sample forms as a blob. 
 
-2. Expand the portal menu by clicking on the three lines at the top left hand of the screen. Click on Storage accounts, and create a **Storage Account** resource with the following settings:
+1. Sign in using the Microsoft account associated with your Azure subscription.
 
-    - **Subscription**: *Your Azure subscription*
-    - **Resource group**: *Choose or create a resource group (if you are using a restricted subscription, you may not have permission to create a new resource group - use the one provided)*
-    - **Storage account name**: *Enter a unique name*
-    - **Location**: *Choose any available region*
-    - **Performance**: Standard
-    - **Account kind**: StorageV2 (general purpose v2)
-    - **Replication**: Read-access geo-redundant storage (RA-GRS)
+```
+az-login 
+```
 
-Click Review + Create.  
+2. Create a storage account: 
 
-3. Wait for the resource to be created. Once it is ready, view the deployment details in the overview page. On the deployment details page, click on **Containers** and create a new container by clicking on **+ Container** with the following settings: 
-    
-    - **Name**: *Enter a unique name, lowercase* 
-    - **Public access level**: Private (no anonymous access) 
+```
+az storage account create \
+    --name <storage-account> \
+    --resource-group <resource-group> \
+    --location <location> \
+    --sku Standard_ZRS \
+    --encryption-services blob
+```
 
-You do not need to configure Advanced settings for this exercise. Select **Create** to create the container. 
+3. Wait for the resource to be created. 
+
+```
+az ad signed-in-user show --query objectId -o tsv | az role assignment create \
+    --role "Storage Blob Data Contributor" \
+    --assignee @- \
+    --scope "/subscriptions/<subscription>/resourceGroups/<resource-group>/providers/Microsoft.Storage/storageAccounts/<storage-account>"
+
+az storage container create \
+    --account-name <storage-account> \
+    --name <container> \
+    --auth-mode login
+```
  
 ### Upload a block blob 
 
 We use block blobs to store data in the cloud, like files, images, and videos. Upload a block blob with your training forms to your container following these steps: 
 
-1. Navigate to the container you just created above.  
-2. Select the **Upload** button and browse your local file system. You will want to access the local folder where you cloned this repository. Select the pdf forms located in the **20-custom-form/sample-forms/train** folder. 
-
-3. Upload the files as a block blob by selecting **Upload**. You do not need to configure Advanced settings for this exercise. 
+```
+az storage blob upload \
+    --account-name <storage-account> \
+    --container-name <container> \
+    --name helloworld \
+    --file helloworld \
+    --auth-mode login
+```
 
 ## Train a model **without labels** using the API
 
@@ -165,12 +181,9 @@ Now we will use Form Recognizer via the SDK.
 7. Review the model. 
 8. Copy the Model ID in the terminal output. You will use your Model ID when analyzing new forms.  
 
-## Analyze new forms 
-
 Now you're ready use your trained model. Notice how we trained our model using files from a storage container URI. We could also have trained our model using local files. Similarly, we can test our model using forms from a URI or from local files. We will test our form model with a local file using the **StartRecognizeCustomForms** method. However, you can also analyze new forms from a URI using the **StartRecognizeCustomFormsFromUri** method. 
 
 ## Test the model 
-
 Now that you've got the model ID, you can use it from a client application. Once again, you can choose to use **C#** or **Python**.
 
 1. In Visual Studio Code, in the **AI-102** project, browse to the **20-custom-form** folder and in the folder for your preferred language (**C-Sharp** or **Python**), expand the **test-without-labels** folder.
@@ -200,7 +213,7 @@ Now we will train a model using labels.
 
 ## Train a model with labels using the API
 
-Now suppose we have labels for the same forms we used to train a model above, and want to train a new custom model with labeled data. We will be using labeled forms this time. We have already uploaded all the image files. If you have not done so, please return to the top of the page and follow instructions to upload the sample form files to a Storage Blob. 
+Now suppose we have labels for the same forms we used to train a model above, and want to train a new custom model with labeled data. We will be using labeled forms this time. If you have not done so, please return to the top of the page and follow instructions to upload all the sample form files to a Storage Blob. 
 
 > **Note**: In this exercise, you can choose to use the API from either the **C#** or **Python** SDK. In the steps below, perform the actions appropriate for your preferred language.
 
@@ -226,7 +239,7 @@ Now suppose we have labels for the same forms we used to train a model above, an
     - **C#**: appsettings.json
     - **Python**: .env
 
-    Open the configuration file. 
+    Open the configuration file. Use the same key and endpoint from the form recognizer you created earlier. 
 
     ### Get Container's Shared Access Signature
 
