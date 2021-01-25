@@ -15,7 +15,6 @@ If you have not already done so, you must clone the code repository for this cou
 3. Wait for the resources to be created, and then view the deployment details by navigating to the resource group where you created them.
 
 ## Custom Form Case: Hero Limited
-### Training a custom model with forms without labels 
 
 Suppose the company Hero Limited sends out invoices. Although the forms are sent digitally, an employee at Hero Limited is still manually transferring the data in the forms to a database. 
 
@@ -23,15 +22,25 @@ We want to create a custom model that will recognize the data in our industry-sp
 
 ## Gather training data 
 
-Take a look at the files in **20-custom-form/sample-forms/train**.  
+![An image of a Hero Limited invoice.](../20-custom-form/sample-forms/Form_1.jpg)
 
-### Create An Azure Storage blob 
+Take a look at the files in **20-custom-form/sample-forms/train**. We will be using these sample forms to train two models, one with labels, and one without labels. The **sample-forms** file contains all the forms we will need to train both models.  
+
+Notice there are four types of files: 
+- **.json**
+- **.jpg**
+- **.jpg.labels.json**
+- **jpg.ocr.json**
+
+When we train a model without labels we will only uses the **.jpg** files. When we a train a model with labels we will use both the **.jpg** and the **.json** files.
+
+## Store training data
 
 To provide your own training data to the Train Custom Model operation, you need to provide a minimum of **five** filled-in forms or an empty form (you must include the word "empty" in the file name) and two filled-in forms.
 
 The full custom model input requirements can be found [https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#custom-model-input-requirements](here).    
 
-We'll use the sample forms in the sample_forms folder and upload the set of form documents to an Azure blob storage container. To do this we'll create a container and upload a block blob.  
+We'll use the sample forms in the **sample-forms** folder and upload the set of form documents to an Azure blob storage container. To do this we'll create a container and upload a block blob.  
 
 ### Create a container 
 
@@ -65,7 +74,7 @@ We use block blobs to store data in the cloud, like files, images, and videos. U
 
 3. Upload the files as a block blob by selecting **Upload**. You do not need to configure Advanced settings for this exercise. 
 
-## Train a model without labels using the API
+## Train a model **without labels** using the API
 
 Now we will use Form Recognizer via the SDK.  
 
@@ -191,13 +200,7 @@ Now we will train a model using labels.
 
 ## Train a model with labels using the API
 
-Now suppose we have labels for the same forms we used to train a model above, and want to train a new custom model with labeled data. We will be using labeled forms this time. Take a look at the **20-custom-form/sample-forms/train** folder to see what we mean.
-
-Notice there are four types of files: 
-- **.json**
-- **.jpg**
-- **.jpg.labels.json**
-- **jpg.ocr.json**
+Now suppose we have labels for the same forms we used to train a model above, and want to train a new custom model with labeled data. We will be using labeled forms this time. We have already uploaded all the image files. If you have not done so, please return to the top of the page and follow instructions to upload the sample form files to a Storage Blob. 
 
 > **Note**: In this exercise, you can choose to use the API from either the **C#** or **Python** SDK. In the steps below, perform the actions appropriate for your preferred language.
 
