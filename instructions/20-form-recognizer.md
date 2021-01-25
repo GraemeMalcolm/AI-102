@@ -1,8 +1,6 @@
-# Use the Form Recognizer to train a custom model 
+# Train and test a custom model with Form Recognizer 
 
-**Form Recognizer** is a cognitive service that can extract key, value pairs of information from documents using optical character recognition (OCR). Form Recognizer has pre-built models for recognizing invoices, receipts, and business cards. The service also gives you the capability to create custom models, trained for your industry-specific forms. In this exercise, you will use the Form Recognizer service to train and test custom form recognition models, first using training forms **without** labels, then using training forms **with** labels. 
-
-We can train a custom Form Recognizer model with labeled data or data without labels. We will first train a model using forms without labels and test it. Then we will train a model using forms with labels and test that model.  
+**Form Recognizer** is a cognitive service that can extract key, value pairs of information from documents using optical character recognition (OCR). Form Recognizer has pre-built models for recognizing invoices, receipts, and business cards. The service also gives you the capability to create custom models, trained for your industry-specific forms. We will build custom models in this exercise.
 
 ## Clone the repository for this course
 
@@ -16,9 +14,16 @@ If you have not already done so, you must clone the code repository for this cou
 
 ## Custom Form Case: Hero Limited
 
-Suppose the company Hero Limited sends out invoices. Although the forms are sent digitally, an employee at Hero Limited is still manually transferring the data in the forms to a database. 
+Suppose you are an AI Engineer asked to automate the collection of invoice data for the company Hero Limited. Currently an employee at Hero Limited is still manually reading the data on each invoice and typing it into a database. You will use the Form Recognizer service to train and test custom form recognition models, first using training forms **without** labels, then using training forms **with** labels. 
 
-We want to create a custom model that will recognize the data in our industry-specific forms and give an output of accurate key, value pairs in a JSON file, which can be used to automate the process. In order to create a custom model, we will upload a set of training documents to a container, create a Form Recognizer resource, train a model, and test the model. 
+We can train a custom Form Recognizer model with labeled data or data without labels. We will first train a model using forms without labels and test it. Then we will train a model using forms with labels and test that model.  
+
+Overview of steps: 
+- Gather and upload training documents to an Azure Blob Container
+- Create a Form Recognizer resource, taking note of its keys and endpoint
+- Configure our environment
+- Run a program to train a model with or without labels
+- Run a program to test the model trained with or without labels 
 
 ## Gather training data 
 
@@ -68,11 +73,10 @@ We'll use the sample forms in the **sample-forms** folder and upload the set of 
     ```bash
     setup
     ```
-13. When the script completes, review the output it displays and note the following information about your Azure resources (you will need these values later):
+13. When the script completes, review the output it displays and note the following information about your Azure resource:
     - Storage account name
-    - Storage connection string
 
-14. In the Azure portal, refresh the resource group and verify that it contains the Azure Storage account and a blob file with the forms from the **sample-forms** folder. 
+14. In the Azure portal, refresh the resource group and verify that it contains the Azure Storage account and a blob file with the forms from the local **20-custom-form/sample-forms/train** folder. 
 
 ## Train a model **without labels** using the API
 
@@ -102,7 +106,7 @@ Now we will use Form Recognizer via the SDK.
 
     Open the configuration file. We will need a key, endpoint, and the URI for our stored sample forms.  
     
-    ### Create a Form Recognizer resource and get Key and Endpoint
+    ### Create a Form Recognizer resource and get your Key and Endpoint
 
     You will need to create a **Form Recognizer** Azure resource.  
     
