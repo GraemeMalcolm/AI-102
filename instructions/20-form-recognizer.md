@@ -14,14 +14,14 @@ If you have not already done so, you must clone the code repository for this cou
 
 ## Custom Form Case: Hero Limited
 
-Suppose you are an AI Engineer asked to automate the collection of invoice data for the company Hero Limited. Currently an employee at Hero Limited is still manually reading the data on each invoice and typing it into a database. You will use the Form Recognizer service to train and test custom form recognition models, first using training forms **without** labels, then using training forms **with** labels. 
+Suppose you are asked to automate the collection of invoice data for the company Hero Limited. Currently an employee at Hero Limited is still manually reading the data on each invoice and typing it into a database. You will use the Form Recognizer service to train and test custom form recognition models, first using training forms **without** labels, then using training forms **with** labels. These models will take in the invoice, and produce a file with key value pairs that can be used to automatically update a database. 
 
-We can train a custom Form Recognizer model with labeled data or data without labels. We will first train a model using forms without labels and test it. Then we will train a model using forms with labels and test that model.  
+We will first train a model using forms without labels and test it. Then we will train a model using forms with labels and test that model.  
 
 Overview of steps: 
 - Gather and upload training documents to an Azure Blob Container
 - Create a Form Recognizer resource, taking note of its keys and endpoint
-- Configure our environment
+- Configure our environment variables
 - Run a program to train a model with or without labels
 - Run a program to test the model trained with or without labels 
 
@@ -171,8 +171,8 @@ Install the Form Recognizer package by running the appropriate command for your 
     ```
 
 6. Wait for the program to end. 
-7. Review the model. 
-8. Copy the Model ID in the terminal output. You will use your Model ID when analyzing new forms.  
+7. Review the model output in the terminal. Locate the Model ID.  
+8. Copy the Model ID from the terminal output. You will use it when analyzing new forms.  
 
 Now you're ready use your trained model. Notice how we trained our model using files from a storage container URI. We could also have trained our model using local files. Similarly, we can test our model using forms from a URI or from local files. We will test our form model with a local file using the **StartRecognizeCustomForms** method. However, you can also analyze new forms from a URI using the **StartRecognizeCustomFormsFromUri** method. 
 
