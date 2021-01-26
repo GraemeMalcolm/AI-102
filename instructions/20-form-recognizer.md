@@ -206,7 +206,7 @@ Now that you've got the model ID, you can use it from a client application. Once
 
 6. View the output and notice the prediction confidence scores. Notice how the output provides field names field-1, field-2 etc. 
 
->**Check In**: Can you find either of these identified fields in the terminal output?   
+>**Check In**: Can you find either of these fields in the terminal output?   
 
 >Field 'field-X' has label 'Vendor Name:' with value 'Dwight Schrute' and a confidence score of ..
  
@@ -298,8 +298,12 @@ Now that you've got the model ID, test out the model. Once again, you can choose
 
 4. View the output and notice the prediction confidence scores. Observe how the output for the model trained **with** labels provides field names like "CompanyPhoneNumber" and "DatedAs" unlike the output from the model trained **without** labels, which produced an output of field-1, field-2 etc.   
 
->**Check in**: Now that you have trained a custom model using Form Recognizer _with_ and _without_ labels, what similarities and differences do you see in the processes?
+>**Check in**: Now that you have trained a custom model using Form Recognizer _with_ and _without_ labels, what similarities and differences do you see in the processes? 
+
+While the program code for training a model with labels may not differ greatly from the code for training without labels, choosing one versus another can greatly change your project timeline. For example, if you use labeled forms you will need to label your documents (something we did not cover in this exercise but you can explore [here with the sample labeling tool](https://docs.microsoft.com/en-us/azure/cognitive-services/form-recognizer/quickstarts/label-tool?tabs=v2-0)). The choice of model also affects the downstream processes based on what fields the model returns.  
 
 ## More information
 
 For more information about the Form Recognizer service, see the [Form Recognizer documentation](https://docs.microsoft.com/azure/cognitive-services/form-recognizer/).
+
+
