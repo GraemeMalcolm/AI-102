@@ -1,6 +1,6 @@
-# Train and test a custom model with Form Recognizer 
+# Build custom models with Form Recognizer 
 
-**Form Recognizer** is a cognitive service that can extract key, value pairs of information from documents using optical character recognition (OCR). Form Recognizer has pre-built models for recognizing invoices, receipts, and business cards. The service also gives you the capability to create custom models, trained for your industry-specific forms. We will build custom models in this exercise.
+**Form Recognizer** is a cognitive service that can extract key, value pairs of information from documents using optical character recognition (OCR). Form Recognizer has pre-built models for recognizing invoices, receipts, and business cards. The service also gives you the capability to create custom models, trained to your industry-specific forms. We will build custom models in this exercise.
 
 ## Clone the repository for this course
 
@@ -14,36 +14,32 @@ If you have not already done so, you must clone the code repository for this cou
 
 ## Custom Form Case: Hero Limited
 
-Suppose you are asked to automate the collection of invoice data for the company Hero Limited. Currently an employee at Hero Limited is still manually reading the data on each invoice and typing it into a database. You will use the Form Recognizer service to train and test custom form recognition models, first using training forms **without** labels, then using training forms **with** labels. These models will take in the invoice, and produce a file with key value pairs that can be used to automatically update a database. 
+Suppose you are asked to automate the process of recording invoice data for the company Hero Limited. Currently an employee at Hero Limited manually reads each invoice and enters its data it into a database. We want to build a model that will read an invoice, and produce structured data with key/value pairs that can be used to automatically update a database.   
 
-We will first train a model using forms without labels and test it. Then we will train a model using forms with labels and test that model.  
+You will use the Form Recognizer service to train and test custom form recognition models, first training a model **without** labeled sample forms, then training a model **with** labeled sample forms. 
 
 Overview of steps: 
-- Gather and upload training documents to an Azure Blob Container
+- Gather and upload training documents to an Azure Storage Blob
 - Create a Form Recognizer resource, taking note of its keys and endpoint
 - Configure our environment variables
-- Run a program to train a model with or without labels
+- Run a program to train a model with or without labels 
 - Run a program to test the model trained with or without labels 
 
 ## Gather training data 
 
 ![An image of a Hero Limited invoice.](../20-custom-form/sample-forms/train/Form_1.jpg)
 
-Take a look at the files in **20-custom-form/sample-forms/train**. We will be using these sample forms to train two models, one with labels, and one without labels. The **sample-forms** file contains all the forms we will need to train both models.  
+Take a look at your local files in this repo in the folder **20-custom-form/sample-forms/train**. 
 
-Notice there are four types of files: 
-- **.json**
-- **.jpg**
-- **.jpg.labels.json**
-- **jpg.ocr.json**
+Notice there are files ending in **.json** and **.jpg**. We will upload all the files to our Azure Storage Blob.  
 
-When we train a model without labels we will only uses the **.jpg** files. When we a train a model with labels we will use both the **.jpg** and the **.json** files.
+We will be using the **.jpg** files to train our first model _without_ labels. Notice how the files ending in **.jpg** only contain an image of the invoice. 
 
-To provide your own training data to the Train Custom Model operation, you need to provide a minimum of **five** filled-in forms or an empty form (you must include the word "empty" in the file name) and two filled-in forms.
+Later we will use the files ending in **.json** and **.jpg** to train our second model _with_ labels. The **.json** files contain special label information. To train with labels, you need to have special label information files (<mark>&lt;filename&gt;.jpg.labels.json</mark>) in your blob storage container alongside the forms.
 
-The full custom model input requirements can be found [https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#custom-model-input-requirements](here).    
+ We need to provide a minimum of **five** filled-in forms or an empty form (you must include the word "empty" in the file name) with two filled-in forms. The full custom model input requirements can be found [https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#custom-model-input-requirements](here) and are discussed in depth in the Learn module (no link yet).    
 
-We'll use the sample forms in the **sample-forms** folder and upload the set of form documents to an Azure blob storage container. To do this we'll create a container and upload a block blob.  
+We'll use the sample forms in the **20-custom-form/sample-forms/train** folder and upload the set of form documents to a blob storage container. Use the next set of instructions to create an Azure Storage blob.
 
 <a id="blob"></a>
 ## Store training data in an Azure blob storage container 
@@ -110,7 +106,7 @@ Install the Form Recognizer package by running the appropriate command for your 
     Open the configuration file. We will need a key, endpoint, and the URI for our stored sample forms.  
     
     <a id="getform"></a>
-    ### Create a Form Recognizer resource and get your Key and Endpoint
+    ### Create a Form Recognizer resource and get its key and endpoint
 
     You will need to create a **Form Recognizer** Azure resource.  
     
@@ -126,12 +122,12 @@ Install the Form Recognizer package by running the appropriate command for your 
 
     3. Select **Keys and Endpoint** on the left hand panel. Copy the key and endpoint into the configuration file. 
     
-    Now we will obtain our storage blob's URI.  
+    Now we will obtain our storage blob containers's URI by creating a Shared Access Signature.  
     
     <a id ="sig"></a>
-    ### Get Container's Shared Access Signature
+    ### Create a Shared Access Signature
 
-    From the main menu of your Storage Account, navigate to **Storage Explorer**, select **BLOB CONTAINERS**, and right click on the container with your form training data. 
+    Navigate to the [Azure portal](https://portal.azure.com/) and select your recently created Stoarge Account. From the main menu of your Storage Account, navigate to **Storage Explorer**, select **BLOB CONTAINERS**, and right click on the container **sampleforms**. 
 
     ![Visual of how to get shared access signature.](../20-custom-form/shared_access_sig.jpg)
  
