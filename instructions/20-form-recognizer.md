@@ -1,6 +1,6 @@
 # Build custom models with the Form Recognizer service 
 
-**Form Recognizer** is a cognitive service that lets you build automated data processing software by extracting text, and key/value pairs from form documents using optical character recognition (OCR). Form Recognizer has pre-built models for recognizing invoices, receipts, and business cards. The service also gives you the capability to create custom models, trained to your industry-specific forms. In this exercise, you will focus on building custom models.
+**Form Recognizer** is a cognitive service that lets you build automated data processing software by extracting text, key/value pairs, and tables from form documents using optical character recognition (OCR). Form Recognizer has pre-built models for recognizing invoices, receipts, and business cards. The service also gives you the capability to train custom models using your industry-specific forms. In this exercise, we will focus on building custom models.
 
 ## Clone the repository for this course
 
@@ -11,7 +11,8 @@ If you have not already done so, you must clone the code repository for this cou
 3. When the repository has been cloned, open the folder in Visual Studio Code.
 
 <a id="getform"></a>
-## Create a Form Recognizer resource 
+
+## Create a Form Recognizer resource
 
 1. Navigate to the Microsoft account associated with your Azure subscription at [https://portal.azure.com](https://portal.azure.com).
 2. Select the **&#65291;Create a resource** button, search for *Form Recognizer*, and create a **Form Recognizer** resource with the following settings:
@@ -25,15 +26,14 @@ If you have not already done so, you must clone the code repository for this cou
 
 3. When the resource has been deployed, go to it and view its **Keys and Endpoint** page. You will need the endpoint and one of the keys from this page to manage access from your code later on.
 
-## Custom Form Case: Hero Limited
+## Case: Automating Hero Limited's data entry process
 
-Suppose the company Hero Limited asks you to automate the their data entry process. Currently an employee at Hero Limited manually reads each invoice and enters its data it into a database. You want to build a model that will use a machine learning model to read an invoice and produce structured data that can be used to automatically update a database.   
+Suppose the company Hero Limited asks you to automate their data entry process. Currently an employee at Hero Limited manually reads a purchase order and enters its data into a database. You want to build a model that will use a machine learning model to read the form and produce structured data that can be used to automatically update a database.   
 
 You will use Form Recognizer to train and test custom form recognition models. First you'll train a model **without** labeled sample forms, then train a model **with** labeled sample forms.  
 
 Overview of next steps: 
 - Gather and upload training documents to an Azure Storage Blob
-- Create a Form Recognizer resource, taking note of its keys and endpoint
 - Configure our environment variables
 - Run a program to train a model without labels 
 - Run a program to test the model trained without labels
@@ -43,15 +43,15 @@ Overview of next steps:
 
 ![An image of a Hero Limited invoice.](../20-custom-form/sample-forms/train/Form_1.jpg)
 
- You need to provide a minimum of **five** filled-in forms or an empty form (you must include the word "empty" in the file name) with two filled-in forms.Their format must be JPG, PNG, PDF (text or scanned), or TIFF. The full custom model input requirements can be found [here](https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#custom-model-input-requirements) and are discussed in depth in the Learn module (no link yet).    
+You need to provide a minimum of **five** filled-in forms or an empty form (you must include the word "empty" in the file name) with two filled-in forms.Their format must be JPG, PNG, PDF (text or scanned), or TIFF. The full custom model input requirements can be found [here](https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#custom-model-input-requirements) and are discussed in depth in the Learn module (no link yet).    
 
 You'll use the sample forms in the **20-custom-form/sample-forms/train** folder in this repo, which contain all the files you'll need to train a model with labels and without labels. 
 
-Take a look at the files in the folder. In Visual Studio Code open the **AI-102** project, and in the **Explorer** pane, browse to the **20-custom-form** folder and expand the **sample-forms/train** folder. Notice there are files ending in **.json** and **.jpg**. You will upload all the files to our Azure Storage Blob.   
+>**Important**: Take a look at the files in the folder. In Visual Studio Code open the **AI-102** project, and in the **Explorer** pane, browse to the **20-custom-form** folder and expand the **sample-forms/train** folder. Notice there are files ending in **.json** and **.jpg**. You will upload all the files to your Azure Storage Blob.   
 
-You will first use the **.jpg** files to train our first model _without_ labels.  
+>**Now**: You will use the **.jpg** files to train your first model _without_ labels.  
 
-Later you will use the files ending in **.json** and **.jpg** to train our second model _with_ labels. The **.json** files contain special label information. To train with labels, you need to have special label information files (<mark>&lt;filename&gt;.jpg.labels.json</mark>) in your blob storage container alongside the forms.
+>**Later**: You will use the files ending in **.json** and **.jpg** to train your second model _with_ labels. The **.json** files contain special label information. To train with labels, you need to have special label information files (<mark>&lt;filename&gt;.jpg.labels.json</mark>) in your blob storage container alongside the forms.
 
  Next, create an Azure blob container to store the training form documents.
 
@@ -86,7 +86,9 @@ Later you will use the files ending in **.json** and **.jpg** to train our secon
     ```
 13. When the script completes, review the displayed output and note your Azure resource's Storage account name. 
 
-14. In the Azure portal, refresh the resource group and verify that it contains the Azure Storage account and a blob file with the forms from the local **20-custom-form/sample-forms/train** folder. 
+14. In the Azure portal, refresh the resource group and verify that it contains the Azure Storage account and container with the **sampleforms** blob. The blob should have the forms from your local **20-custom-form/sample-forms/train** folder. 
+
+![Screenshot of sampleforms container.](../20-custom-form/container_img.jpg)
 
 ## Train a model **without labels** using the client library
 
