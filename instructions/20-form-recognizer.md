@@ -300,7 +300,7 @@ Now that you've got the model ID, test out the model. Once again, you can choose
 
 >**Check in**: Now that you have trained a custom model using Form Recognizer _with_ and _without_ labels, what similarities and differences do you see in the processes? 
 
-While the program code for training a model with labels may not differ greatly from the code for training without labels, choosing one versus another can greatly change your project timeline. For example, if you use labeled forms you will need to label your documents (something we did not cover in this exercise but you can explore [here with the sample labeling tool](https://docs.microsoft.com/en-us/azure/cognitive-services/form-recognizer/quickstarts/label-tool?tabs=v2-0)). The choice of model also affects the downstream processes based on what fields the model returns.  
+While the program code for training a model with labels may not differ greatly from the code for training without labels, choosing one versus another can greatly change your project timeline. For example, if you use labeled forms you will need to label your documents (something we did not cover in this exercise but you can explore [here with the sample labeling tool](https://docs.microsoft.com/en-us/azure/cognitive-services/form-recognizer/quickstarts/label-tool?tabs=v2-0)). The choice of model also affects the downstream processes based on what fields the model returns and how confident you are with the returned values.  
 
 ## More information
 
