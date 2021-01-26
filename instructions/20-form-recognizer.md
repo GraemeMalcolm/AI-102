@@ -47,7 +47,7 @@ You need to provide a minimum of **five** filled-in forms or an empty form (you 
 
 You'll use the sample forms in the **20-custom-form/sample-forms/train** folder in this repo, which contain all the files you'll need to train a model with labels and without labels. 
 
->**Important**: Take a look at the files in the folder. In Visual Studio Code open the **AI-102** project, and in the **Explorer** pane, browse to the **20-custom-form** folder and expand the **sample-forms/train** folder. Notice there are files ending in **.json** and **.jpg**. You will upload all the files to your Azure Storage Blob.   
+>**Important**: Take a look at the files in the folder. In the **AI-102** project, and in the **Explorer** pane, select the **20-custom-form** folder and expand the **sample-forms/train** folder. Notice there are files ending in **.json** and **.jpg**. You will run a Bash script that will upload all the files to your Azure Storage Blob.   
 
 >**Now**: You will use the **.jpg** files to train your first model _without_ labels.  
 
@@ -96,7 +96,7 @@ You will use the Form Recognizer SDK to train and test a custom model.
 
 > **Note**: In this exercise, you can choose to use the API from either the **C#** or **Python** SDK. In the steps below, perform the actions appropriate for your preferred language.
 
-1. In Visual Studio Code open the **AI-102** project, and in the **Explorer** pane, browse to the **20-custom-form** folder and expand the **C-Sharp** or **Python** folder depending on your language preference.
+1. Browse to the **20-custom-form** folder and expand the **C-Sharp** or **Python** folder depending on your language preference.
  
 2. Right-click the **train-without-labels** folder and open an integrated terminal.
 <a id="package"></a>
@@ -118,7 +118,7 @@ Install the Form Recognizer package by running the appropriate command for your 
     - **C#**: appsettings.json
     - **Python**: .env
 
-    Open the configuration file. You will need our Form Recognizer's key and endpoint, and the URI of our blob container for our configuration file.
+    Open the configuration file. You will need a Form Recognizer key and endpoint, and the URI of our blob container for our configuration file.
     
     ### Get the Form Recognizer keys and endpoint 
     
@@ -134,7 +134,7 @@ Install the Form Recognizer package by running the appropriate command for your 
 
     ![Visual of how to get shared access signature.](../20-custom-form/shared_access_sig.jpg)
  
-     Select **Get Shared Access Signature**. Then use the following configurations: 
+    Select **Get Shared Access Signature**. Then use the following configurations: 
    
     - Access Policy: (none)
     - Start time: *leave as is for this exercise* 
@@ -142,9 +142,11 @@ Install the Form Recognizer package by running the appropriate command for your 
     - Time Zone: Local 
     - Permissions: _Select **Read** and **List**_ 
 
-    Select **Create** and copy the **URI**. Paste it to your local configuration file's **STORAGE_URL** value.
+    Select **Create** and copy the **URI**. 
+    
+    ![Visual of how to copy Shared Access Signature URI.](../20-custom-form/sas_example.jpg)
 
-     Update the configuration values it contains to reflect the endpoint and key for your Form Recognizer resource, and container Shared Access Signature. 
+    Paste it to your local configuration file's **STORAGE_URL** value.  
   
 4. Note that the **train-without-labels** folder contains a code file for the client application:
 
@@ -154,6 +156,8 @@ Install the Form Recognizer package by running the appropriate command for your 
     Open the code file and review the code it contains, noting the following details:
     - Namespaces from the package you installed are imported
     - The **Main** function retrieves the configuration settings, and uses the key and endpoint to create an authenticated **Client**.
+    > **C#**: The code uses the the training client with the <mark>StartTrainingAsync</mark> function and <mark>useTrainingLabels</mark> parameter.
+    > **Python**: The code uses the training client with the <mark>begin_training</mark> function and <mark>use_training_labels</mark> parameter.  
 
 5. Return the integrated terminal for the **train-without-labels** folder, and enter the following command to run the program:
 
