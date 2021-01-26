@@ -45,7 +45,7 @@ Overview of next steps:
 
 You'll use the sample forms in the **20-custom-form/sample-forms** folder in this repo, which contain all the files you'll need to train a model with labels and without labels. 
 
->**Important**: Take a look at the files in the folder. In the **AI-102** project, and in the **Explorer** pane, select the **20-custom-form** folder and expand the **sample-forms** folder. Notice there are files ending in **.json** and **.jpg**. You will run a Bash script that will upload all these files to your Azure Storage Blob.   
+>**Important**: Take a look at the files in the folder. In the **AI-102** project, and in the **Explorer** pane, select the **20-custom-form** folder and expand the **sample-forms** folder. Notice there are files ending in **.json** and **.jpg**.    
 
 >**Now**: You will use the **.jpg** files to train your first model _without_ labels.  
 
@@ -85,7 +85,7 @@ You can learn more about custom model input requirements [here](https://docs.mic
     ```
 13. When the script completes, review the displayed output and note your Azure resource's Storage account name. 
 
-14. In the Azure portal, refresh the resource group and verify that it contains the Azure Storage account and container with the **sampleforms** blob. The blob should have the forms from your local **20-custom-form/sample-forms** folder. 
+14. In the Azure portal, refresh the resource group and verify that it contains the Azure Storage account just created and a container with the **sampleforms** blob. The blob should contain all the forms from your local **20-custom-form/sample-forms** folder. 
 
 ![Screenshot of sampleforms container.](../20-custom-form/container_img.jpg)
 
@@ -117,12 +117,12 @@ Install the Form Recognizer package by running the appropriate command for your 
     - **C#**: appsettings.json
     - **Python**: .env
 
-    Open the configuration file. You will need a Form Recognizer key and endpoint, and the URI of our blob container for our configuration file.
+    Open the configuration file. You will need a Form Recognizer key and endpoint, and the URI of your blob container for the configuration file.
     
     ### Get the Form Recognizer keys and endpoint 
     
-    1. Navigate from the Azure Portal to to the **Form Recognizer** resource you created earlier. 
-    2. Select **Keys and Endpoint** on the left hand panel. Copy the key and endpoint into the configuration file. 
+    1. Navigate from the Azure Portal to the **Form Recognizer** resource you created earlier. 
+    2. Select **Keys and Endpoint** on the left hand panel. Copy **Key 1** and **Endpoint** into the configuration file. 
     
     <a id ="sig"></a>
     ### Create a Shared Access Signature
@@ -145,7 +145,7 @@ Install the Form Recognizer package by running the appropriate command for your 
     
     ![Visual of how to copy Shared Access Signature URI.](../20-custom-form/sas_example.jpg)
 
-    4. Paste it to your local configuration file's **STORAGE_URL** value.  
+    4. Paste it to your local configuration file's storage url value. 
   
 4. Note that the **train-without-labels** folder contains a code file for the client application:
 
@@ -174,7 +174,7 @@ Install the Form Recognizer package by running the appropriate command for your 
     ```
 
 6. Wait for the program to end. 
-7. Review the model output in the terminal. Locate the Model ID.  
+7. Review the model output and locate the Model ID in the terminal.  
 8. Copy the Model ID from the terminal output. You will use it when analyzing new forms.  
 
 Now you're ready use your trained model. Notice how you trained your model using files from a storage container URI. You could also have trained the model using local files. Similarly, you can test your model using forms from a URI or from local files. You will test the form model with a local file. 
