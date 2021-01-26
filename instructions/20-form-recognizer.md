@@ -273,7 +273,7 @@ Now that you've got the model ID, test out the model. Once again, you can choose
     python test-model-with-labels.py
     ```
 
-6. View the output and notice the prediction confidence scores.   
+6. View the output and notice the prediction confidence scores. Notice how the output provides field names like "CompanyPhoneNumber" and "DatedAs" unlike the output from the model trained without labels, which produced an output of field-1, field-2 etc.   
 
 ## More information
 
