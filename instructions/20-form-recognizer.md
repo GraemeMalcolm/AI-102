@@ -41,7 +41,7 @@ Overview of next steps:
 
 ## Gather documents for training
 
-![An image of a Hero Limited invoice.](../20-custom-form/sample-forms/train/Form_1.jpg)  
+![An image of a Hero Limited invoice.](../20-custom-form/sample-forms/Form_1.jpg)  
 
 You'll use the sample forms in the **20-custom-form/sample-forms** folder in this repo, which contain all the files you'll need to train a model with labels and without labels. 
 
@@ -87,7 +87,7 @@ You can learn more about custom model input requirements [here](https://docs.mic
 
 14. In the Azure portal, refresh the resource group and verify that it contains the Azure Storage account just created and a container with the **sampleforms** blob. The blob should contain all the forms from your local **20-custom-form/sample-forms** folder. 
 
-![Screenshot of sampleforms container.](../20-custom-form/container_img.jpg)
+![Screenshot of sampleforms container.](./images/container_img.jpg)
 
 ## Train a model **without labels** using the client library
 
@@ -131,7 +131,7 @@ Install the Form Recognizer package by running the appropriate command for your 
 
     1. Navigate from the Azure Portal to your resources. From the main menu of your Storage Account, navigate to **Storage Explorer**, select **BLOB CONTAINERS**, and right click on the container **sampleforms**. 
 
-    ![Visual of how to get shared access signature.](../20-custom-form/shared_access_sig.jpg)
+    ![Visual of how to get shared access signature.](./images/shared_access_sig.jpg)
  
     2. Select **Get Shared Access Signature**. Then use the following configurations: 
    
@@ -143,7 +143,7 @@ Install the Form Recognizer package by running the appropriate command for your 
 
     3. Select **Create** and copy the **URI**. 
     
-    ![Visual of how to copy Shared Access Signature URI.](../20-custom-form/sas_example.jpg)
+    ![Visual of how to copy Shared Access Signature URI.](./images/sas_example.jpg)
 
     4. Paste it to your local configuration file's storage url value. 
   

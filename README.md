@@ -22,7 +22,7 @@ These exercises are currently in development.
 - [Exercise 17: Detect objects in images with Custom Vision](./instructions/17-object-detection.md)
 - [Exercise 18: Detect and recognize faces](./instructions/18-face-service.md)
 - [Exercise 19: Read text in images with Computer Vision](./instructions/19-ocr.md)
-- Exercise 20: Create a custom form recognition model with Form Recognizer
+- [Exercise 20: Create a custom form recognition model with Form Recognizer](./instructions/20-custom-form)
 - [Exercise 21: Analyze video with Video Indexer](./instructions/21-video-indexer.md)
 - [Exercise 22: Create an Azure Cognitive Search solution](./instructions/22-azure-search.md)
 - [Exercise 23: Create a custom skill for Azure Cognitive Search](./instructions/23-search-skills.md)
