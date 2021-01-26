@@ -26,5 +26,4 @@ call az storage blob upload-batch -d sampleforms -s ./sample-forms/train --accou
 
 echo -------------------------------------
 echo Storage account: ai102form!unique_id!
-call az storage account show-connection-string --subscription !subscription_id! --resource-group !resource_group! --name ai102form!unique_id!
-echo ----
+
