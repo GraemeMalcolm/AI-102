@@ -22,7 +22,7 @@ set key_json=!key_json!%%a
 set key_string=!key_json:[ { "keyName": "key1", "permissions": "Full", "value": "=!
 set AZURE_STORAGE_KEY=!key_string:" } ]=!
 call az storage container create --account-name ai102form!unique_id! --name sampleforms --public-access blob --auth-mode key --account-key %AZURE_STORAGE_KEY% --output none
-call az storage blob upload-batch -d sampleforms -s ./sample-forms/train --account-name ai102form!unique_id! --auth-mode key --account-key %AZURE_STORAGE_KEY%  --output none
+call az storage blob upload-batch -d sampleforms -s ./sample-forms --account-name ai102form!unique_id! --auth-mode key --account-key %AZURE_STORAGE_KEY%  --output none
 
 echo -------------------------------------
 echo Storage account: ai102form!unique_id!
