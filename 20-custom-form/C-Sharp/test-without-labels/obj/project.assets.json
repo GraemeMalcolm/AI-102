@@ -565,11 +565,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\sheryang\\Documents\\learn-pr\\AI-102\\20-custom-form\\C-Sharp\\test-custom-form\\test-custom-form.csproj",
-      "projectName": "test-custom-form",
-      "projectPath": "C:\\Users\\sheryang\\Documents\\learn-pr\\AI-102\\20-custom-form\\C-Sharp\\test-custom-form\\test-custom-form.csproj",
+      "projectUniqueName": "C:\\Users\\sheryang\\Documents\\learn-pr\\AI-102\\20-custom-form\\C-Sharp\\test-without-labels\\test-without-labels.csproj",
+      "projectName": "test-without-labels",
+      "projectPath": "C:\\Users\\sheryang\\Documents\\learn-pr\\AI-102\\20-custom-form\\C-Sharp\\test-without-labels\\test-without-labels.csproj",
       "packagesPath": "C:\\Users\\sheryang\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\sheryang\\Documents\\learn-pr\\AI-102\\20-custom-form\\C-Sharp\\test-custom-form\\obj\\",
+      "outputPath": "C:\\Users\\sheryang\\Documents\\learn-pr\\AI-102\\20-custom-form\\C-Sharp\\test-without-labels\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\sheryang\\AppData\\Roaming\\NuGet\\NuGet.Config"
